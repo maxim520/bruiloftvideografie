@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f4ef;
+  --surface: #eee8e1;
+  --surface-light: #fbfaf7;
+  --brown-dark: #241b17;
+  --brown: #49362c;
+  --brown-medium: #765541;
+  --copper: #a66e4a;
+  --copper-hover: #8f5c3d;
+  --text: #28231f;
+  --text-muted: #71675f;
+  --border: #d8cfc6;
+  --white: #ffffff;
+
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --container: 1280px;
+  --section-y: 112px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-light: var(--surface-light);
+  --color-brown-dark: var(--brown-dark);
+  --color-brown: var(--brown);
+  --color-brown-medium: var(--brown-medium);
+  --color-copper: var(--copper);
+  --color-copper-hover: var(--copper-hover);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.14;
+  letter-spacing: .005em;
+}
+p { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Over mij | North &amp; Oak Photo &amp; Film</title>
+<meta name="description" content="Maak kennis met de fotograaf achter North &amp; Oak. Persoonlijke trouwfotografie en trouwfilms met een rustige, tijdloze stijl." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --background:#f7f4ef;
+  --surface:#eee8e1;
+  --surface-light:#fbfaf7;
+  --brown-dark:#241b17;
+  --brown:#49362c;
+  --brown-medium:#765541;
+  --copper:#a66e4a;
+  --copper-hover:#8f5c3d;
+  --text:#28231f;
+  --text-muted:#71675f;
+  --border:#d8cfc6;
+  --white:#ffffff;
+
+  --font-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --font-body:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --font-script:"Petit Formal Script","Snell Roundhand",cursive;
+
+  --container:1280px;
+  --section-y:112px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--background);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;margin:0;line-height:1.14;letter-spacing:.005em;}
+p{margin:0;}
+
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:2px;}
+.on-dark :focus-visible{outline-color:#e2c3a9;}
+
+.container{max-width:var(--container);margin:0 auto;padding-left:24px;padding-right:24px;}
+.section{padding-top:var(--section-y);padding-bottom:var(--section-y);}
+
+/* ---------- labels & links ---------- */
+.eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--copper);margin:0 0 20px;
+}
+.eyebrow.muted{color:var(--brown-medium);}
+.on-dark .eyebrow{color:#c08f68;}
+.eyebrow--rule{display:flex;align-items:center;gap:14px;}
+.eyebrow--rule::after{content:"";width:46px;height:1px;background:currentColor;opacity:.6;}
+
+.text-link{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--copper);padding:6px 0;border-bottom:1px solid rgba(166,110,74,.4);
+  transition:color .2s ease,border-color .2s ease,gap .2s ease;
+}
+.text-link:hover{color:var(--copper-hover);border-color:var(--copper-hover);gap:14px;}
+.on-dark .text-link{color:#d6a67e;border-color:rgba(214,166,126,.35);}
+.on-dark .text-link:hover{color:#eec6a4;border-color:#eec6a4;}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  border-radius:10px;padding:14px 22px;min-height:48px;
+  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  cursor:pointer;border:1px solid transparent;white-space:nowrap;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
+}
+.btn--primary{background:var(--copper);color:#fff;border-color:var(--copper);}
+.btn--primary:hover{background:var(--copper-hover);border-color:var(--copper-hover);transform:translateY(-1px);}
+.btn--secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.7);}
+.btn--secondary:hover{background:rgba(255,255,255,.1);border-color:#fff;transform:translateY(-1px);}
+.btn--dark-outline{background:transparent;color:var(--brown-dark);border-color:var(--brown-dark);}
+.btn--dark-outline:hover{background:var(--brown-dark);color:#fff;transform:translateY(-1px);}
+.btn--sm{padding:11px 18px;min-height:42px;font-size:11px;}
+
+/* ---------- header ---------- */
+.header{
+  position:fixed;inset:0 0 auto 0;z-index:60;padding:14px 0;
+  border-bottom:1px solid transparent;
+  transition:background-color .35s ease,border-color .35s ease,padding .35s ease;
+}
+.header--scrolled{
+  background:rgba(36,27,23,.86);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom-color:rgba(255,255,255,.1);padding:6px 0;
+}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.logo{color:#fff;display:block;}
+.logo__name{font-family:var(--font-display);font-size:21px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.1;}
+.logo__sub{font-size:9px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-top:5px;padding-left:2px;}
+.nav{display:flex;align-items:center;gap:30px;}
+.nav a{
+  font-size:12px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.86);padding:8px 0;position:relative;transition:color .2s ease;
+}
+.nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--copper);
+  transform:scaleX(0);transform-origin:left;transition:transform .25s ease;
+}
+.nav a:hover{color:#fff;}
+.nav a:hover::after{transform:scaleX(1);}
+.nav a[aria-current="page"]{color:#fff;}
+.nav a[aria-current="page"]::after{transform:scaleX(1);}
+.burger{display:none;width:46px;height:46px;align-items:center;justify-content:center;background:none;border:0;cursor:pointer;color:#fff;}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:70;background:var(--brown-dark);
+  padding:22px 24px 34px;display:flex;flex-direction:column;
+  transform:translateY(-100%);visibility:hidden;
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+}
+.mobile-menu[data-open="true"]{transform:translateY(0);visibility:visible;}
+.mobile-menu__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;}
+.mobile-menu nav{display:flex;flex-direction:column;}
+.mobile-menu nav a{font-family:var(--font-display);font-size:28px;color:#fff;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.mobile-menu nav a[aria-current="page"]{color:#d6a67e;}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:86vh;display:flex;align-items:center;overflow:hidden;background:var(--brown-dark);}
+.hero__media{position:absolute;inset:0;}
+.hero__media img{width:100%;height:100%;object-fit:cover;object-position:62% 30%;}
+.hero__overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(20,14,11,.82) 0%,rgba(20,14,11,.46) 52%,rgba(20,14,11,.2) 100%);
+}
+.hero__overlay::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(20,14,11,.55) 0%,rgba(20,14,11,0) 28%,rgba(20,14,11,0) 66%,rgba(20,14,11,.45) 100%);
+}
+.hero__inner{position:relative;z-index:2;width:100%;padding-top:120px;padding-bottom:96px;}
+.hero__content{max-width:620px;color:#fff;}
+.hero h1{font-size:clamp(38px,4.6vw,62px);font-weight:500;line-height:1.14;margin-bottom:26px;}
+.hero h1 span{display:block;}
+.hero__sub{font-size:16.5px;color:rgba(255,255,255,.8);max-width:38em;margin-bottom:36px;}
+.hero__actions{display:flex;gap:14px;flex-wrap:wrap;}
+
+/* ---------- wie ik ben ---------- */
+.story{background:var(--surface-light);}
+.story__layout{display:grid;grid-template-columns:minmax(0,42fr) minmax(0,58fr);gap:72px;align-items:center;}
+.story h2{font-size:clamp(30px,3.1vw,42px);margin-bottom:28px;max-width:16ch;}
+.story__body{display:flex;flex-direction:column;gap:18px;}
+.story__body p{font-size:15.5px;line-height:1.8;color:var(--text-muted);max-width:44ch;}
+.signature{margin-top:40px;}
+.signature__name{font-family:var(--font-script);font-size:38px;line-height:1;color:var(--brown);}
+.signature__role{
+  font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--copper);margin-top:12px;
+}
+.story__grid{display:grid;grid-template-columns:1.15fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
+.story__grid .photo:first-child{grid-row:span 2;}
+
+.photo{position:relative;overflow:hidden;border-radius:8px;background:var(--surface);}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.6,.2,1);}
+.photo:hover img{transform:scale(1.025);}
+.ratio-45{aspect-ratio:4/5;}
+.ratio-43{aspect-ratio:4/3;}
+.ratio-11{aspect-ratio:1/1;}
+
+/* ---------- mijn aanpak ---------- */
+.values{background:var(--brown-dark);color:#f7f4ef;padding-top:78px;padding-bottom:78px;}
+.values__grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.value{
+  text-align:center;padding:8px 34px;
+  border-left:1px solid rgba(255,255,255,.12);
+}
+.value:first-child{border-left:0;}
+.value__icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);
+  color:#d6a67e;margin-bottom:20px;
+}
+.value h3{
+  font-family:var(--font-body);font-size:11px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:12px;
+}
+.value p{font-size:13.5px;line-height:1.75;color:rgba(247,244,239,.6);max-width:24ch;margin:0 auto;}
+
+/* ---------- ervaring ---------- */
+.experience{background:var(--background);}
+.experience__layout{display:grid;grid-template-columns:minmax(0,38fr) minmax(0,62fr);gap:72px;align-items:center;}
+.experience h2{font-size:clamp(30px,3.1vw,42px);margin-bottom:24px;max-width:14ch;}
+.experience p{font-size:15.5px;color:var(--text-muted);max-width:40ch;margin-bottom:32px;line-height:1.8;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{text-align:center;padding:4px 18px;border-left:1px solid var(--border);}
+.stat:first-child{border-left:0;}
+.stat__value{font-family:var(--font-display);font-size:clamp(38px,4vw,54px);font-weight:500;line-height:1;color:var(--copper);}
+.stat__label{
+  font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-muted);margin-top:16px;line-height:1.7;
+}
+
+/* ---------- zo werk ik ---------- */
+.workflow{background:var(--surface-light);}
+.workflow__layout{display:grid;grid-template-columns:minmax(0,32fr) minmax(0,68fr);gap:64px;align-items:flex-start;}
+.workflow h2{font-size:clamp(28px,2.9vw,40px);margin-bottom:22px;max-width:14ch;}
+.workflow p.intro{font-size:15.5px;color:var(--text-muted);line-height:1.8;max-width:38ch;}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:26px;padding-top:6px;}
+.timeline::before{
+  content:"";position:absolute;left:8%;right:8%;top:27px;
+  border-top:1px dashed var(--border);
+}
+.tstep{position:relative;}
+.tstep__icon{
+  position:relative;z-index:2;
+  width:54px;height:54px;border-radius:50%;
+  background:var(--brown);color:#e2c3a9;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  box-shadow:0 0 0 6px var(--surface-light);
+}
+.tstep__num{font-size:11px;letter-spacing:.2em;color:var(--copper);margin-bottom:5px;}
+.tstep h3{font-size:19px;margin-bottom:10px;}
+.tstep p{font-size:13.5px;color:var(--text-muted);line-height:1.7;max-width:24ch;}
+
+/* ---------- quote ---------- */
+.quote{background:var(--brown-dark);color:#fff;padding-top:104px;padding-bottom:104px;text-align:center;}
+.quote blockquote{margin:0;}
+.quote p{
+  font-family:var(--font-display);font-size:clamp(26px,3.2vw,42px);
+  line-height:1.32;max-width:20ch;margin:0 auto;font-style:italic;font-weight:400;
+}
+.quote__mark{color:#c08f68;margin-bottom:28px;display:inline-block;}
+.quote cite{
+  display:block;margin-top:34px;font-style:normal;font-family:var(--font-body);
+  font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,239,.5);
+}
+
+/* ---------- reviews ---------- */
+.reviews{background:var(--surface);}
+.reviews h2{font-size:clamp(30px,3.1vw,42px);margin-bottom:44px;}
+.reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.review{
+  background:#fff;border:1px solid var(--border);border-radius:8px;
+  box-shadow:0 1px 2px rgba(36,27,23,.04);padding:26px;
+  display:flex;gap:18px;align-items:flex-start;
+}
+.review__avatar{width:56px;height:70px;flex:none;border-radius:3px;object-fit:cover;background:var(--surface);}
+.stars{display:flex;gap:3px;color:var(--copper);margin-bottom:12px;}
+.review p{font-size:14px;line-height:1.7;color:var(--text-muted);margin-bottom:16px;}
+.review__name{font-size:13px;font-weight:600;}
+
+/* ---------- faq ---------- */
+.faq{background:var(--background);}
+.faq__layout{display:grid;grid-template-columns:minmax(0,34fr) minmax(0,66fr);gap:64px;align-items:flex-start;}
+.faq h2{font-size:clamp(28px,2.9vw,40px);max-width:12ch;}
+.faq__list{border-top:1px solid var(--border);}
+.faq__item{border-bottom:1px solid var(--border);}
+.faq__trigger{
+  width:100%;background:none;border:0;cursor:pointer;text-align:left;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:24px 0;color:var(--text);
+  font-family:var(--font-display);font-size:21px;line-height:1.3;
+  transition:color .2s ease;
+}
+.faq__trigger:hover{color:var(--copper);}
+.faq__icon{
+  flex:none;width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--copper);transition:transform .3s ease,background-color .25s ease,border-color .25s ease,color .25s ease;
+}
+.faq__trigger[aria-expanded="true"] .faq__icon{transform:rotate(45deg);background:var(--copper);border-color:var(--copper);color:#fff;}
+.faq__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.4,0,.2,1);}
+.faq__panel[data-open="true"]{grid-template-rows:1fr;}
+.faq__panel > div{overflow:hidden;}
+.faq__panel p{font-size:15px;line-height:1.8;color:var(--text-muted);max-width:62ch;padding-bottom:26px;}
+
+/* ---------- cta ---------- */
+.final{position:relative;min-height:420px;display:flex;align-items:center;overflow:hidden;background:var(--brown-dark);}
+.final__media{position:absolute;inset:0;}
+.final__media img{width:100%;height:100%;object-fit:cover;object-position:center 32%;}
+.final__overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,14,11,.88) 0%,rgba(20,14,11,.6) 55%,rgba(20,14,11,.3) 100%);}
+.final .container{position:relative;z-index:2;padding-top:76px;padding-bottom:76px;}
+.final h2{font-size:clamp(28px,2.9vw,40px);color:#fff;max-width:18ch;margin-bottom:16px;}
+.final p{color:rgba(255,255,255,.78);margin-bottom:30px;font-size:16px;}
+
+/* ---------- footer ---------- */
+.footer{background:#1b1310;color:rgba(247,244,239,.72);padding-top:78px;}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1.3fr 1.2fr;gap:48px;padding-bottom:56px;}
+.footer h4{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin:0 0 20px;}
+.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
+.footer li a,.footer address a{font-size:14px;transition:color .2s ease;}
+.footer li a:hover,.footer address a:hover{color:#fff;}
+.footer__about{font-size:14px;max-width:30ch;margin:20px 0 24px;line-height:1.7;}
+.socials{display:flex;gap:10px;}
+.socials a{
+  width:40px;height:40px;border:1px solid rgba(255,255,255,.16);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);
+  transition:border-color .2s ease,color .2s ease,background-color .2s ease;
+}
+.socials a:hover{border-color:var(--copper);background:var(--copper);color:#fff;}
+.footer address{font-style:normal;font-size:14px;line-height:2;margin-bottom:22px;}
+.footer__bottom{
+  border-top:1px solid rgba(255,255,255,.1);padding:22px 0 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12.5px;color:rgba(247,244,239,.5);
+}
+.footer__bottom nav{display:flex;gap:24px;}
+.footer__bottom a:hover{color:#fff;}
+
+/* ---------- animatie ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.is-visible{opacity:1;transform:none;}
+
+/* ---------- placeholder fallback ---------- */
+.photo.is-missing{background:linear-gradient(135deg,#3a2c24,#765541 55%,#a66e4a);}
+.photo.is-missing img{opacity:0;}
+
+/* ---------- responsive ---------- */
+@media (max-width:1023px){
+  :root{--section-y:80px;}
+  .nav,.header__cta{display:none;}
+  .burger{display:flex;}
+
+  .story__layout{grid-template-columns:1fr;gap:40px;}
+  .story__body p{max-width:none;}
+  .values__grid{grid-template-columns:repeat(2,1fr);gap:36px 0;}
+  .value{border-left:0;padding:0 20px;}
+  .value:nth-child(even){border-left:1px solid rgba(255,255,255,.12);}
+  .experience__layout{grid-template-columns:1fr;gap:44px;}
+  .experience p{max-width:none;}
+  .stats{grid-template-columns:repeat(2,1fr);gap:34px 0;}
+  .stat{border-left:0;}
+  .stat:nth-child(even){border-left:1px solid var(--border);}
+
+  .workflow__layout{grid-template-columns:1fr;gap:40px;}
+  .timeline{grid-template-columns:1fr;gap:0;}
+  .timeline::before{display:none;}
+  .tstep{display:grid;grid-template-columns:54px 1fr;gap:0 22px;padding-bottom:34px;}
+  .tstep::before{
+    content:"";position:absolute;left:26px;top:54px;bottom:0;
+    border-left:1px dashed var(--border);
+  }
+  .tstep:last-child::before{display:none;}
+  .tstep__icon{margin-bottom:0;box-shadow:none;}
+  .tstep__num{grid-column:2;margin-top:5px;}
+  .tstep__body{grid-column:2;}
+  .tstep p{max-width:none;}
+
+  .reviews__grid{
+    grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:82%;
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    margin:0 -24px;padding:0 24px 8px;scrollbar-width:none;
+  }
+  .reviews__grid::-webkit-scrollbar{display:none;}
+  .review{scroll-snap-align:start;}
+
+  .faq__layout{grid-template-columns:1fr;gap:34px;}
+  .faq h2{max-width:none;}
+}
+
+@media (max-width:767px){
+  :root{--section-y:68px;}
+  body{font-size:16px;}
+  .container{padding-left:20px;padding-right:20px;}
+
+  .hero{min-height:640px;align-items:flex-end;}
+  .hero__media img{object-position:58% 22%;}
+  .hero__overlay{background:linear-gradient(180deg,rgba(20,14,11,.55) 0%,rgba(20,14,11,.28) 32%,rgba(20,14,11,.86) 100%);}
+  .hero__inner{padding-bottom:56px;padding-top:150px;}
+  .hero h1{font-size:clamp(34px,9vw,42px);}
+  .hero__sub{font-size:15.5px;margin-bottom:28px;}
+  .hero__actions{flex-direction:column;}
+  .hero__actions .btn{width:100%;}
+
+  .story__grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:10px;}
+  .story__grid .photo:first-child{grid-row:auto;grid-column:1 / -1;aspect-ratio:4/3;}
+  .signature{margin-top:32px;}
+
+  .values{padding-top:56px;padding-bottom:56px;}
+  .values__grid{grid-template-columns:1fr;gap:0;}
+  .value{
+    display:grid;grid-template-columns:48px 1fr;gap:0 18px;
+    text-align:left;padding:22px 0;border-left:0;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .value:nth-child(even){border-left:0;}
+  .value:first-child{border-top:0;}
+  .value__icon{margin-bottom:0;grid-row:span 2;}
+  .value h3{margin-bottom:6px;align-self:center;}
+  .value p{max-width:none;margin:0;}
+
+  .stats{grid-template-columns:1fr;gap:0;}
+  .stat{
+    display:flex;align-items:baseline;gap:18px;text-align:left;
+    padding:18px 0;border-left:0;border-top:1px solid var(--border);
+  }
+  .stat:nth-child(even){border-left:0;}
+  .stat:first-child{border-top:0;}
+  .stat__value{min-width:110px;font-size:38px;}
+  .stat__label{margin-top:0;}
+
+  .quote{padding-top:76px;padding-bottom:76px;}
+  .quote p{max-width:16ch;}
+
+  .faq__trigger{font-size:19px;padding:20px 0;}
+
+  .final{min-height:480px;align-items:flex-end;}
+  .final__overlay{background:linear-gradient(180deg,rgba(20,14,11,.5) 0%,rgba(20,14,11,.35) 40%,rgba(20,14,11,.9) 100%);}
+  .final .container{padding-bottom:54px;}
+  .final .btn{width:100%;}
+
+  .footer__grid{grid-template-columns:1fr;gap:40px;padding-bottom:44px;}
+  .footer__bottom{flex-direction:column;align-items:flex-start;gap:14px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition-duration:.01ms !important;}
+  .reveal{opacity:1;transform:none;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header on-dark" id="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html" aria-label="North &amp; Oak Photo &amp; Film, naar home">
+      <span class="logo__name">North &amp; Oak</span>
+      <span class="logo__sub">Photo &amp; Film</span>
+    </a>
+
+    <nav class="nav" aria-label="Hoofdnavigatie">
+      <a href="index.html">Home</a>
+      <a href="#" aria-current="page">Over mij</a>
+      <a href="#">Fotografie</a>
+      <a href="#">Video</a>
+      <a href="#">Pakketten</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <a class="btn btn--primary btn--sm header__cta" href="#contact">Check beschikbaarheid</a>
+
+    <button class="burger" id="burger" aria-label="Menu openen" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu on-dark" id="mobile-menu" data-open="false">
+  <div class="mobile-menu__top">
+    <span class="logo">
+      <span class="logo__name">North &amp; Oak</span>
+      <span class="logo__sub">Photo &amp; Film</span>
+    </span>
+    <button class="burger" id="close-menu" aria-label="Menu sluiten" style="display:flex">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobiele navigatie">
+    <a href="index.html">Home</a>
+    <a href="#" aria-current="page">Over mij</a>
+    <a href="#">Fotografie</a>
+    <a href="#">Video</a>
+    <a href="#">Pakketten</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+  </nav>
+  <a class="btn btn--primary" href="#contact" style="margin-top:36px">Check beschikbaarheid</a>
+</div>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero on-dark">
+    <div class="hero__media">
+      <img src="images/hero-about.jpg" data-fallback="https://picsum.photos/seed/noak-about-hero/1920/1200" alt="Jeroen met camera in de hand tijdens het gouden uur" fetchpriority="high" />
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <p class="eyebrow eyebrow--rule">Over mij</p>
+        <h1>
+          <span>Ik leg jullie verhaal</span>
+          <span>vast zoals het &eacute;cht was.</span>
+        </h1>
+        <p class="hero__sub">Geen regie, geen standaard poses. Ik geloof dat de mooiste herinneringen ontstaan wanneer jullie volledig kunnen genieten van de dag. Alles vastleggen is mijn werk, niet dat van jullie.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="index.html#portfolio">Bekijk mijn werk</a>
+          <a class="btn btn--secondary" href="#contact">Check beschikbaarheid</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WIE IK BEN ============ -->
+  <section class="section story">
+    <div class="container">
+      <div class="story__layout">
+        <div class="reveal">
+          <p class="eyebrow muted">Wie ik ben</p>
+          <h2>De fotograaf achter North &amp; Oak.</h2>
+          <div class="story__body">
+            <p>Hoi, ik ben Jeroen. Bruiloften vastleggen is voor mij veel meer dan mooie beelden maken. Het is het vertrouwen krijgen om dichtbij te mogen zijn op een van de belangrijkste dagen van jullie leven.</p>
+            <p>Wat een bruiloft bijzonder maakt zijn de momenten die niemand plant. De blik van jullie vader tijdens de ceremonie, de lach die te vroeg komt, de stilte net voor de deuren opengaan. Daar ben ik voor.</p>
+            <p>Met oog voor detail en gevoel voor timing werk ik rustig en onopvallend. Jullie merken nauwelijks dat ik er ben, terwijl ik zorg voor herinneringen die blijven.</p>
+          </div>
+          <div class="signature">
+            <div class="signature__name">Jeroen</div>
+            <div class="signature__role">Fotograaf &amp; videograaf</div>
+          </div>
+        </div>
+
+        <div class="story__grid reveal">
+          <figure class="photo" style="margin:0">
+            <img src="images/about-portrait.jpg" data-fallback="https://picsum.photos/seed/noak-ab1/800/1100" alt="Portret van Jeroen voor een klassiek landhuis" loading="lazy" />
+          </figure>
+          <figure class="photo ratio-43" style="margin:0">
+            <img src="images/about-camera.jpg" data-fallback="https://picsum.photos/seed/noak-ab2/700/520" alt="Jeroen filmt tijdens het avondfeest" loading="lazy" />
+          </figure>
+          <figure class="photo ratio-43" style="margin:0">
+            <img src="images/about-blackwhite.jpg" data-fallback="https://picsum.photos/seed/noak-ab3/700/520" alt="Zwart-witbeeld van Jeroen aan het werk" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MIJN AANPAK ============ -->
+  <section class="values on-dark" aria-label="Mijn aanpak">
+    <div class="container">
+      <div class="values__grid reveal">
+        <article class="value">
+          <span class="value__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.4-7.5-9.4A4.1 4.1 0 0 1 12 7.7a4.1 4.1 0 0 1 7.5 2.9c0 5-7.5 9.4-7.5 9.4z"/></svg>
+          </span>
+          <h3>Echt &amp; oprecht</h3>
+          <p>Ik leg de dag vast zoals hij echt was. Zonder regie, zonder gemaakte momenten.</p>
+        </article>
+
+        <article class="value">
+          <span class="value__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L8 6.5H4.5A1.5 1.5 0 0 0 3 8v10a1.5 1.5 0 0 0 1.5 1.5h15A1.5 1.5 0 0 0 21 18V8a1.5 1.5 0 0 0-1.5-1.5H16z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          </span>
+          <h3>Onopvallend aanwezig</h3>
+          <p>Rustig, discreet en altijd op de juiste plek. Zodat jullie niets missen van elkaar.</p>
+        </article>
+
+        <article class="value">
+          <span class="value__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>
+          </span>
+          <h3>Foto &amp; video in &eacute;&eacute;n stijl</h3>
+          <p>Beelden die naadloos samenkomen en samen &eacute;&eacute;n verhaal vertellen. Rustig en tijdloos.</p>
+        </article>
+
+        <article class="value">
+          <span class="value__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9-5.3-2.9-5.3 2.9 1.1-5.9L3.5 9.7l5.9-.8z"/></svg>
+          </span>
+          <h3>Kwaliteit boven alles</h3>
+          <p>Hoogwaardige apparatuur, zorgvuldige nabewerking en aandacht voor elk detail.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ERVARING ============ -->
+  <section class="section experience">
+    <div class="container">
+      <div class="experience__layout">
+        <div class="reveal">
+          <p class="eyebrow">Mijn ervaring</p>
+          <h2>Al meer dan 8 jaar met hart en ziel.</h2>
+          <p>In al die jaren heb ik honderden liefdesverhalen mogen vastleggen, van intieme bruiloften in eigen tuin tot dagen in Toscane. Elke bruiloft is anders en dat maakt mijn werk elke keer opnieuw bijzonder.</p>
+          <a class="btn btn--dark-outline" href="#">Lees mijn verhaal</a>
+        </div>
+
+        <div class="stats reveal">
+          <div class="stat">
+            <div class="stat__value">500+</div>
+            <div class="stat__label">Bruiloften<br />vastgelegd</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">8+</div>
+            <div class="stat__label">Jaar<br />ervaring</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">2</div>
+            <div class="stat__label">Specialisaties<br />foto &amp; video</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">5/5</div>
+            <div class="stat__label">Gemiddelde<br />review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ZO WERK IK ============ -->
+  <section class="section workflow">
+    <div class="container">
+      <div class="workflow__layout">
+        <div class="reveal">
+          <p class="eyebrow">Zo werk ik</p>
+          <h2>Jullie dag. Jullie tempo.</h2>
+          <p class="intro">Ik geloof dat de mooiste momenten ontstaan als jullie jezelf kunnen zijn. Daarom werk ik met een duidelijke aanpak die zorgt voor ontspanning en vertrouwen.</p>
+        </div>
+
+        <div class="timeline reveal">
+          <article class="tstep">
+            <span class="tstep__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15.5a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <div class="tstep__num">01.</div>
+            <div class="tstep__body">
+              <h3>Kennismaking</h3>
+              <p>We leren elkaar kennen tijdens een vrijblijvend gesprek.</p>
+            </div>
+          </article>
+
+          <article class="tstep">
+            <span class="tstep__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3.5v3M16 3.5v3"/></svg>
+            </span>
+            <div class="tstep__num">02.</div>
+            <div class="tstep__body">
+              <h3>Voorbereiding</h3>
+              <p>We plannen alles rustig en stemmen jullie wensen goed af.</p>
+            </div>
+          </article>
+
+          <article class="tstep">
+            <span class="tstep__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L8 6.5H4.5A1.5 1.5 0 0 0 3 8v10a1.5 1.5 0 0 0 1.5 1.5h15A1.5 1.5 0 0 0 21 18V8a1.5 1.5 0 0 0-1.5-1.5H16z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </span>
+            <div class="tstep__num">03.</div>
+            <div class="tstep__body">
+              <h3>De bruiloft</h3>
+              <p>Ik ben op de achtergrond aanwezig en leg alle momenten vast.</p>
+            </div>
+          </article>
+
+          <article class="tstep">
+            <span class="tstep__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.4-7.5-9.4A4.1 4.1 0 0 1 12 7.7a4.1 4.1 0 0 1 7.5 2.9c0 5-7.5 9.4-7.5 9.4z"/></svg>
+            </span>
+            <div class="tstep__num">04.</div>
+            <div class="tstep__body">
+              <h3>Herinneringen</h3>
+              <p>Jullie ontvangen een prachtige selectie beelden en film om te koesteren.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="quote on-dark">
+    <div class="container">
+      <blockquote class="reveal">
+        <span class="quote__mark" aria-hidden="true">
+          <svg width="34" height="26" viewBox="0 0 34 26" fill="currentColor" opacity=".85"><path d="M0 26V13.4C0 6.4 4.3 1.2 12 0l1.3 3.7C9 5 6.7 7.6 6.6 11.4H12V26zm20 0V13.4C20 6.4 24.3 1.2 32 0l1.3 3.7c-4.3 1.3-6.6 3.9-6.7 7.7H32V26z"/></svg>
+        </span>
+        <p>Ik wil niet alleen laten zien hoe jullie trouwdag eruitzag. Ik wil dat jullie opnieuw voelen hoe hij was.</p>
+        <cite>Jeroen &middot; North &amp; Oak</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="section reviews" id="reviews">
+    <div class="container">
+      <div class="reveal">
+        <p class="eyebrow">Lieve woorden</p>
+        <h2>Wat bruidsparen over mij zeggen.</h2>
+      </div>
+
+      <div class="reviews__grid reveal">
+        <article class="review">
+          <img class="review__avatar" src="images/review-eva-mark.jpg" data-fallback="https://picsum.photos/seed/noak-r1/160/200" alt="Eva en Mark" loading="lazy" />
+          <div>
+            <div class="stars" aria-label="5 van de 5 sterren">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+            </div>
+            <p>&ldquo;Vanaf het eerste moment voelden we ons op ons gemak. De foto&rsquo;s en film zijn zo prachtig geworden dat we onze dag telkens opnieuw beleven.&rdquo;</p>
+            <div class="review__name">Eva &amp; Mark</div>
+          </div>
+        </article>
+
+        <article class="review">
+          <img class="review__avatar" src="images/review-sanne-daan.jpg" data-fallback="https://picsum.photos/seed/noak-r2/160/200" alt="Sanne en Daan" loading="lazy" />
+          <div>
+            <div class="stars" aria-label="5 van de 5 sterren">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+            </div>
+            <p>&ldquo;Professioneel, creatief en vooral heel betrokken. Hij legde ieder belangrijk moment vast zonder dat we het doorhadden.&rdquo;</p>
+            <div class="review__name">Sanne &amp; Daan</div>
+          </div>
+        </article>
+
+        <article class="review">
+          <img class="review__avatar" src="images/review-julia-mees.jpg" data-fallback="https://picsum.photos/seed/noak-r3/160/200" alt="Julia en Mees" loading="lazy" />
+          <div>
+            <div class="stars" aria-label="5 van de 5 sterren">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.3 6.7 19.2l1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+            </div>
+            <p>&ldquo;De combinatie van foto en video was voor ons de beste keuze. Alles klopt en vormt samen &eacute;&eacute;n mooi verhaal.&rdquo;</p>
+            <div class="review__name">Julia &amp; Mees</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section faq">
+    <div class="container">
+      <div class="faq__layout">
+        <div class="reveal">
+          <p class="eyebrow">Veelgestelde vragen</p>
+          <h2>Goed om te weten.</h2>
+        </div>
+
+        <div class="faq__list reveal" id="faq-list">
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-1">
+                Waarom fotografeer je alleen?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-1" data-open="false"><div>
+              <p>Omdat ik geloof in een persoonlijke band. Jullie spreken vanaf het eerste gesprek met dezelfde persoon die op de dag zelf aanwezig is en die daarna de beelden bewerkt. Dat maakt de dag rustiger en de stijl consistent.</p>
+            </div></div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-2">
+                Werk je ook in het buitenland?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-2" data-open="false"><div>
+              <p>Zeker. Destination weddings zijn een van de mooiste onderdelen van dit werk. Ik fotografeer in heel Europa en reis graag mee. De reis- en verblijfkosten reken ik transparant door in de offerte.</p>
+            </div></div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-3">
+                Fotografeer je ook kleine bruiloften?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-3" data-open="false"><div>
+              <p>Graag zelfs. Intieme bruiloften met twintig gasten leveren vaak de meest oprechte beelden op. Er zijn kortere pakketten beschikbaar voor dagen die om minder uren vragen.</p>
+            </div></div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-4">
+                Maak je ook trouwfilms?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-4" data-open="false"><div>
+              <p>Ja. Foto en video komen bij mij uit dezelfde hand, in dezelfde kleuren en met hetzelfde ritme. Jullie ontvangen een highlight film van vier tot zes minuten, optioneel aangevuld met een langere versie.</p>
+            </div></div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-5">
+                Hoe lang ben je aanwezig?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-5" data-open="false"><div>
+              <p>Dat bepalen jullie zelf. De meeste bruidsparen kiezen voor acht tot tien uur, van het aankleden tot het eerste deel van het feest. Een volledige dag inclusief avondprogramma is altijd mogelijk.</p>
+            </div></div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin:0">
+              <button class="faq__trigger" aria-expanded="false" aria-controls="faq-6">
+                Wanneer ontvangen we alles?
+                <span class="faq__icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-6" data-open="false"><div>
+              <p>Binnen een week krijgen jullie een korte voorproefje. De volledige galerij en de film volgen binnen zes tot acht weken, via een persoonlijke online omgeving die jullie eenvoudig kunnen delen.</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="final on-dark" id="contact">
+    <div class="final__media">
+      <img src="images/cta-about.jpg" data-fallback="https://picsum.photos/seed/noak-about-cta/1920/900" alt="Jeroen aan het fotograferen in het avondlicht" loading="lazy" />
+    </div>
+    <div class="final__overlay" aria-hidden="true"></div>
+    <div class="container">
+      <h2>Zijn jullie benieuwd of jullie trouwdatum nog beschikbaar is?</h2>
+      <p>Laat een bericht achter en ik neem zo snel mogelijk contact met jullie op.</p>
+      <a class="btn btn--primary" href="#">Check beschikbaarheid</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer on-dark">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <span class="logo">
+          <span class="logo__name">North &amp; Oak</span>
+          <span class="logo__sub">Photo &amp; Film</span>
+        </span>
+        <p class="footer__about">Foto &amp; video voor de mooiste dag van jullie leven.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-2.5A4.5 4.5 0 0 0 8 7.5V11H5v4h3v6h4v-6h3l1-4h-4V7.5A.5.5 0 0 1 12.5 7H15z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10.5 9.5 5 2.5-5 2.5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Navigatie</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Over mij</a></li>
+          <li><a href="#">Fotografie</a></li>
+          <li><a href="#">Video</a></li>
+          <li><a href="#">Pakketten</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Populaire pagina&rsquo;s</h4>
+        <ul>
+          <li><a href="#">Trouwfotograaf Gelderland</a></li>
+          <li><a href="#">Trouwfotograaf Utrecht</a></li>
+          <li><a href="#">Trouwfotograaf Amsterdam</a></li>
+          <li><a href="#">Trouwvideograaf Nederland</a></li>
+          <li><a href="#">Destination wedding</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <address>
+          <a href="tel:+31612345678">06 12 34 56 78</a><br />
+          <a href="mailto:info@northoak.nl">info@northoak.nl</a><br />
+          Arnhem, Gelderland
+        </address>
+        <a class="btn btn--primary btn--sm" href="#contact">Check beschikbaarheid</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; <span id="year">2026</span> North &amp; Oak Photo &amp; Film</span>
+      <nav aria-label="Juridisch">
+        <a href="#">Privacyverklaring</a>
+        <a href="#">Algemene voorwaarden</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Header scroll state
+  var header = document.getElementById('header');
+  var onScroll = function(){ header.classList.toggle('header--scrolled', window.scrollY > 50); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Mobiel menu
+  var burger = document.getElementById('burger');
+  var closeBtn = document.getElementById('close-menu');
+  var menu = document.getElementById('mobile-menu');
+  var setMenu = function(open){
+    menu.setAttribute('data-open', String(open));
+    burger.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+    if(open){ menu.querySelector('a').focus(); } else { burger.focus(); }
+  };
+  burger.addEventListener('click', function(){ setMenu(true); });
+  closeBtn.addEventListener('click', function(){ setMenu(false); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && menu.getAttribute('data-open') === 'true'){ setMenu(false); }
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq__trigger').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      panel.setAttribute('data-open', String(!open));
+    });
+  });
+
+  // Fade-up bij scroll
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  // Beeld fallback
+  document.querySelectorAll('img[data-fallback]').forEach(function(img){
+    img.addEventListener('error', function(){
+      var fb = img.getAttribute('data-fallback');
+      if(fb && img.src.indexOf(fb) === -1){ img.src = fb; }
+      else { var wrap = img.closest('.photo'); if(wrap){ wrap.classList.add('is-missing'); } }
+    });
+  });
+})();
+</script>
+</body>
+</html>
