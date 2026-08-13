@@ -108,6 +108,9 @@ export default function Hero({ block }: HeroProps) {
           priority
           sizes="100vw"
           className={`object-cover ${objectPositionClasses[size]}`}
+          // Eigen, per-pagina (en per-breakpoint) object-position; zie de
+          // toelichting bij SafeImage's useHotspot-prop.
+          useHotspot={false}
         />
       </div>
 

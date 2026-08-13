@@ -49,6 +49,9 @@ export default function FinalCta({ block }: FinalCtaProps) {
           image={image}
           sizes="100vw"
           className={`object-cover ${objectPositionClasses[size]}`}
+          // Eigen, per-pagina object-position; zie de toelichting bij
+          // SafeImage's useHotspot-prop.
+          useHotspot={false}
         />
       </div>
       <div

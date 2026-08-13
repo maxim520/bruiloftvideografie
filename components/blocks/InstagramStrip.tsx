@@ -28,7 +28,7 @@ export default function InstagramStrip({ block }: InstagramStripProps) {
             <div className="mb-[18px] flex flex-col items-start gap-[18px] md:mb-[26px] md:flex-row md:items-end md:justify-between md:gap-6">
               <div>
                 {eyebrow && (
-                  <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper">
+                  <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
                     {eyebrow}
                   </p>
                 )}

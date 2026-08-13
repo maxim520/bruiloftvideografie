@@ -7,19 +7,43 @@
  * component-code, niet in dit model.
  */
 
+/** Focuspunt binnen een Sanity-afbeelding, gebruikt om bijsnedes te sturen. */
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+/** Handmatige bijsnijding van een Sanity-afbeelding. */
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
 /**
  * Sanity-afbeelding met verplichte alt-tekst.
  *
- * Ondersteunt tijdelijk twee vormen: een echte Sanity asset-referentie,
- * of een simpele `url` (het pad uit _reference/) voor lib/mock-data.ts,
- * zolang er nog geen Sanity-project is aangesloten (Fase 4/5 van
- * BOUWPLAN.md). Zodra content uit Sanity komt vervalt de url-vorm.
+ * Ondersteunt tijdelijk twee vormen: een echte Sanity asset-referentie
+ * (met optionele hotspot/crop, aanwezig zodra een redactor die instelt —
+ * elk schemaveld heeft `options: {hotspot: true}` staan), of een simpele
+ * `url` (het pad uit _reference/) voor lib/mock-data.ts, zolang niet elke
+ * pagina nog op Sanity is aangesloten (Fase 4/5 van BOUWPLAN.md). Zodra
+ * alle content uit Sanity komt vervalt de url-vorm.
  */
 export type SanityImage = {
   _type: "image";
   alt: string;
 } & (
-  | { asset: { _type: "reference"; _ref: string } }
+  | {
+      asset: { _type: "reference"; _ref: string };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+    }
   | { url: string }
 );
 

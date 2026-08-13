@@ -1,0 +1,81 @@
+name: Sanity-backup
+
+# De redactionele content bestaat maar op één plek: in Sanity. Code staat
+# in git, beeldmateriaal (in elk geval het seed-materiaal) in
+# _seed-images/ — maar teksten, verwijzingen en structuur die een redacteur
+# via de Studio aanpast, bestaan nergens anders. Dit is dus de enige
+# workflow in dit project die iets *onvervangbaars* veiligstelt, in
+# tegenstelling tot deploy.yml, dat alleen dingen herbouwt die al in git
+# staan.
+on:
+  schedule:
+    # Elke zondag 03:00 UTC. Buiten kantoortijden van de redacteur, en ruim
+    # vóór een eventuele maandagochtend-publicatie.
+    - cron: "0 3 * * 0"
+  workflow_dispatch: {}
+
+concurrency:
+  group: sanity-backup
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Dataset-export
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: studio
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Node 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bestandsnaam bepalen
+        id: meta
+        run: echo "filename=sanity-backup-production-$(date -u +%Y-%m-%d).tar.gz" >> "$GITHUB_OUTPUT"
+
+      # SANITY_AUTH_TOKEN is geen los CLI-argument (dataset export heeft
+      # geen --token-vlag, in tegenstelling tot dataset import) — de CLI
+      # leest 'm automatisch uit deze omgevingsvariabele, zonder dat het
+      # commando zelf 'm ooit als argument ziet (dus ook niet in de log).
+      - name: Dataset exporteren
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        run: npx sanity dataset export production "${{ steps.meta.outputs.filename }}" --overwrite
+
+      # Voorkomt dat een stille, lege export (bv. een token zonder rechten
+      # dat toch 0 documenten teruggeeft in plaats van te falen) als
+      # "geslaagde" backup wordt geüpload.
+      - name: Export verifiëren
+        run: |
+          set -euo pipefail
+          size=$(stat -c%s "${{ steps.meta.outputs.filename }}" 2>/dev/null || stat -f%z "${{ steps.meta.outputs.filename }}")
+          echo "Exportbestand: ${{ steps.meta.outputs.filename }} (${size} bytes)"
+          if [ "$size" -lt 1024 ]; then
+            echo "::error::Exportbestand is verdacht klein (<1KB) — waarschijnlijk mislukt of leeg"
+            exit 1
+          fi
+
+      - name: Upload als artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ steps.meta.outputs.filename }}
+          path: studio/${{ steps.meta.outputs.filename }}
+          # 90 dagen is het maximum voor GitHub-artifacts — bij wekelijkse
+          # export dus altijd de laatste ~12 weken beschikbaar. Zie
+          # DEPLOY.md voor hoe je een back-up bewaart voorbij die 90 dagen.
+          retention-days: 90
+          if-no-files-found: error

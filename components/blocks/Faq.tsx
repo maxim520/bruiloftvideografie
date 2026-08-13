@@ -171,7 +171,7 @@ export default function Faq({ block, columns = 1, compact = false }: FaqProps) {
           <Reveal>
             <div className="mb-10">
               {eyebrow && (
-                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper">
+                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
                   {eyebrow}
                 </p>
               )}
@@ -209,7 +209,7 @@ export default function Faq({ block, columns = 1, compact = false }: FaqProps) {
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,34fr)_minmax(0,66fr)] lg:gap-16">
             <div>
               {eyebrow && (
-                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper">
+                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
                   {eyebrow}
                 </p>
               )}

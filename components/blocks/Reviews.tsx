@@ -49,7 +49,12 @@ export default function Reviews({ block }: ReviewsProps) {
                 className="flex w-[82%] flex-none snap-start gap-[18px] rounded-lg border border-border bg-white p-[26px] shadow-[0_1px_2px_rgba(36,27,23,0.04)] lg:w-auto"
               >
                 <div className="relative h-[70px] w-14 flex-none overflow-hidden rounded-[3px] bg-surface">
-                  <SafeImage image={review.avatar} sizes="56px" className="object-cover" />
+                  <SafeImage
+                    image={review.avatar}
+                    width={56}
+                    height={70}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
                 <div>
                   <Stars />

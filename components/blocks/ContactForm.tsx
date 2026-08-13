@@ -41,12 +41,35 @@ const contactFormSchema = z.object({
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
-type SubmitPayload = Omit<ContactFormValues, "website" | "renderedAt">;
 
-/** Hier komt later de echte verzending naartoe (API-route, CRM, e-maildienst). */
-async function submitContactForm(data: SubmitPayload): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-  console.log("Aanvraag:", data);
+const CONTACT_ENDPOINT = "/api/contact.php";
+
+class ContactSubmissionError extends Error {}
+
+/**
+ * Stuurt het complete formulier (dus ook website/renderedAt) naar
+ * public/api/contact.php. Dat endpoint doet zijn eigen, onafhankelijke
+ * honeypot- en timing-check — de client-side kortsluiting in onSubmit
+ * hieronder is alleen een snelle UX-optimalisatie, geen vervanging
+ * daarvan. Bij een netwerkfout of een non-200-status gooit dit een
+ * ContactSubmissionError; de aanroeper toont dan de generieke
+ * foutmelding in de status==="error"-tak.
+ */
+async function submitContactForm(data: ContactFormValues): Promise<void> {
+  let response: Response;
+  try {
+    response = await fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch {
+    throw new ContactSubmissionError("Netwerkfout bij het versturen van de aanvraag.");
+  }
+
+  if (!response.ok) {
+    throw new ContactSubmissionError(`Onverwachte serverstatus: ${response.status}`);
+  }
 }
 
 function ErrorMessage({ id, message }: { id: string; message?: string }) {
@@ -169,17 +192,7 @@ export default function ContactForm({ block }: ContactFormProps) {
 
     setStatus("submitting");
     try {
-      const payload: SubmitPayload = {
-        names: data.names,
-        email: data.email,
-        phone: data.phone,
-        weddingDate: data.weddingDate,
-        weddingLocation: data.weddingLocation,
-        service: data.service,
-        message: data.message,
-        privacy: data.privacy,
-      };
-      await submitContactForm(payload);
+      await submitContactForm(data);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -236,7 +249,7 @@ export default function ContactForm({ block }: ContactFormProps) {
           <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[minmax(0,7fr)_1px_minmax(0,4fr)] lg:gap-14">
             <div>
               {eyebrow && (
-                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper">
+                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
                   {eyebrow}
                 </p>
               )}
@@ -432,7 +445,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                   />
                   <label htmlFor={`${formId}-privacy`} className="text-base leading-[1.55] text-text">
                     Ik ga akkoord met de{" "}
-                    <a href="#" className="text-copper underline underline-offset-2">
+                    <a href="#" className="text-copper-text underline underline-offset-2">
                       privacyverklaring
                     </a>
                     . <span className="text-copper" aria-hidden="true">*</span>

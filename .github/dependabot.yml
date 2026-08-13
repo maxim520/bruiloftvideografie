@@ -1,0 +1,39 @@
+version: 2
+updates:
+  # Next.js-app (root). Los van studio/ hieronder: apart package.json +
+  # package-lock.json, dus een eigen update-stroom.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5
+
+  # Sanity Studio: eigen, onafhankelijk npm-project (zie studio/package.json).
+  - package-ecosystem: "npm"
+    directory: "/studio"
+    schedule:
+      interval: "weekly"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5
+
+  # .github/workflows/deploy.yml pint elke Action op een commit-SHA — dat
+  # betekent dat Dependabot ze niet stilzwijgend meebeweegt, maar wel (met
+  # een expliciete PR per update) een nieuwe SHA + de bijbehorende tag als
+  # commentaar voorstelt. Zonder deze entry zouden die SHA's alleen
+  # handmatig bijgewerkt worden.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5

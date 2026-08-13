@@ -21,7 +21,7 @@ export default function ReportageList({ block }: ReportageListProps) {
             <div className="mb-9 flex flex-col items-start gap-[22px] md:mb-12 md:flex-row md:items-end md:justify-between md:gap-8">
               <div>
                 {eyebrow && (
-                  <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper">
+                  <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
                     {eyebrow}
                   </p>
                 )}
@@ -58,7 +58,7 @@ export default function ReportageList({ block }: ReportageListProps) {
                     </h3>
                   )}
                   {reportage.location && (
-                    <div className="mb-[18px] text-[11px] font-semibold uppercase tracking-[.16em] text-copper">
+                    <div className="mb-[18px] text-[11px] font-semibold uppercase tracking-[.16em] text-copper-text">
                       {reportage.location}
                     </div>
                   )}

@@ -23,6 +23,7 @@ export default function FilmSection({ block }: FilmSectionProps) {
               eyebrow={eyebrow}
               heading={heading}
               cta={cta}
+              onDark
               className="[&_h2]:max-w-[14ch] [&_h2]:text-[clamp(2rem,3.2vw,2.75rem)] [&_h2]:text-white"
             />
 

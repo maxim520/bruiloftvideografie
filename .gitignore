@@ -32,6 +32,16 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env*.example
+
+# server-private/ is de lokale-testkopie van wat op de server NAAST
+# public_html/ hoort te staan (zie public/api/contact.php): het echte
+# configbestand (met de Resend-key) en de runtime-gegenereerde
+# rate-limit- en logbestanden horen nooit in git. Wel in git: het
+# .example-sjabloon en cleanup-rate-limits.php (broncode, geen geheim).
+server-private/*
+!server-private/*.example.php
+!server-private/cleanup-rate-limits.php
 
 # vercel
 .vercel

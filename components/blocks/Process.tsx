@@ -56,6 +56,7 @@ export default function Process({ block }: ProcessProps) {
             heading={heading}
             text={text}
             cta={cta}
+            onDark={isDark}
             className={`mb-9 lg:mb-14 [&_h2]:max-w-[14ch] [&_h2]:text-[clamp(1.875rem,3vw,2.625rem)] ${
               isDark ? "[&_h2]:text-white" : ""
             }`}
@@ -71,7 +72,7 @@ export default function Process({ block }: ProcessProps) {
                       sizes="(min-width: 1024px) 23vw, 68vw"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]"
                     />
-                    <span className="absolute -bottom-[18px] left-[14px] z-[2] flex h-9 w-9 items-center justify-center rounded-full border border-copper bg-surface text-[11px] font-semibold tracking-[.08em] text-copper">
+                    <span className="absolute -bottom-[18px] left-[14px] z-[2] flex h-9 w-9 items-center justify-center rounded-full border border-copper bg-surface text-[11px] font-semibold tracking-[.08em] text-copper-text">
                       {stepNumber(index)}
                     </span>
                   </div>
@@ -100,7 +101,7 @@ export default function Process({ block }: ProcessProps) {
                     <span className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/[0.28] text-[#d6a67e]">
                       {step.icon && <Icon name={step.icon} size={22} />}
                     </span>
-                    <div className="col-start-2 mt-1 text-[11px] tracking-[.2em] text-copper">
+                    <div className="col-start-2 mt-1 text-[11px] tracking-[.2em] text-copper-text-on-dark">
                       {stepNumber(index)}.
                     </div>
                     <div className="col-start-2">
@@ -121,7 +122,7 @@ export default function Process({ block }: ProcessProps) {
                       <span className="mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/[0.28] text-[#d6a67e]">
                         {step.icon && <Icon name={step.icon} size={22} />}
                       </span>
-                      <div className="mb-1.5 text-[11px] tracking-[.2em] text-copper">
+                      <div className="mb-1.5 text-[11px] tracking-[.2em] text-copper-text-on-dark">
                         {stepNumber(index)}.
                       </div>
                       <h3 className="mb-2 text-[21px] text-white">{step.title}</h3>
@@ -167,7 +168,7 @@ export default function Process({ block }: ProcessProps) {
                     <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brown text-[#e2c3a9]">
                       {step.icon && <Icon name={step.icon} size={22} />}
                     </span>
-                    <div className="col-start-2 mt-[5px] text-[11px] tracking-[.2em] text-copper">
+                    <div className="col-start-2 mt-[5px] text-[11px] tracking-[.2em] text-copper-text">
                       {stepNumber(index)}.
                     </div>
                     <div className="col-start-2">
@@ -192,7 +193,7 @@ export default function Process({ block }: ProcessProps) {
                     >
                       {step.icon && <Icon name={step.icon} size={22} />}
                     </span>
-                    <div className="mb-[5px] text-[11px] tracking-[.2em] text-copper">
+                    <div className="mb-[5px] text-[11px] tracking-[.2em] text-copper-text">
                       {stepNumber(index)}.
                     </div>
                     <h3 className="mb-2.5 text-[19px] text-text">{step.title}</h3>

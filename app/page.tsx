@@ -1,12 +1,25 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import SectionRenderer from "@/components/SectionRenderer";
-import { homePage } from "@/lib/mock-data";
+import { getPageBySlug } from "@/lib/sanity/queries";
+import { resolvePageMetadata } from "@/lib/sanity/metadata";
 
-export const metadata: Metadata = {
-  title: homePage.seo.title,
-  description: homePage.seo.description,
-};
+const SLUG = "/";
 
-export default function HomePage() {
-  return <SectionRenderer sections={homePage.sections} />;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageBySlug(SLUG);
+  if (!page) notFound();
+
+  return resolvePageMetadata(page, {
+    title: "North & Oak Photo & Film",
+    description:
+      "Tijdloze trouwfotografie en trouwfilms voor bruidsparen in heel Nederland en Europa.",
+  });
+}
+
+export default async function HomePage() {
+  const page = await getPageBySlug(SLUG);
+  if (!page) notFound();
+
+  return <SectionRenderer sections={page.sections} />;
 }

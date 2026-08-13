@@ -1,0 +1,217 @@
+name: Deploy
+
+# Twee triggers naar dezelfde pipeline: een code-wijziging op main, of een
+# repository_dispatch die Sanity's publish-webhook stuurt (zie DEPLOY.md).
+# Dat laatste is nodig omdat content uit Sanity build-time wordt opgehaald
+# (getSiteSettings() etc. in app/layout.tsx) — een publicatie in de Studio
+# verandert geen regel code, dus zonder deze trigger zou de site nooit
+# opnieuw builden na het publiceren van nieuwe content.
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [sanity-publish]
+
+# Eén productie-deploy tegelijk. cancel-in-progress blijft bewust false:
+# een lftp-upload die halverwege wordt afgebroken laat de server in een
+# inconsistente staat (oude + nieuwe bestanden door elkaar) achter — een
+# tweede publicatie die vlak na de eerste binnenkomt moet wachten tot de
+# eerste upload volledig klaar is, nooit hem onderbreken.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Node 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+
+      # Nooit npm install: dat mag package-lock.json stilzwijgend bijwerken
+      # (andere versies dan lokaal getest) en faalt niet op een lockfile
+      # dat niet meer bij package.json past — npm ci doet beide wel.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # NEXT_PUBLIC_-variabelen: publiek, geen geheim (zie
+      # .env.local.example), maar wel verplicht — lib/sanity/client.ts
+      # gooit een harde fout als ze ontbreken, dus zonder deze twee
+      # repository-variabelen faalt de build meteen.
+      - name: Build (static export)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+
+      # Harde stop vóór het uploaden van een artifact: als output: "export"
+      # om wat voor reden dan ook een onvolledige out/ achterlaat (zonder
+      # dat next build zelf een non-zero exit geeft), moet dat hier al
+      # opvallen — niet pas nadat het naar productie is gestuurd.
+      - name: Verify export output
+        run: |
+          test -f out/index.html
+          test -f out/api/contact.php
+          test -f out/.htaccess
+
+      - name: Upload build output
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: site-out
+          path: out/
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy naar TransIP
+    # `needs: build` is de harde garantie uit eis 3: deze job start pas
+    # ná een groene build-job, en GitHub Actions slaat 'm automatisch over
+    # zodra build faalt (lint of build) — er is geen enkel pad waarop een
+    # halve/kapotte site geüpload wordt.
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Download build output
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: site-out
+          path: out
+
+      - name: Install lftp
+        run: sudo apt-get update -y && sudo apt-get install -y lftp
+
+      # Alleen relevant als DEPLOY_PROTOCOL=sftp: lftp moet de host-key van
+      # de server kunnen verifiëren, anders is het geen veilige verbinding.
+      # DEPLOY_SFTP_HOST_KEY is de output van
+      # `ssh-keyscan -t ed25519,rsa <host>` — zie DEPLOY.md.
+      - name: SSH host key registreren (alleen sftp)
+        if: vars.DEPLOY_PROTOCOL == 'sftp'
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SFTP_HOST_KEY }}" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      # Eén lftp-sessie, drie mirror-commando's ín die volgorde — dat is
+      # precies wat eis 6 vraagt en waarom dit geen losse `mirror --delete`
+      # in één keer is:
+      #
+      #   1. Alles behalve *.html uploaden (nieuwe JS/CSS/media/PHP/
+      #      .htaccess bestanden komen erbij; nog niets wordt verwijderd).
+      #      Op dit moment verwijst geen enkele live pagina al naar deze
+      #      nieuwe assets, dus niets kan tijdelijk breken.
+      #   2. Pas dan de *.html-bestanden uploaden. Vanaf dit moment
+      #      verwijzen live pagina's naar de nieuwe assets — die staan er
+      #      al sinds stap 1, dus geen enkel moment waarop HTML naar een
+      #      nog-niet-bestaand bestand kan wijzen.
+      #   3. Opruimen: alles op de server verwijderen dat niet meer in
+      #      out/ zit (oude, hernoemde build-chunks e.d.). Nu pas veilig,
+      #      want alle live HTML wijst inmiddels naar de nieuwe bestanden.
+      #
+      # `.well-known/` expliciet uitgesloten van de opruimstap: dat pad
+      # hoort nooit bij de Next-build maar kan door de hostingprovider
+      # gebruikt worden voor domeinvalidatie (bv. een TLS-certificaat).
+      # Lighthouse/next build weet daar niets van, dus als er ooit iets in
+      # terechtkomt mag stap 3 dat nooit als "hoort hier niet, weg ermee"
+      # behandelen. (server-private/ hoeft geen eigen uitzondering: dat
+      # staat naast public_html/, dus deze mirror — die alleen binnen
+      # DEPLOY_REMOTE_DIR opereert — komt daar sowieso nooit bij.)
+      #
+      # Wachtwoord gaat via een heredoc naar lftp's stdin, nooit als
+      # command-line-argument (zou anders in `ps` zichtbaar zijn). Geen
+      # `set -x`/lftp `--verbose`-dump van de open-regel zelf, dus het
+      # wachtwoord komt nergens in de logs — en zou daar door GitHub's
+      # automatische secret-masking sowieso als *** verschijnen, mocht het
+      # toch ooit ergens in output terechtkomen.
+      - name: Deploy (assets → html → opruimen)
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL || 'ftps' }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+          DEPLOY_REMOTE_DIR: ${{ vars.DEPLOY_REMOTE_DIR || '.' }}
+        run: |
+          set -euo pipefail
+
+          PORT_ARG=""
+          if [ -n "${DEPLOY_PORT}" ]; then
+            PORT_ARG="-p ${DEPLOY_PORT}"
+          fi
+
+          # Let op: lftp's eigen "ftps://"-schema betekent *implicit* FTPS
+          # op poort 990 (zie FTPS_DEFAULT_PORT in lftp's ftpclass.cc) — dat
+          # is niet wat gedeelde hosting zoals TransIP normaal aanbiedt.
+          # "FTPS" betekent hier, zoals vrijwel overal bij shared hosting,
+          # *explicit* FTPS: een gewone ftp://-verbinding op poort 21 die
+          # via AUTH TLS naar TLS opwaardeert — vandaar dat de open-URL
+          # hieronder bij ftps altijd het ftp://-schema gebruikt, en de TLS
+          # afdwinging apart via ftp:ssl-force gebeurt.
+          OPEN_SCHEME="sftp"
+          PROTOCOL_SETTINGS=""
+          if [ "${DEPLOY_PROTOCOL}" = "ftps" ]; then
+            OPEN_SCHEME="ftp"
+            PROTOCOL_SETTINGS='set ftp:ssl-force yes; set ftp:ssl-protect-data yes;'
+          elif [ "${DEPLOY_PROTOCOL}" != "sftp" ]; then
+            echo "::error::Onbekende DEPLOY_PROTOCOL '${DEPLOY_PROTOCOL}' (verwacht 'ftps' of 'sftp')" >&2
+            exit 1
+          fi
+
+          lftp <<LFTP_SCRIPT
+          set cmd:fail-exit yes
+          set net:max-retries 2
+          set net:timeout 20
+          set ssl:verify-certificate yes
+          ${PROTOCOL_SETTINGS}
+          open ${PORT_ARG} -u "${DEPLOY_USERNAME}","${DEPLOY_PASSWORD}" ${OPEN_SCHEME}://${DEPLOY_HOST}
+          cd "${DEPLOY_REMOTE_DIR}"
+          lcd out
+
+          mirror --reverse --verbose --exclude-glob=*.html .
+          mirror --reverse --verbose --include-glob=*.html --exclude-glob=* .
+          mirror --reverse --verbose --delete --exclude-glob=.well-known .
+
+          bye
+          LFTP_SCRIPT
+
+      # Eis 9: de daadwerkelijke, live homepage opvragen na deploy — geen
+      # aanname dat de upload gelukt is omdat lftp geen fout gaf, maar een
+      # echte externe verificatie. Drie pogingen met korte pauze: de eerste
+      # request vlak na een FTP-upload kan in zeldzame gevallen een stale
+      # cache van Apache zelf raken (bv. mod_deflate/opcache-gerelateerd),
+      # geen poging om trage DNS/propagatie op te vangen (dat zou dagen
+      # kunnen duren, niet seconden, en is geen scenario waar retries iets
+      # aan doen).
+      - name: Smoke test homepage
+        run: |
+          set -euo pipefail
+          url="https://northoak.nl/"
+          attempt=1
+          status="000"
+          while [ "$attempt" -le 3 ]; do
+            status=$(curl -s -o /dev/null -w '%{http_code}' "$url" || echo "000")
+            echo "Poging $attempt: $url -> $status"
+            if [ "$status" = "200" ]; then
+              break
+            fi
+            attempt=$((attempt + 1))
+            sleep 5
+          done
+          if [ "$status" != "200" ]; then
+            echo "::error::Homepage gaf $status i.p.v. 200 na deploy (na 3 pogingen)"
+            exit 1
+          fi

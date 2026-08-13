@@ -9,12 +9,29 @@
   --brown-medium: #765541;
   --copper: #a66e4a;
   --copper-hover: #8f5c3d;
+  /* Alleen voor copper als tekstkleur (labels, links) op een lichte
+     achtergrond: --copper zelf haalt daar 3.9:1, onder de 4.5:1-eis voor
+     normale tekst (WCAG 1.4.3) — wel ruim genoeg voor iconen/randen/
+     achtergronden, die aan de lagere 3:1-eis voor niet-tekst voldoen. */
+  --copper-text: #85583b;
+  /* Zelfde rol, maar op een donkere sectie (Process' home-variant,
+     FilmSection) — exact de kleur die _reference/home.html al gebruikt
+     via .on-dark .eyebrow, hier voor het eerst ook echt toegepast. */
+  --copper-text-on-dark: #c08f68;
+  /* Idem voor de tekst-link-knop (SectionHeading/ReportageList/InstagramStrip-
+     cta's) op een donkere sectie — exact .on-dark .text-link / :hover uit
+     de referentie, een net iets ander getal dan de eyebrow-kleur hierboven. */
+  --copper-link-on-dark: #d6a67e;
+  --copper-link-hover-on-dark: #eec6a4;
   --text: #28231f;
   --text-muted: #71675f;
   --border: #d8cfc6;
   --white: #ffffff;
 
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  /* Cursieve 400-instantie (Quote.tsx, StoryIntro.tsx's handtekening) —
+     zie app/layout.tsx voor waarom dit een losse next/font-oproep is. */
+  --font-display-quote: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
   --container: 1280px;
@@ -30,11 +47,16 @@
   --color-brown-medium: var(--brown-medium);
   --color-copper: var(--copper);
   --color-copper-hover: var(--copper-hover);
+  --color-copper-text: var(--copper-text);
+  --color-copper-text-on-dark: var(--copper-text-on-dark);
+  --color-copper-link-on-dark: var(--copper-link-on-dark);
+  --color-copper-link-hover-on-dark: var(--copper-link-hover-on-dark);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-border: var(--border);
 
   --font-display: var(--font-display);
+  --font-display-quote: var(--font-display-quote);
   --font-body: var(--font-body);
 }
 

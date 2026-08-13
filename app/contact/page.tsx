@@ -1,29 +1,45 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import SectionRenderer from "@/components/SectionRenderer";
-import { contactPage } from "@/lib/mock-data";
-import type { SanityImage } from "@/types/blocks";
+import Breadcrumb from "@/components/layout/Breadcrumb";
+import JsonLd from "@/components/JsonLd";
+import { getPageBySlug } from "@/lib/sanity/queries";
+import { resolvePageMetadata } from "@/lib/sanity/metadata";
+import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 
-function resolveImageSrc(image: SanityImage): string {
-  return "url" in image ? image.url : "";
+const SLUG = "/contact";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageBySlug(SLUG);
+  if (!page) notFound();
+
+  return resolvePageMetadata(page, {
+    title: "Contact & beschikbaarheid | North & Oak Photo & Film",
+    description:
+      "Controleer jullie trouwdatum en vraag vrijblijvend informatie aan over trouwfotografie en trouwfilm van North & Oak Photo & Film.",
+  });
 }
 
-const { ogImage } = contactPage.seo;
+export default async function ContactPage() {
+  const page = await getPageBySlug(SLUG);
+  if (!page) notFound();
 
-export const metadata: Metadata = {
-  title: contactPage.seo.title,
-  description: contactPage.seo.description,
-  ...(ogImage && {
-    openGraph: {
-      images: [{ url: resolveImageSrc(ogImage), alt: ogImage.alt }],
-    },
-  }),
-};
+  const [hero, ...rest] = page.sections;
 
-export default function ContactPage() {
   return (
-    <SectionRenderer
-      sections={contactPage.sections}
-      overrides={{ faq: { columns: 2, compact: true } }}
-    />
+    <>
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: page.title, path: SLUG },
+        ])}
+      />
+      {hero && <SectionRenderer sections={[hero]} />}
+      <Breadcrumb currentLabel={page.title} />
+      <SectionRenderer
+        sections={rest}
+        overrides={{ faq: { columns: 2, compact: true } }}
+      />
+    </>
   );
 }

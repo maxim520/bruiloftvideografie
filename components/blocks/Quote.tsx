@@ -21,7 +21,7 @@ export default function Quote({ block }: QuoteProps) {
                 <path d="M0 26V13.4C0 6.4 4.3 1.2 12 0l1.3 3.7C9 5 6.7 7.6 6.6 11.4H12V26zm20 0V13.4C20 6.4 24.3 1.2 32 0l1.3 3.7c-4.3 1.3-6.6 3.9-6.7 7.7H32V26z" />
               </svg>
             </span>
-            <p className="mx-auto max-w-[16ch] font-display text-[clamp(1.625rem,3.2vw,2.625rem)] font-normal italic leading-[1.32] md:max-w-[20ch]">
+            <p className="mx-auto max-w-[16ch] font-display-quote text-[clamp(1.625rem,3.2vw,2.625rem)] font-normal italic leading-[1.32] md:max-w-[20ch]">
               {quote}
             </p>
             {attribution && (

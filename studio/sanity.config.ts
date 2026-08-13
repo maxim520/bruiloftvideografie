@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'North & Oak Photo & Film',
 
-  projectId: 'ic4bxfaa',
+  projectId: '5o909qb6',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],

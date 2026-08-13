@@ -1,0 +1,161 @@
+# North & Oak — productie-.htaccess voor de statische export (out/) op
+# Apache/TransIP-hosting.
+#
+# Interactie met trailingSlash: true en de mapstructuur van de export:
+# next.config.ts heeft trailingSlash: true, dus `next build` levert geen
+# platte bestanden als over-mij.html op, maar een echte map per route met
+# een index.html erin (over-mij/index.html, fotografie/index.html, ...).
+# Een aanvraag voor /over-mij/ wordt door Apache's ingebouwde
+# DirectoryIndex-mechanisme vanzelf naar over-mij/index.html vertaald,
+# zónder rewrite-regels — dat is precies waarom trailingSlash hier aan
+# staat. Bijkomend gevolg: <FilesMatch> hieronder matcht op het
+# uiteindelijk geserveerde bestand (dus index.html), niet op het
+# opgevraagde pad — een regel voor \.html$ raakt dus ook /, /over-mij/,
+# /fotografie/ en /contact/. Voor de caching-regel op _next/static/
+# hieronder is dat niet genoeg (die map bestaat pas na de build en
+# <FilesMatch> matcht alleen op bestandsnaam, niet op pad), dus die
+# gebruikt SetEnvIf op het opgevraagde pad in plaats van FilesMatch.
+
+# ---------------------------------------------------------------------
+# HTTPS forceren (301) + alleen public/api/contact.php mag PHP uitvoeren
+# ---------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Aanname: Apache termineert TLS hier zelf (het gebruikelijke beeld bij
+    # traditionele shared hosting zoals TransIP), dus %{HTTPS} klopt.
+    # Loopt het verkeer via een proxy die TLS eerder termineert, dan is
+    # %{HTTPS} altijd "off" en moet dit i.p.v. %{HTTP:X-Forwarded-Proto}
+    # !https checken — controleer dit bij twijfel met een test-aanvraag.
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Elk verzoek naar een .php-bestand weigeren, behalve naar het ene
+    # bedoelde eindpunt. Dit blokkeert op HTTP-niveau (403), onafhankelijk
+    # van hóe PHP op deze host precies aan Apache gekoppeld is (mod_php,
+    # PHP-FPM, CGI) — dat mechanisme ligt niet vast en dit werkt hoe dan
+    # ook, in tegenstelling tot proberen de PHP-handler zelf per map
+    # aan/uit te zetten.
+    RewriteCond %{REQUEST_URI} \.php$
+    RewriteCond %{REQUEST_URI} !^/api/contact\.php$
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ---------------------------------------------------------------------
+# Directory listing uit
+# ---------------------------------------------------------------------
+Options -Indexes
+
+# ---------------------------------------------------------------------
+# Dotfiles (.env, .htaccess zelf, .git*, ...) en bron-/configbestanden
+# blokkeren
+# ---------------------------------------------------------------------
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(md|json|lock|ya?ml)$">
+    Require all denied
+</FilesMatch>
+
+# ---------------------------------------------------------------------
+# Beveiligingsheaders
+# ---------------------------------------------------------------------
+<IfModule mod_headers.c>
+    # HSTS: bewust een korte max-age (5 minuten) om mee te beginnen. Pas
+    # na een probleemloze periode ophogen — bijv. eerst naar 86400 (1
+    # dag), dan 604800 (1 week), pas daarna richting 31536000 (1 jaar).
+    # includeSubDomains/preload bewust nog niet: dat is onomkeerbaar
+    # lastig terug te draaien als een subdomein nog geen HTTPS heeft.
+    Header always set Strict-Transport-Security "max-age=300"
+
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+    # Content-Security-Policy — eerst Report-Only, zie de toelichting in
+    # het gesprek voor hoe je dit test voordat je hem afdwingt.
+    #
+    # 'unsafe-inline' in script-src én style-src is hier geen achteloze
+    # verzwakking maar een technische noodzaak van deze specifieke opzet:
+    # Next.js App Router injecteert per pagina inline <script>-tags met
+    # hydratatiedata (self.__next_f.push(...)), en een aantal componenten
+    # (Hero, FinalCta) zetten bewust inline style="" voor per-pagina
+    # gradients, plus next/image's eigen inline positionering. Een
+    # statische export heeft geen server om per request een nonce te
+    # genereren, dus is nonce-gebaseerde CSP hier geen optie, en de
+    # hydratatie-payload verschilt per build/pagina, dus is een vaste
+    # sha256-allowlist ook niet haalbaar. De rest van de policy blijft
+    # wel strikt: geen enkel extern script/stylesheet-domein, alleen
+    # eigen domein + cdn.sanity.io voor afbeeldingen, en connect-src
+    # 'self' blokkeert alsnog exfiltratie naar een ander domein.
+    Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://cdn.sanity.io; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+
+    # Pas wanneer de Report-Only-versie hierboven een tijd lang geen
+    # onverwachte meldingen meer geeft: de regel hieronder ontkommentariëren
+    # (en de Report-Only-regel erboven verwijderen of laten staan, dat mag
+    # allebei tegelijk actief zijn).
+    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://cdn.sanity.io; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+</IfModule>
+
+# ---------------------------------------------------------------------
+# Caching
+# ---------------------------------------------------------------------
+
+# HTML: nooit cachen zonder herverificatie. Essentieel zodra content uit
+# Sanity komt — zonder dit ziet een redacteur na publiceren mogelijk nog
+# een oude, gecachete versie van haar eigen pagina en gaat twijfelen of
+# het systeem wel werkt. FilesMatch werkt hier goed dankzij trailingSlash
+# (zie de toelichting bovenaan): elke route wordt intern als index.html
+# geserveerd, dus deze regel raakt ook /, /over-mij/, /fotografie/ en
+# /contact/, niet alleen letterlijke .html-URL's.
+<IfModule mod_headers.c>
+    <FilesMatch "\.html$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Gehashte build-assets: een jaar immutable. FilesMatch is hier niet
+# genoeg (matcht op bestandsnaam, niet pad, en de hash zelf zegt niets
+# over "hoort dit bij _next/static"), dus dit matcht op het opgevraagde
+# pad via SetEnvIf.
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+        SetEnvIf Request_URI "^/_next/static/" IS_HASHED_ASSET
+        Header set Cache-Control "public, max-age=31536000, immutable" env=IS_HASHED_ASSET
+    </IfModule>
+</IfModule>
+
+# Tekstformaten comprimeren: gzip via mod_deflate (vrijwel overal
+# beschikbaar) als basis, brotli als bonus waar de host het aanbiedt —
+# controleer bij TransIP of mod_brotli daadwerkelijk actief is, anders
+# doet dat blok simpelweg niets (veilig dankzij de IfModule-check).
+#
+# AddOutputFilterByType wordt geleverd door mod_filter, niet door
+# mod_deflate/mod_brotli zelf (die leveren alleen het genoemde filter,
+# "DEFLATE"/"BROTLI_COMPRESS") — vandaar de geneste IfModule-check op
+# allebei. Zonder de mod_filter-laag geeft Apache "Invalid command
+# AddOutputFilterByType" en breekt de hele .htaccess (leidt tot een 500
+# op elke pagina) i.p.v. de regel simpelweg over te slaan — dat heb ik
+# hier lokaal ook zo zien gebeuren voor ik dit toevoegde.
+<IfModule mod_filter.c>
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+    </IfModule>
+    <IfModule mod_brotli.c>
+        AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json image/svg+xml
+    </IfModule>
+</IfModule>
+
+# ---------------------------------------------------------------------
+# Overig
+# ---------------------------------------------------------------------
+
+# De door Next gegenereerde 404-pagina. next build met output: "export"
+# levert zowel 404.html (plat bestand in de root) als 404/index.html op;
+# ErrorDocument verwijst naar het platte bestand omdat dat zonder
+# afhankelijkheid van DirectoryIndex-afhandeling direct serveerbaar is.
+ErrorDocument 404 /404.html
+
+ServerSignature Off

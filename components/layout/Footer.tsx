@@ -73,9 +73,9 @@ export default function Footer({ settings }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
               Navigatie
-            </h4>
+            </h3>
             <ul className="flex flex-col gap-[11px]">
               {footer.navLinks.map((link) => (
                 <li key={link.href}>
@@ -91,9 +91,9 @@ export default function Footer({ settings }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
               Populaire pagina&apos;s
-            </h4>
+            </h3>
             <ul className="flex flex-col gap-[11px]">
               {footer.popularPages.map((link) => (
                 <li key={link.label}>
@@ -109,9 +109,9 @@ export default function Footer({ settings }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
               Contact
-            </h4>
+            </h3>
             <address className="mb-[22px] text-sm leading-[2] not-italic">
               <a
                 href={`tel:${business.phone.replace(/\s+/g, "")}`}

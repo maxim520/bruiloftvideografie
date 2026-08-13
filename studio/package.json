@@ -9,7 +9,9 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "dev": "sanity dev",
-    "start": "sanity start"
+    "start": "sanity start",
+    "seed": "tsx scripts/seed.ts",
+    "lint": "eslint ."
   },
   "keywords": [
     "sanity"
@@ -22,10 +24,14 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
+    "@sanity/client": "^7.26.2",
     "@sanity/eslint-config-studio": "^6.0.0",
+    "@types/node": "^22.0.0",
     "@types/react": "^19.2.14",
+    "dotenv": "^17.4.2",
     "eslint": "^9.28",
     "prettier": "^3.5",
+    "tsx": "^4.23.12",
     "typescript": "^5.8"
   },
   "prettier": {
