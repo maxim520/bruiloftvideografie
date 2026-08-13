@@ -14,9 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!page) notFound();
 
   return resolvePageMetadata(page, {
-    title: "Contact & beschikbaarheid | North & Oak Photo & Film",
+    title: "Contact & beschikbaarheid | Behind Every Wedding",
     description:
-      "Controleer jullie trouwdatum en vraag vrijblijvend informatie aan over trouwfotografie en trouwfilm van North & Oak Photo & Film.",
+      "Controleer jullie trouwdatum en vraag vrijblijvend informatie aan over trouwfotografie en trouwfilm van Behind Every Wedding.",
   });
 }
 

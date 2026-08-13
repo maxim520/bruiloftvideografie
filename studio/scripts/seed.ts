@@ -191,7 +191,7 @@ async function main(): Promise<void> {
     useCdn: false,
   })
 
-  log('North & Oak — Sanity seed')
+  log('Behind Every Wedding — Sanity seed')
   log(`Project: ${PROJECT_ID} · Dataset: ${DATASET}`)
 
   await seedSiteSettings(client, siteSettingsMock)

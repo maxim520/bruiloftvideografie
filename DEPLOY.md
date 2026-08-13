@@ -160,14 +160,14 @@ Actions of de workflow daadwerkelijk gestart is.
   TransIP-webhosting biedt doorgaans FTP en FTPS; SFTP (over SSH) is meestal
   alleen beschikbaar op VPS-achtige pakketten met SSH-toegang. Zet
   `DEPLOY_PROTOCOL` (stap 1) overeenkomstig — nooit op plain `ftp`.
-- **DNS**: `northoak.nl` (zie `lib/site.ts`) moet naar deze hosting wijzen.
+- **DNS**: `behindeverywedding.nl` (zie `lib/site.ts`) moet naar deze hosting wijzen.
   Als het domein al bij TransIP geregistreerd staat en de hosting er ook
   draait, regelt TransIP dit meestal automatisch bij het koppelen van domein
   aan hostingpakket in het controlepaneel; staat het domein elders
   geregistreerd, zet dan een A-record (en AAAA indien TransIP IPv6 aanbiedt)
   naar het IP-adres van je hostingpakket, te vinden in het controlepaneel.
 - **TLS/HTTPS**: activeer een (gratis Let's Encrypt-)certificaat voor
-  `northoak.nl` in het TransIP-controlepaneel, vóór de eerste deploy —
+  `behindeverywedding.nl` in het TransIP-controlepaneel, vóór de eerste deploy —
   `public/.htaccess` forceert een 301-redirect naar HTTPS op elk verzoek
   (`RewriteCond %{HTTPS} off`), dus zonder werkend certificaat is de site na
   deploy niet bereikbaar.
@@ -260,7 +260,7 @@ monitors, controle-interval 5 minuten):
 | | Homepage | Contactformulier |
 |---|---|---|
 | Monitor type | HTTP(s) | HTTP(s) |
-| URL | `https://northoak.nl/` | `https://northoak.nl/api/contact.php` |
+| URL | `https://behindeverywedding.nl/` | `https://behindeverywedding.nl/api/contact.php` |
 | Interval | 5 minuten | 5 minuten |
 | Verwachte statuscode | 200 | **405** |
 | Methode | GET (standaard) | GET (standaard) |

@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   // _reference/contact.html — nodig zodat relatieve og:image-paden en
   // canonical-URL's tot absolute URL's herleid kunnen worden.
   metadataBase: new URL(SITE_URL),
-  title: "North & Oak Photo & Film",
+  title: "Behind Every Wedding",
   description:
     "Tijdloze trouwfotografie en trouwfilms voor bruidsparen in heel Nederland en Europa.",
 };

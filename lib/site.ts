@@ -4,4 +4,4 @@
  * blijven aan de Origin-whitelist in public/api/contact.php (andere taal,
  * dus daar noodgedwongen een eigen kopie).
  */
-export const SITE_URL = "https://northoak.nl";
+export const SITE_URL = "https://behindeverywedding.nl";

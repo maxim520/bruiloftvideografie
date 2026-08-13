@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!page) notFound();
 
   return resolvePageMetadata(page, {
-    title: "Trouwfotografie | North & Oak Photo & Film",
+    title: "Trouwfotografie | Behind Every Wedding",
     description:
       "Tijdloze trouwfotografie voor bruidsparen in Nederland en Europa. Echte momenten, natuurlijke kleuren en een complete reportage van jullie trouwdag.",
   });

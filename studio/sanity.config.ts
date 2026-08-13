@@ -5,7 +5,7 @@ import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
   name: 'default',
-  title: 'North & Oak Photo & Film',
+  title: 'Behind Every Wedding',
 
   projectId: '5o909qb6',
   dataset: 'production',

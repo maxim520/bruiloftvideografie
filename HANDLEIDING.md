@@ -1,6 +1,6 @@
 # Handleiding voor de redacteur
 
-Deze handleiding legt uit hoe je de website van North & Oak bijwerkt. Je
+Deze handleiding legt uit hoe je de website van Behind Every Wedding bijwerkt. Je
 hebt hiervoor geen technische kennis nodig. Alles gebeurt in één scherm: de
 Studio.
 

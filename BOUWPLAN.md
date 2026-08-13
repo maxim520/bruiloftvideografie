@@ -1,8 +1,8 @@
-# North & Oak — Bouwplan
+# Behind Every Wedding — Bouwplan
 
 ## Wat we bouwen
 
-Een trouwfotografie-website voor North & Oak Photo & Film. Next.js (App
+Een trouwfotografie-website voor Behind Every Wedding. Next.js (App
 Router, TypeScript, Tailwind), statisch geëxporteerd en gehost op TransIP.
 Content komt straks uit Sanity CMS; tot die fase toe draait de site op
 tijdelijke, hardgecodeerde content zodat layout en componenten eerst kunnen

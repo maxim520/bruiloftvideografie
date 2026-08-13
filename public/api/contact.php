@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Contactformulier-endpoint voor North & Oak.
+ * Contactformulier-endpoint voor Behind Every Wedding.
  *
  * Dit is het enige uitvoerbare bestand op de server: de rest van de site
  * is een statische export (next build, output: "export") die via FTPS
@@ -64,8 +64,8 @@ final class RateLimitExceededException extends RuntimeException
  * ongeacht wat de rest van de aanvraag verder bevat.
  */
 const ALLOWED_ORIGINS = [
-    'https://northoak.nl',
-    'https://www.northoak.nl',
+    'https://behindeverywedding.nl',
+    'https://www.behindeverywedding.nl',
 ];
 
 /** Vereiste 4: maximale totale body-grootte, geweigerd vóór enige verwerking. */
@@ -439,7 +439,7 @@ function build_email_html(array $p): string
         'Gewenste dienst' => $p['service'],
     ];
 
-    $html = '<h2>Nieuwe aanvraag via northoak.nl</h2><table cellpadding="6">';
+    $html = '<h2>Nieuwe aanvraag via behindeverywedding.nl</h2><table cellpadding="6">';
     foreach ($rows as $label => $value) {
         $html .= '<tr><td><strong>' . $esc($label) . '</strong></td><td>' . $esc($value) . '</td></tr>';
     }
@@ -486,7 +486,7 @@ function send_via_resend(array $fields): void
         // hierboven. Bewust geen naam ervoor (dat zou weer
         // gebruikersinvoer in een header zijn) — alleen het kale adres.
         'reply_to' => sanitize_header_value($fields['email']),
-        'subject' => 'Nieuwe aanvraag via northoak.nl',
+        'subject' => 'Nieuwe aanvraag via behindeverywedding.nl',
         'html' => build_email_html($fields),
     ];
 

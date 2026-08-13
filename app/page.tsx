@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!page) notFound();
 
   return resolvePageMetadata(page, {
-    title: "North & Oak Photo & Film",
+    title: "Behind Every Wedding",
     description:
       "Tijdloze trouwfotografie en trouwfilms voor bruidsparen in heel Nederland en Europa.",
   });

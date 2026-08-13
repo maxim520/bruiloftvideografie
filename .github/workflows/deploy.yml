@@ -199,7 +199,7 @@ jobs:
       - name: Smoke test homepage
         run: |
           set -euo pipefail
-          url="https://northoak.nl/"
+          url="https://behindeverywedding.nl/"
           attempt=1
           status="000"
           while [ "$attempt" -le 3 ]; do

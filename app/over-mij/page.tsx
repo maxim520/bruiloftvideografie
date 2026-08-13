@@ -11,9 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!page) notFound();
 
   return resolvePageMetadata(page, {
-    title: "Over mij | North & Oak Photo & Film",
+    title: "Over mij | Behind Every Wedding",
     description:
-      "Maak kennis met de fotograaf achter North & Oak. Persoonlijke trouwfotografie en trouwfilms met een rustige, tijdloze stijl.",
+      "Maak kennis met de fotograaf achter Behind Every Wedding. Persoonlijke trouwfotografie en trouwfilms met een rustige, tijdloze stijl.",
   });
 }
 

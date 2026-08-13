@@ -56,7 +56,7 @@ export function resolvePageMetadata(page: Page, fallback: MetadataFallback): Met
       title,
       description,
       url,
-      siteName: "North & Oak Photo & Film",
+      siteName: "Behind Every Wedding",
       locale: "nl_NL",
       type: "website",
       ...(images && { images }),

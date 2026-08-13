@@ -1,5 +1,5 @@
 /**
- * Blokgebaseerd paginamodel voor North & Oak.
+ * Blokgebaseerd paginamodel voor Behind Every Wedding.
  *
  * Elk bloktype bevat uitsluitend content die een redacteur mag wijzigen:
  * teksten, afbeeldingen, knoplabels met link, en lijsten daarvan. Kleur,

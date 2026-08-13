@@ -27,7 +27,7 @@ export const homePage: Page = {
   title: "Home",
   slug: { _type: "slug", current: "/" },
   seo: {
-    title: "Trouwfotograaf & videograaf | North & Oak Photo & Film",
+    title: "Trouwfotograaf & videograaf | Behind Every Wedding",
     description:
       "Tijdloze trouwfotografie en trouwfilms voor bruidsparen in heel Nederland en Europa.",
   },
@@ -209,7 +209,7 @@ export const homePage: Page = {
     {
       _type: "instagramStrip",
       eyebrow: "Volg ons op Instagram",
-      heading: "@northandoak",
+      heading: "@behindeverywedding",
       cta: cta("Volg ons", "#"),
       images: [
         img("/images/insta-1.jpg", "Trouwringen op een linnen doek"),
@@ -240,9 +240,9 @@ export const overMijPage: Page = {
   title: "Over mij",
   slug: { _type: "slug", current: "/over-mij" },
   seo: {
-    title: "Over mij | North & Oak Photo & Film",
+    title: "Over mij | Behind Every Wedding",
     description:
-      "Maak kennis met de fotograaf achter North & Oak. Persoonlijke trouwfotografie en trouwfilms met een rustige, tijdloze stijl.",
+      "Maak kennis met de fotograaf achter Behind Every Wedding. Persoonlijke trouwfotografie en trouwfilms met een rustige, tijdloze stijl.",
   },
   sections: [
     {
@@ -263,7 +263,7 @@ export const overMijPage: Page = {
     {
       _type: "storyIntro",
       eyebrow: "Wie ik ben",
-      heading: "De fotograaf achter North & Oak.",
+      heading: "De fotograaf achter Behind Every Wedding.",
       paragraphs: [
         "Hoi, ik ben Jeroen. Bruiloften vastleggen is voor mij veel meer dan mooie beelden maken. Het is het vertrouwen krijgen om dichtbij te mogen zijn op een van de belangrijkste dagen van jullie leven.",
         "Wat een bruiloft bijzonder maakt zijn de momenten die niemand plant. De blik van jullie vader tijdens de ceremonie, de lach die te vroeg komt, de stilte net voor de deuren opengaan. Daar ben ik voor.",
@@ -353,7 +353,7 @@ export const overMijPage: Page = {
       _type: "quote",
       quote:
         "Ik wil niet alleen laten zien hoe jullie trouwdag eruitzag. Ik wil dat jullie opnieuw voelen hoe hij was.",
-      attribution: "Jeroen · North & Oak",
+      attribution: "Jeroen · Behind Every Wedding",
     },
     {
       _type: "reviews",
@@ -439,7 +439,7 @@ export const fotografiePage: Page = {
   title: "Fotografie",
   slug: { _type: "slug", current: "/fotografie" },
   seo: {
-    title: "Trouwfotografie | North & Oak Photo & Film",
+    title: "Trouwfotografie | Behind Every Wedding",
     description:
       "Tijdloze trouwfotografie voor bruidsparen in Nederland en Europa. Echte momenten, natuurlijke kleuren en een complete reportage van jullie trouwdag.",
   },
@@ -655,9 +655,9 @@ export const contactPage: Page = {
   title: "Contact",
   slug: { _type: "slug", current: "/contact" },
   seo: {
-    title: "Contact & beschikbaarheid | North & Oak Photo & Film",
+    title: "Contact & beschikbaarheid | Behind Every Wedding",
     description:
-      "Controleer jullie trouwdatum en vraag vrijblijvend informatie aan over trouwfotografie en trouwfilm van North & Oak Photo & Film.",
+      "Controleer jullie trouwdatum en vraag vrijblijvend informatie aan over trouwfotografie en trouwfilm van Behind Every Wedding.",
     ogImage: img(
       "/images/contact-hero.jpg",
       "Trouwfotograaf fotografeert tijdens golden hour"
@@ -792,7 +792,7 @@ export const contactPage: Page = {
    ========================================================================== */
 
 export const siteSettings: SiteSettings = {
-  logoName: "North & Oak",
+  logoName: "Behind Every Wedding",
   logoSubline: "Photo & Film",
   mainNav: [
     { label: "Home", href: "/" },

@@ -29,8 +29,8 @@ return [
 
     // Vast, eigen domein-adres waar aanvragen vandaan lijken te komen.
     // Moet een op Resend geverifieerd verzenddomein zijn.
-    'from_email' => 'North & Oak Photo & Film <aanvragen@northoak.nl>',
+    'from_email' => 'Behind Every Wedding <aanvragen@behindeverywedding.nl>',
 
     // Waar de aanvraag naartoe gestuurd wordt — de eigen inbox.
-    'to_email' => 'info@northoak.nl',
+    'to_email' => 'info@behindeverywedding.nl',
 ];
