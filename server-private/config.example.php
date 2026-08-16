@@ -28,9 +28,11 @@ return [
     'resend_api_key' => 'CHANGE_ME',
 
     // Vast, eigen domein-adres waar aanvragen vandaan lijken te komen.
-    // Moet een op Resend geverifieerd verzenddomein zijn.
-    'from_email' => 'Behind Every Wedding <aanvragen@behindeverywedding.nl>',
+    // Moet een op Resend geverifieerd verzenddomein zijn — pas dit domein
+    // aan naar wat je daadwerkelijk in Resend verifieert, dat hoeft niet
+    // per se behindeverystory.nl te zijn (kan ook behindeverywedding.nl).
+    'from_email' => 'Behind Every Wedding <aanvragen@behindeverystory.nl>',
 
     // Waar de aanvraag naartoe gestuurd wordt — de eigen inbox.
-    'to_email' => 'info@behindeverywedding.nl',
+    'to_email' => 'info@behindeverystory.nl',
 ];
