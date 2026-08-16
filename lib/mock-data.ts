@@ -709,9 +709,9 @@ export const contactPage: Page = {
         },
       ],
       directHeading: "Liever direct contact?",
-      phone: "06 12 34 56 78",
-      email: "info@northoak.nl",
-      location: "Arnhem, Gelderland",
+      phone: "+31 6 24 46 40 33",
+      email: "info@behindeverystory.nl",
+      location: "Delft, Zuid-Holland",
       successHeading: "Bedankt voor jullie aanvraag.",
       successText:
         "Ik heb jullie gegevens ontvangen en neem zo snel mogelijk persoonlijk contact op. Meestal reageer ik binnen 24 uur.",
@@ -793,7 +793,7 @@ export const contactPage: Page = {
 
 export const siteSettings: SiteSettings = {
   logoName: "Behind Every Wedding",
-  logoSubline: "Photo & Film",
+  logoSubline: "",
   mainNav: [
     { label: "Home", href: "/" },
     { label: "Over mij", href: "/over-mij" },
@@ -832,10 +832,10 @@ export const siteSettings: SiteSettings = {
     ],
   },
   business: {
-    phone: "06 12 34 56 78",
-    email: "info@northoak.nl",
-    city: "Arnhem",
-    region: "Gelderland",
+    phone: "+31 6 24 46 40 33",
+    email: "info@behindeverystory.nl",
+    city: "Delft",
+    region: "Zuid-Holland",
     country: "NL",
   },
 };

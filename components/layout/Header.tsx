@@ -53,15 +53,17 @@ export default function Header({
         <Container className="flex items-center justify-between gap-8">
           <Link
             href="/"
-            aria-label={`${logoName} ${logoSubline}, naar home`}
+            aria-label={logoSubline ? `${logoName} ${logoSubline}, naar home` : `${logoName}, naar home`}
             className="block text-white"
           >
             <span className="block font-display text-[21px] font-medium uppercase leading-[1.1] tracking-[.16em]">
               {logoName}
             </span>
-            <span className="mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] text-white/[0.62]">
-              {logoSubline}
-            </span>
+            {logoSubline && (
+              <span className="mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] text-white/[0.62]">
+                {logoSubline}
+              </span>
+            )}
           </Link>
 
           <nav

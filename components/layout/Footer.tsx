@@ -39,9 +39,11 @@ export default function Footer({ settings }: FooterProps) {
               <span className="block font-display text-[21px] font-medium uppercase leading-[1.1] tracking-[.16em]">
                 {logoName}
               </span>
-              <span className="mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] text-white/[0.62]">
-                {logoSubline}
-              </span>
+              {logoSubline && (
+                <span className="mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] text-white/[0.62]">
+                  {logoSubline}
+                </span>
+              )}
             </span>
             <p className="my-5 max-w-[30ch] text-sm leading-[1.7]">
               {footer.aboutText}

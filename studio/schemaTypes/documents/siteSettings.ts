@@ -24,8 +24,9 @@ export const siteSettings = defineType({
     defineField({
       name: 'logoSubline',
       title: 'Onderschrift bij het logo',
+      description: 'Optioneel — leeg laten toont geen onderschrift onder de logonaam.',
       type: 'string',
-      validation: (Rule) => Rule.required().max(60),
+      validation: (Rule) => Rule.max(60),
     }),
     defineField({
       name: 'mainNav',
