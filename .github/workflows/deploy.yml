@@ -1,16 +1,20 @@
 name: Deploy
 
-# Twee triggers naar dezelfde pipeline: een code-wijziging op main, of een
-# repository_dispatch die Sanity's publish-webhook stuurt (zie DEPLOY.md).
-# Dat laatste is nodig omdat content uit Sanity build-time wordt opgehaald
-# (getSiteSettings() etc. in app/layout.tsx) — een publicatie in de Studio
-# verandert geen regel code, dus zonder deze trigger zou de site nooit
-# opnieuw builden na het publiceren van nieuwe content.
+# Drie triggers naar dezelfde pipeline: een code-wijziging op main, een
+# repository_dispatch die Sanity's publish-webhook stuurt (zie DEPLOY.md),
+# of een handmatige start via de Actions-tab. Dat laatste is nodig omdat
+# content uit Sanity build-time wordt opgehaald (getSiteSettings() etc.
+# in app/layout.tsx) — een publicatie in de Studio verandert geen regel
+# code, dus zonder de repository_dispatch-trigger zou de site nooit
+# opnieuw builden na het publiceren van nieuwe content. workflow_dispatch
+# is er puur voor "opnieuw draaien met de huidige secrets/variables",
+# zonder daarvoor een lege commit te hoeven pushen.
 on:
   push:
     branches: [main]
   repository_dispatch:
     types: [sanity-publish]
+  workflow_dispatch: {}
 
 # Eén productie-deploy tegelijk. cancel-in-progress blijft bewust false:
 # een lftp-upload die halverwege wordt afgebroken laat de server in een
