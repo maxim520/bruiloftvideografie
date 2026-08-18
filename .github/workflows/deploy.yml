@@ -92,8 +92,18 @@ jobs:
           name: site-out
           path: out
 
+      # DEBIAN_FRONTEND=noninteractive en NEEDRESTART_MODE=a: zonder deze
+      # twee kan apt-get op de Ubuntu-runner blijven hangen op een
+      # interactieve "welke services herstarten?"-prompt van needrestart —
+      # onopgemerkt tot de job-timeout het afkapt (precies wat hier
+      # gebeurde: 15 minuten hangen op deze stap, geannuleerd, geen
+      # foutmelding). --no-install-recommends houdt de install klein.
       - name: Install lftp
-        run: sudo apt-get update -y && sudo apt-get install -y lftp
+        timeout-minutes: 3
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          NEEDRESTART_MODE: a
+        run: sudo apt-get update -y && sudo apt-get install -y --no-install-recommends lftp
 
       # Alleen relevant als DEPLOY_PROTOCOL=sftp: lftp moet de host-key van
       # de server kunnen verifiëren, anders is het geen veilige verbinding.
