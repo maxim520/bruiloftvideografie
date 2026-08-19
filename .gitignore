@@ -17,6 +17,11 @@
 /.next/
 /out/
 
+# scripts/fetch-hero-images.mjs genereert dit vers bij elke build (npm's
+# automatische "prebuild"-hook, vóór "build") — nooit committen, anders
+# raakt de cache stil verouderd zodra een hero-foto in Sanity wijzigt.
+/public/_hero-cache/
+
 # production
 /build
 
