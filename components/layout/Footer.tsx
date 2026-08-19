@@ -27,8 +27,17 @@ const socialIcons: Record<string, ReactNode> = {
   ),
 };
 
+/** Filtert een placeholder-bestemming ("#", leeg) eruit — zie Header.tsx/Button.tsx voor dezelfde regel. */
+function withRealHref<T extends { href: string }>(links: T[]): T[] {
+  return links.filter((link) => link.href && link.href !== "#");
+}
+
 export default function Footer({ settings }: FooterProps) {
   const { logoName, logoSubline, footer, business, headerCta } = settings;
+  const socials = withRealHref(footer.socials);
+  const navLinks = withRealHref(footer.navLinks);
+  const popularPages = withRealHref(footer.popularPages);
+  const legalLinks = withRealHref(footer.legalLinks);
 
   return (
     <footer className="bg-[#1b1310] pt-[78px] text-white/[0.72]">
@@ -48,67 +57,73 @@ export default function Footer({ settings }: FooterProps) {
             <p className="my-5 max-w-[30ch] text-sm leading-[1.7]">
               {footer.aboutText}
             </p>
-            <div className="flex gap-2.5">
-              {footer.socials.map((social) => (
-                <a
-                  key={social.platform}
-                  href={social.href}
-                  aria-label={social.platform}
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/[0.16] text-white/80 transition-colors hover:border-copper hover:bg-copper hover:text-white"
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.4}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
+            {socials.length > 0 && (
+              <div className="flex gap-2.5">
+                {socials.map((social) => (
+                  <a
+                    key={social.platform}
+                    href={social.href}
+                    aria-label={social.platform}
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/[0.16] text-white/80 transition-colors hover:border-copper hover:bg-copper hover:text-white"
                   >
-                    {socialIcons[social.platform]}
-                  </svg>
-                </a>
-              ))}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.4}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      {socialIcons[social.platform]}
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {navLinks.length > 0 && (
+            <div>
+              <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+                Navigatie
+              </h3>
+              <ul className="flex flex-col gap-[11px]">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
+          )}
 
-          <div>
-            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
-              Navigatie
-            </h3>
-            <ul className="flex flex-col gap-[11px]">
-              {footer.navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
-              Populaire pagina&apos;s
-            </h3>
-            <ul className="flex flex-col gap-[11px]">
-              {footer.popularPages.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {popularPages.length > 0 && (
+            <div>
+              <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+                Populaire pagina&apos;s
+              </h3>
+              <ul className="flex flex-col gap-[11px]">
+                {popularPages.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
@@ -141,17 +156,19 @@ export default function Footer({ settings }: FooterProps) {
           <span>
             © {new Date().getFullYear()} {logoName}
           </span>
-          <nav aria-label="Juridisch" className="flex gap-6">
-            {footer.legalLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {legalLinks.length > 0 && (
+            <nav aria-label="Juridisch" className="flex gap-6">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="transition-colors hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          )}
         </div>
       </Container>
     </footer>

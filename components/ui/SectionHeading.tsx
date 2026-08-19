@@ -28,7 +28,7 @@ export default function SectionHeading({
       {eyebrow && (
         <p
           className={`mb-5 text-[11px] font-semibold uppercase tracking-[.22em] ${
-            muted ? "text-brown-medium" : onDark ? "text-copper-text-on-dark" : "text-copper-text"
+            muted ? "text-charcoal-muted" : onDark ? "text-copper-text-on-dark" : "text-copper-text"
           }`}
         >
           {eyebrow}

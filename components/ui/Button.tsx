@@ -47,7 +47,7 @@ const variantClasses: Record<Exclude<ButtonVariant, "text-link">, string> = {
   secondary:
     "justify-center gap-2.5 rounded-[10px] border border-white/70 bg-transparent text-white hover:bg-white/10 hover:border-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
   "dark-outline":
-    "justify-center gap-2.5 rounded-[10px] border border-brown-dark bg-transparent text-brown-dark hover:bg-brown-dark hover:text-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
+    "justify-center gap-2.5 rounded-[10px] border border-ink bg-transparent text-ink hover:bg-ink hover:text-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
 };
 
 /**
@@ -107,11 +107,29 @@ export default function Button(props: ButtonProps) {
       children
     );
 
-  if ("href" in props && props.href) {
+  // Redesign-regel (Fase 2, sectie 8/45): een placeholder-bestemming mag
+  // nooit als klikbare link renderen ("misleidende klikinteractie") — dus
+  // "#" en een lege string worden hier, centraal voor elke CTA die via
+  // deze component loopt, een niet-klikbaar, zichtbaar inactief element
+  // i.p.v. een <Link>. Content-zijde (Sanity) hoort dit sowieso te
+  // vermijden zodra een echte bestemming bestaat; dit is de vangnet-laag.
+  if ("href" in props && props.href && props.href !== "#") {
     return (
       <Link href={props.href} onClick={onClick} className={classes}>
         {content}
       </Link>
+    );
+  }
+
+  if ("href" in props) {
+    return (
+      <span
+        aria-disabled="true"
+        title="Binnenkort beschikbaar"
+        className={`${classes} pointer-events-none opacity-45`}
+      >
+        {content}
+      </span>
     );
   }
 

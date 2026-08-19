@@ -39,7 +39,7 @@ export default function Process({ block }: ProcessProps) {
   return (
     <section
       className={`relative overflow-hidden py-[68px] md:py-20 lg:py-[112px] ${
-        isDark ? "bg-brown-dark text-background" : "bg-surface-light text-text"
+        isDark ? "bg-ink text-background" : "bg-surface-light text-text"
       }`}
     >
       {backgroundImage && (
@@ -165,7 +165,7 @@ export default function Process({ block }: ProcessProps) {
                         className="absolute bottom-0 left-[26px] top-[54px] border-l border-dashed border-border"
                       />
                     )}
-                    <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brown text-[#e2c3a9]">
+                    <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-charcoal text-[#e2c3a9]">
                       {step.icon && <Icon name={step.icon} size={22} />}
                     </span>
                     <div className="col-start-2 mt-[5px] text-[11px] tracking-[.2em] text-copper-text">
@@ -188,7 +188,7 @@ export default function Process({ block }: ProcessProps) {
                 {steps.map((step, index) => (
                   <div key={index} className="relative">
                     <span
-                      className="relative z-[2] mb-6 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brown text-[#e2c3a9]"
+                      className="relative z-[2] mb-6 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-charcoal text-[#e2c3a9]"
                       style={{ boxShadow: "0 0 0 6px var(--surface-light)" }}
                     >
                       {step.icon && <Icon name={step.icon} size={22} />}

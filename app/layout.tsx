@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { preconnect } from "react-dom";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -49,7 +49,9 @@ const cormorantGaramondQuote = Cormorant_Garamond({
   preload: false,
 });
 
-const manrope = Manrope({
+// Redesign-besluit (Fase 2): Inter i.p.v. Manrope als body/UI-sans —
+// zelfde weights, zelfde laadstrategie, alleen het lettertype zelf wisselt.
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -103,7 +105,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="nl">
       <body
-        className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${manrope.variable}`}
+        className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${inter.variable}`}
       >
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
         <SiteHeader

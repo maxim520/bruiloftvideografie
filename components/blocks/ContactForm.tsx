@@ -111,7 +111,7 @@ function Field({ id, label, required, error, children }: FieldProps) {
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.16em] text-brown-medium"
+        className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.16em] text-charcoal-muted"
       >
         {label}
         {required && (
@@ -444,11 +444,12 @@ export default function ContactForm({ block }: ContactFormProps) {
                     {...register("privacy")}
                   />
                   <label htmlFor={`${formId}-privacy`} className="text-base leading-[1.55] text-text">
-                    Ik ga akkoord met de{" "}
-                    <a href="#" className="text-copper-text underline underline-offset-2">
-                      privacyverklaring
-                    </a>
-                    . <span className="text-copper" aria-hidden="true">*</span>
+                    {/* Redesign-regel (Fase 2, sectie 8/45): geen "#"-link — er
+                        bestaat nog geen privacyverklaring-pagina. Zodra die
+                        er is (samen met footer.legalLinks, ook nu leeg),
+                        hier weer een echte <Link> van maken. */}
+                    Ik ga akkoord met de privacyverklaring.{" "}
+                    <span className="text-copper" aria-hidden="true">*</span>
                   </label>
                 </div>
                 <ErrorMessage id={`${formId}-privacy-error`} message={errors.privacy?.message} />

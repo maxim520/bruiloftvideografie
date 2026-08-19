@@ -83,7 +83,7 @@ function FaqList({
                     strokeWidth={1.5}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`flex-none text-brown-medium transition-transform duration-300 ${
+                    className={`flex-none text-charcoal-muted transition-transform duration-300 ${
                       isOpen ? "rotate-180 text-copper" : ""
                     }`}
                   >

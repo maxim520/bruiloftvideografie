@@ -12,7 +12,7 @@ export default function Quote({ block }: QuoteProps) {
   if (!quote) return null;
 
   return (
-    <section className="bg-brown-dark py-[76px] text-center text-white md:py-[104px]">
+    <section className="bg-ink py-[76px] text-center text-white md:py-[104px]">
       <Container>
         <Reveal>
           <blockquote className="m-0">

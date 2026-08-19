@@ -14,7 +14,8 @@ export default function ReportageList({ block }: ReportageListProps) {
   if (reportages.length === 0) return null;
 
   return (
-    <section className="bg-background py-[68px] md:py-20 lg:py-[112px]">
+    // id="reportages": doel van de hero-CTA "Bekijk mijn werk" (page-fotografie).
+    <section id="reportages" className="bg-background py-[68px] md:py-20 lg:py-[112px]">
       <Container>
         <Reveal>
           {(eyebrow || heading || cta) && (

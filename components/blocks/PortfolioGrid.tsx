@@ -19,7 +19,10 @@ export default function PortfolioGrid({ block }: PortfolioGridProps) {
   if (images.length === 0) return null;
 
   return (
-    <section className="bg-background py-[68px] md:py-20 lg:py-[112px]">
+    // id="portfolio": doel van de hero-CTA "Bekijk ons werk" (page-home) —
+    // die ankerlink bestond al in de content, maar wees tot nu toe nergens
+    // naartoe (geen enkel element in de DOM had dit id).
+    <section id="portfolio" className="bg-background py-[68px] md:py-20 lg:py-[112px]">
       <Container>
         <Reveal>
           <div className="grid grid-cols-2 gap-1.5 md:grid-cols-4">

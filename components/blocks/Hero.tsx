@@ -100,7 +100,7 @@ export default function Hero({ block }: HeroProps) {
 
   return (
     <section
-      className={`relative flex items-end overflow-hidden bg-brown-dark md:items-center ${sizeClasses[size]}`}
+      className={`relative flex items-end overflow-hidden bg-ink md:items-center ${sizeClasses[size]}`}
     >
       <div className="absolute inset-0">
         <SafeImage

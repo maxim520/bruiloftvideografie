@@ -24,7 +24,7 @@ export default function TrustBar({ block }: TrustBarProps) {
                     : "border-t md:border-t-0 md:border-l"
                 }`}
               >
-                <Icon name={item.icon} size={30} className="shrink-0 text-brown-medium" />
+                <Icon name={item.icon} size={30} className="shrink-0 text-charcoal-muted" />
                 <div>
                   <div className="text-[15px] font-semibold tracking-[.01em]">{item.title}</div>
                   <div className="text-[13px] text-text-muted">{item.text}</div>

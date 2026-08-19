@@ -94,7 +94,7 @@ export default function Benefits({ block }: BenefitsProps) {
   return (
     <section
       aria-label="Mijn aanpak"
-      className="bg-brown-dark py-[56px] text-background md:py-[78px]"
+      className="bg-ink py-[56px] text-background md:py-[78px]"
     >
       <Container>
         <Reveal>

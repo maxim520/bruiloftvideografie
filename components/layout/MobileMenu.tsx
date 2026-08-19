@@ -62,7 +62,7 @@ export default function MobileMenu({
       // Buiten beeld (translate) betekent niet buiten de taborde: inert
       // voorkomt dat toetsenbordgebruikers in het dichte menu belanden.
       inert={!open}
-      className={`fixed inset-0 z-[70] flex flex-col bg-brown-dark px-6 pb-8 pt-[22px] transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
+      className={`fixed inset-0 z-[70] flex flex-col bg-ink px-6 pb-8 pt-[22px] transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
         open ? "translate-y-0 visible" : "-translate-y-full invisible"
       }`}
     >
@@ -99,7 +99,10 @@ export default function MobileMenu({
       </div>
 
       <nav aria-label="Mobiele navigatie" className="flex flex-col">
-        {navLinks.map((link, index) => (
+        {/* Zie Header.tsx voor waarom "#"-items hier gefilterd worden. */}
+        {navLinks
+          .filter((link) => link.href && link.href !== "#")
+          .map((link, index) => (
           <Link
             key={link.href}
             href={link.href}

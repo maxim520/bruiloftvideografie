@@ -46,7 +46,7 @@ export default function Header({
       <header
         className={`fixed inset-x-0 top-0 z-[60] border-b transition-[background-color,border-color,padding,backdrop-filter] duration-[350ms] ${
           scrolled
-            ? "border-white/10 bg-brown-dark/[0.86] py-[6px] backdrop-blur-[14px]"
+            ? "border-white/10 bg-ink/[0.86] py-[6px] backdrop-blur-[14px]"
             : "border-transparent py-[14px]"
         }`}
       >
@@ -70,7 +70,12 @@ export default function Header({
             aria-label="Hoofdnavigatie"
             className="hidden items-center gap-[30px] lg:flex"
           >
-            {navLinks.map((link) => {
+            {/* Redesign-regel (Fase 2, sectie 8/45): geen "#"-navigatie-item
+                tonen zolang de bestemming niet bestaat — hier "verbergen"
+                i.p.v. "disabled tonen", passender voor een navigatiebalk. */}
+            {navLinks
+              .filter((link) => link.href && link.href !== "#")
+              .map((link) => {
               const isActive = link.href === activeHref;
               return (
                 <Link

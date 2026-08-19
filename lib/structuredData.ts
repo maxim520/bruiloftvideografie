@@ -39,7 +39,10 @@ export function buildLocalBusinessJsonLd(siteSettings: SiteSettings): object {
     description: footer.aboutText,
     telephone: toE164(business.phone),
     email: business.email,
-    priceRange: "$$$",
+    // priceRange is optioneel in schema.org en beïnvloedt hoe Google de
+    // prijsindicatie toont in zoekresultaten — dus alleen invullen zodra
+    // er een bewuste, door de klant bevestigde positionering achter zit.
+    // Weglaten kost geen SEO-waarde.
     address: {
       "@type": "PostalAddress",
       addressLocality: business.city,
