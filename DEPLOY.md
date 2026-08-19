@@ -155,11 +155,37 @@ Actions of de workflow daadwerkelijk gestart is.
 
 ## 5. Domein bij TransIP
 
-- **FTP/SFTP-toegang**: controleer in het TransIP-controlepaneel (Hosting →
-  jouw pakket → FTP-accounts) welk protocol je pakket aanbiedt. Gedeelde
-  TransIP-webhosting biedt doorgaans FTP en FTPS; SFTP (over SSH) is meestal
-  alleen beschikbaar op VPS-achtige pakketten met SSH-toegang. Zet
-  `DEPLOY_PROTOCOL` (stap 1) overeenkomstig — nooit op plain `ftp`.
+- **FTP/SFTP-toegang**: controleer bij het hostingpakket (niet bij het
+  domein) het veld **SFTP/SSH** — bij dit account bleek SFTP gewoon
+  beschikbaar op gedeelde webhosting (met "subsites"), dus ga er niet
+  vanuit dat dit alleen op VPS-pakketten kan. De hostnaam heeft de vorm
+  `<iets>.ssh.transip.me`. Zet `DEPLOY_PROTOCOL` (stap 1) overeenkomstig —
+  nooit op plain `ftp`.
+- **Bij meerdere sites op één hostingpakket ("subsites")**: TransIP kan één
+  hostingpakket met meerdere domeinen laten delen, elk in een eigen map
+  (bijv. via "Website toevoegen" in het paneel). Het paneel toont daarbij
+  een **"Website pad"** (bijv. `/subsites/behindeverywedding.nl`) — dat pad
+  is *absoluut vanaf de accountroot*, niet vanaf waar een SFTP-login je
+  neerzet. Gebruik dat pad daarom **nooit letterlijk met een schuine streep
+  vooraan** in `DEPLOY_REMOTE_DIR`; dat laat lftp zoeken vanaf de
+  werkelijke bestandssysteem-root van de server, waar die map niet bestaat
+  (foutmelding: "No such file"). Bepaal het juiste, relatieve pad zo:
+
+  ```
+  sftp jouw-sftp-gebruikersnaam@jouw-ssh-hostnaam
+  pwd
+  ls
+  cd subsites/behindeverywedding.nl   # of het path dat bij jou past
+  pwd
+  ```
+
+  Het pad ná `cd` (zonder het deel dat bij de startmap hoort) is de
+  waarde voor `DEPLOY_REMOTE_DIR` — meestal gewoon zonder schuine streep
+  vooraan, bijv. `subsites/behindeverywedding.nl`.
+
+  Gebruik hiervoor de ingebouwde `sftp`-opdracht in Terminal — Finders
+  "Verbind met server" (Cmd+K) ondersteunt geen `sftp://`, alleen gewone
+  `ftp://`, en geeft daar een onduidelijke foutmelding op.
 - **DNS**: `behindeverywedding.nl` (zie `lib/site.ts`) moet naar deze hosting wijzen.
   Als het domein al bij TransIP geregistreerd staat en de hosting er ook
   draait, regelt TransIP dit meestal automatisch bij het koppelen van domein
@@ -167,18 +193,36 @@ Actions of de workflow daadwerkelijk gestart is.
   geregistreerd, zet dan een A-record (en AAAA indien TransIP IPv6 aanbiedt)
   naar het IP-adres van je hostingpakket, te vinden in het controlepaneel.
 - **TLS/HTTPS**: activeer een (gratis Let's Encrypt-)certificaat voor
-  `behindeverywedding.nl` in het TransIP-controlepaneel, vóór de eerste deploy —
-  `public/.htaccess` forceert een 301-redirect naar HTTPS op elk verzoek
-  (`RewriteCond %{HTTPS} off`), dus zonder werkend certificaat is de site na
-  deploy niet bereikbaar.
-- **Eerste handmatige controle**: log één keer handmatig in met een
-  FTP-cliënt (bv. FileZilla) met de `DEPLOY_USERNAME`/`DEPLOY_PASSWORD` uit
-  stap 1, en controleer in welke map je terechtkomt — dat bepaalt de
-  juiste waarde voor `DEPLOY_REMOTE_DIR`. Bevestig ook dat die map leeg is
-  of alleen bestanden bevat die bij een eerdere `out/`-build horen, vóórdat
-  je de workflow voor het eerst laat draaien: de opruimstap (fase 3 in
-  `deploy.yml`) verwijdert alles in die map dat niet in de nieuwe build
-  zit.
+  `behindeverywedding.nl` in het TransIP-controlepaneel, vóór de eerste
+  deploy. Bij een subsite staat dit onder het eigen beheerscherm van die
+  subsite ("SSL Overzicht"/"SSL-instellingen"), niet bij het hoofddomein.
+- **Eerste handmatige controle**: verbind met `sftp` (zie hierboven) vóórdat
+  je de workflow voor het eerst laat draaien, en bevestig dat de doelmap
+  leeg is of alleen bestanden bevat die bij een eerdere `out/`-build horen:
+  de opruimstap (fase 3 in `deploy.yml`) verwijdert alles in die map dat
+  niet in de nieuwe build zit.
+
+### Bekend gat: security-headers werken niet op nginx-hosting
+
+`public/.htaccess` zet naast de HTTPS-redirect ook een aantal
+beveiligingsheaders (HSTS, X-Frame-Options, X-Content-Type-Options,
+Content-Security-Policy) en cache-headers. **`.htaccess` is Apache-specifiek
+— als jouw TransIP-hosting nginx draait (te zien aan de `server:
+nginx`-responseheader), wordt dit bestand genegeerd.** De HTTPS-redirect en
+dotfile-blokkade bleken bij dit account toch te werken (geregeld op
+TransIP-platformniveau, los van `.htaccess`), maar de overige headers en
+de cache-regels niet.
+
+`Referrer-Policy` is inmiddels via een `<meta>`-tag opgelost
+(`app/layout.tsx`'s `referrer`-veld) — dat is de enige van de geplande
+headers met een volwaardige HTML-vervanging. HSTS/X-Frame-Options/
+X-Content-Type-Options bestaan niet als `<meta>`-variant, en CSP via
+`<meta>` ondersteunt geen Report-Only-modus (dus niet zomaar af te dwingen
+zonder ooit getest te zijn — dat risico is bewust niet genomen).
+
+**Openstaande actie**: vraag TransIP-support of aangepaste HTTP-response-
+headers mogelijk zijn op deze (nginx-)hosting, en zo ja, hoe. Zodra dat
+duidelijk is, kunnen de resterende headers alsnog worden ingesteld.
 
 ## 6. Back-up en monitoring
 
