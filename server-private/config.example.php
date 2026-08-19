@@ -11,13 +11,15 @@
  * waarden in. Commit config.php zelf nooit naar git.
  *
  * Verwachte serverstructuur (pas PRIVATE_DIR in contact.php aan als jouw
- * TransIP-hosting hiervan afwijkt):
+ * TransIP-hosting hiervan afwijkt — zie DEPLOY.md §5 voor hoe je dat per
+ * account controleert):
  *
  *   <account-root>/
- *     public_html/            <- webroot; hier komt de inhoud van out/
- *       api/
- *         contact.php
- *     server-private/         <- NIET onder public_html, dus nooit via HTTP bereikbaar
+ *     subsites/
+ *       behindeverywedding.nl/  <- webroot van deze site; hier komt out/
+ *         api/
+ *           contact.php
+ *     server-private/         <- naast subsites/, dus nooit via HTTP bereikbaar
  *       config.php            <- dit bestand, ingevuld
  *       contact-error.log     <- wordt aangemaakt door contact.php
  *       rate-limit.json       <- wordt aangemaakt door contact.php

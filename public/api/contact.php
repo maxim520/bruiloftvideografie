@@ -11,21 +11,26 @@
  * regel hieronder gaat uit van een aanvaller die de client-code niet
  * gebruikt en rechtstreeks POST't.
  *
- * Verwachte serverstructuur (zie ook server-private/config.example.php):
+ * Verwachte serverstructuur (zie ook server-private/config.example.php).
+ * Dit wijkt af van een "standaard" public_html/-indeling: dit hostingaccount
+ * host meerdere sites op één pakket via TransIP's "subsites"-functie, dus
+ * de webroot van déze site zit een laag dieper (zie DEPLOY.md §5):
  *
  *   <account-root>/
- *     public_html/            <- webroot; hier komt de inhoud van out/
- *       api/
- *         contact.php         <- dit bestand
- *     server-private/         <- NIET onder public_html, dus nooit via HTTP bereikbaar
+ *     subsites/
+ *       behindeverywedding.nl/  <- webroot van déze site; hier komt out/
+ *         api/
+ *           contact.php         <- dit bestand
+ *     server-private/         <- naast subsites/, dus nooit via HTTP bereikbaar
  *       config.php            <- Resend-key + adressen, zie config.example.php
  *       contact-error.log     <- wordt hieronder aangemaakt
  *       rate-limits/          <- wordt hieronder aangemaakt; één bestand per IP-hash
  *       cleanup-rate-limits.php  <- los script, via een cronjob te draaien (zie dat bestand)
  *
  * Pas PRIVATE_DIR hieronder aan als de daadwerkelijke mapstructuur op
- * TransIP hiervan afwijkt. dirname(__DIR__, 2) gaat van public_html/api/
- * naar public_html/, en dan één laag hoger, naar de map naast public_html/.
+ * TransIP hiervan afwijkt. dirname(__DIR__, 3) gaat van
+ * subsites/behindeverywedding.nl/api/ drie lagen omhoog naar de
+ * accountroot, en dan naar de map naast subsites/.
  */
 
 declare(strict_types=1);
@@ -37,7 +42,7 @@ declare(strict_types=1);
 // stacktraces) naar de client lekken. (Vereiste 10, 11)
 // ---------------------------------------------------------------------
 
-define('PRIVATE_DIR', dirname(__DIR__, 2) . '/server-private');
+define('PRIVATE_DIR', dirname(__DIR__, 3) . '/server-private');
 
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');

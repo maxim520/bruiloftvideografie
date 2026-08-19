@@ -33,9 +33,9 @@ voor niet-geheime configuratie).
 |---|---|---|
 | `SANITY_PROJECT_ID` | `5o909qb6` | Ja — zonder deze twee faalt `next build` hard (zie `lib/sanity/client.ts`) |
 | `SANITY_DATASET` | `production` | Ja |
-| `DEPLOY_PROTOCOL` | `ftps` of `sftp` | Nee, valt terug op `ftps`. TransIP-webhosting (het gedeelde pakket, geen VPS) biedt doorgaans alleen FTP/FTPS aan — controleer bij stap 5 of jouw pakket daadwerkelijk SFTP ondersteunt voor je dit op `sftp` zet |
+| `DEPLOY_PROTOCOL` | `ftps` of `sftp` | Nee, valt terug op `ftps`. Controleer bij stap 5 wat jouw pakket aanbiedt — SFTP bleek bij dit account gewoon beschikbaar op gedeelde webhosting, dus neem niet zomaar aan dat alleen FTPS kan |
 | `DEPLOY_PORT` | bv. `21` (ftps) of `22` (sftp) | Nee, lftp gebruikt anders het protocol-standaardpoort |
-| `DEPLOY_REMOTE_DIR` | bv. `public_html` | Nee, valt terug op `.` (de map waar de FTP-login je al in zet). Sommige TransIP-accounts loggen al direct in `public_html/` in, andere in de accountroot ervoor — test dit één keer handmatig met een FTP-cliënt voordat je de workflow draait |
+| `DEPLOY_REMOTE_DIR` | bv. `subsites/behindeverywedding.nl` | Nee, valt terug op `.` (de map waar de SFTP/FTP-login je al in zet). **Altijd relatief, nooit met een schuine streep vooraan** — zie de uitgebreide toelichting in §5 voor hoe je dit met een `sftp`-sessie bepaalt (een absoluut pad zoals TransIP's paneel toont gaf bij dit account een "No such file"-fout) |
 
 ### Fine-grained token voor de Sanity-webhook
 
@@ -82,14 +82,23 @@ maar wel iets om niet te vergeten in te stellen.
 
 ### `server-private/` naast de webroot aanmaken
 
-`contact.php` verwacht een map **naast** `public_html/` (dus niet erin,
-nooit via HTTP bereikbaar, en dus ook nooit door de deploy-workflow
-aangeraakt — die schrijft alleen binnen `DEPLOY_REMOTE_DIR`/`public_html/`)
-— zie de toelichting bovenaan dat bestand voor de exacte verwachte structuur
-en hoe je `PRIVATE_DIR` aanpast als je account anders is ingedeeld.
+`contact.php` verwacht een map **naast** de webroot van deze site (dus niet
+erin, nooit via HTTP bereikbaar, en dus ook nooit door de deploy-workflow
+aangeraakt — die schrijft alleen binnen `DEPLOY_REMOTE_DIR`). Voor dit
+account is dat concreet: naast `subsites/` staan (dus `<accountroot>/
+server-private/`, een niveau boven `subsites/behindeverywedding.nl/`) — zie
+de toelichting bovenaan `contact.php` voor de exacte structuur.
 
-Kopieer `server-private/config.example.php` naar `server-private/config.php`
-op de server en vul in:
+Maak deze map aan via dezelfde `sftp`-verbinding als in §5:
+```
+mkdir server-private
+mkdir server-private/rate-limits
+```
+(vanaf de starte map van de sftp-sessie, dus naast `subsites/`, `www/`, etc.)
+
+Kopieer daarna `server-private/config.example.php` (upload via `sftp put`,
+of de TransIP-bestandsbeheerder) naar `server-private/config.php` op de
+server en vul in:
 - `resend_api_key` — aanmaken op [resend.com/api-keys](https://resend.com/api-keys)
 - `from_email` — moet een op Resend geverifieerd verzenddomein zijn
 - `to_email` — de inbox waar aanvragen naartoe gaan
