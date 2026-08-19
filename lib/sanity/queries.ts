@@ -184,6 +184,18 @@ const sectionsProjection = groq`
     signatureName,
     signatureRole,
     images[]${image}
+  },
+  _type == "pricing" => {
+    _type,
+    eyebrow,
+    heading,
+    items[]{
+      name,
+      description,
+      startingPrice,
+      features,
+      cta
+    }
   }
 `;
 

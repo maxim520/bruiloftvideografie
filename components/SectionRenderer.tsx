@@ -14,6 +14,7 @@ import Faq from "./blocks/Faq";
 import ContactForm from "./blocks/ContactForm";
 import FinalCta from "./blocks/FinalCta";
 import StoryIntro from "./blocks/StoryIntro";
+import Pricing from "./blocks/Pricing";
 import type { Block } from "@/types/blocks";
 
 /**
@@ -39,6 +40,7 @@ const registry = {
   contactForm: ContactForm,
   finalCta: FinalCta,
   storyIntro: StoryIntro,
+  pricing: Pricing,
 } satisfies {
   [K in Block["_type"]]: ComponentType<{ block: Extract<Block, { _type: K }> }>;
 };

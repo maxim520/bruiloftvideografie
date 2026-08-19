@@ -12,6 +12,8 @@ import {statItem} from './objects/statItem'
 import {reportageItem} from './objects/reportageItem'
 import {faqItem} from './objects/faqItem'
 import {contactFormPerk} from './objects/contactFormPerk'
+import {supplier} from './objects/supplier'
+import {pricingItem} from './objects/pricingItem'
 
 import {hero} from './blocks/hero'
 import {trustBar} from './blocks/trustBar'
@@ -28,14 +30,17 @@ import {faq} from './blocks/faq'
 import {contactForm} from './blocks/contactForm'
 import {finalCta} from './blocks/finalCta'
 import {storyIntro} from './blocks/storyIntro'
+import {pricing} from './blocks/pricing'
 
 import {page} from './documents/page'
 import {siteSettings} from './documents/siteSettings'
+import {wedding} from './documents/wedding'
 
 export const schemaTypes = [
   // Documenten
   page,
   siteSettings,
+  wedding,
 
   // Bloktypes
   hero,
@@ -53,6 +58,7 @@ export const schemaTypes = [
   contactForm,
   finalCta,
   storyIntro,
+  pricing,
 
   // Gedeelde objecttypes
   ctaLink,
@@ -69,4 +75,6 @@ export const schemaTypes = [
   reportageItem,
   faqItem,
   contactFormPerk,
+  supplier,
+  pricingItem,
 ]

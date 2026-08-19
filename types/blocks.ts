@@ -203,6 +203,31 @@ export type BenefitsBlock = {
   image?: SanityImage;
 };
 
+/**
+ * Eén dienst/pakket. startingPrice is bewust optioneel — zie
+ * studio/schemaTypes/objects/pricingItem.ts voor waarom (geen verzonnen
+ * prijzen).
+ */
+export type PricingItem = {
+  name: string;
+  description?: string;
+  startingPrice?: number;
+  features?: string[];
+  cta?: CtaLink;
+};
+
+/**
+ * "Investering"/pakketten-sectie (Fase 2-foundation). Rendert niets
+ * zolang items leeg is — kan dus al aan een pagina hangen vóórdat er
+ * echte pakketten/prijzen bekend zijn.
+ */
+export type PricingBlock = {
+  _type: "pricing";
+  eyebrow?: string;
+  heading?: string;
+  items: PricingItem[];
+};
+
 /** Eén review van een bruidspaar. */
 export type ReviewItem = {
   quote: string;
@@ -409,7 +434,8 @@ export type Block =
   | FaqBlock
   | ContactFormBlock
   | FinalCtaBlock
-  | StoryIntroBlock;
+  | StoryIntroBlock
+  | PricingBlock;
 
 /** Eén pagina, opgebouwd uit een geordende lijst blokken. */
 export type Page = {
