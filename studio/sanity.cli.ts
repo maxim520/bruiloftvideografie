@@ -11,5 +11,8 @@ export default defineCliConfig({
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
      */
     autoUpdates: true,
+    // Voorkomt dat een volgende `sanity deploy` opnieuw om de app-id vraagt
+    // — hoort bij https://behindeverywedding.sanity.studio.
+    appId: 'bt0ysoe56y8xseuks5ho24t7',
   },
 })

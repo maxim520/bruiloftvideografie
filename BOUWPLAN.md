@@ -9,7 +9,7 @@ tijdelijke, hardgecodeerde content zodat layout en componenten eerst kunnen
 rijpen.
 
 ```
-Sanity Studio (northandoak.sanity.studio)
+Sanity Studio (behindeverywedding.sanity.studio)
         │  redacteur bewerkt en publiceert
         │  webhook
         ▼

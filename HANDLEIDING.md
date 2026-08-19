@@ -6,7 +6,7 @@ Studio.
 
 ## Inloggen
 
-Ga naar **northandoak.sanity.studio**. Log in met je e-mailadres. Heb je nog
+Ga naar **behindeverywedding.sanity.studio**. Log in met je e-mailadres. Heb je nog
 geen toegang, vraag dan een uitnodiging aan bij de beheerder (zie
 "Hulp nodig" onderaan).
 
