@@ -105,7 +105,7 @@ export default function Hero({ block }: HeroProps) {
       <div className="absolute inset-0">
         <SafeImage
           image={image}
-          priority
+          preload
           sizes="100vw"
           className={`object-cover ${objectPositionClasses[size]}`}
           // Eigen, per-pagina (en per-breakpoint) object-position; zie de

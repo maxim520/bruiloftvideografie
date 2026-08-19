@@ -6,7 +6,21 @@ import type { SanityImage } from "@/types/blocks";
 type SafeImageBaseProps = {
   image?: SanityImage;
   className?: string;
-  priority?: boolean;
+  /**
+   * Voor het LCP-element (typisch de hero-foto): preload het bestand via
+   * een <link> in de <head> EN geef het `<img>`-element zelf hoge
+   * ophaal-prioriteit. Next 16 heeft dit losgekoppeld van elkaar (het
+   * oudere `priority`-prop is deprecated en zet, anders dan in eerdere
+   * Next-versies, GEEN `fetchpriority="high"` meer op het element) — zie
+   * node_modules/next/dist/docs/01-app/03-api-reference/02-components/image.md,
+   * secties "preload" en "priority". Zonder expliciete `fetchPriority`
+   * concurreert de hero-foto op eigen origin (sinds de _hero-cache-fix)
+   * zonder verhoogde prioriteit met lettertypen/CSS/JS op dezelfde
+   * HTTP/2-verbinding — gemeten als een nieuwe "Load Delay"-fase in de
+   * LCP-breakdown die er vóór die fix niet was (toen liep de hero-foto
+   * over een aparte, onbelaste verbinding naar cdn.sanity.io).
+   */
+  preload?: boolean;
   /**
    * Stuurt object-position op basis van de Sanity-hotspot (alleen
    * relevant voor de echte, asset-vorm van SanityImage). Standaard aan.
@@ -61,7 +75,7 @@ export default function SafeImage({
   width,
   height,
   className,
-  priority,
+  preload,
   useHotspot = true,
 }: SafeImageProps) {
   if (!image) {
@@ -88,7 +102,8 @@ export default function SafeImage({
         alt={image.alt ?? ""}
         width={width}
         height={height}
-        priority={priority}
+        preload={preload}
+        fetchPriority={preload ? "high" : undefined}
         className={className}
         style={objectPosition ? { objectPosition } : undefined}
       />
@@ -101,7 +116,8 @@ export default function SafeImage({
       alt={image.alt ?? ""}
       fill
       sizes={sizes}
-      priority={priority}
+      preload={preload}
+      fetchPriority={preload ? "high" : undefined}
       className={className}
       style={objectPosition ? { objectPosition } : undefined}
     />

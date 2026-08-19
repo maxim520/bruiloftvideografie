@@ -96,7 +96,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   // Lighthouse's eigen "uses-rel-preconnect"-audit meldt hier 0ms winst,
   // omdat de preload-hint voor de hero-afbeelding de verbinding al zo
   // vroeg mogelijk opent (zie de link[rel=preload][as=image] in <head>,
-  // gegenereerd via Hero.tsx's priority-prop). Toegevoegd als goedkope,
+  // gegenereerd via Hero.tsx's preload-prop). Toegevoegd als goedkope,
   // onschadelijke garantie: zodra een andere pagina/afbeelding ooit als
   // eerste dit domein aanraakt vóór die preload-hint geparsed is, ligt de
   // verbinding al klaar.
