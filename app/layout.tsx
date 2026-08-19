@@ -64,6 +64,17 @@ export const metadata: Metadata = {
   title: "Behind Every Wedding",
   description:
     "Tijdloze trouwfotografie en trouwfilms voor bruidsparen in heel Nederland en Europa.",
+  // public/.htaccess zette dit (en meer) via een echte HTTP-header, maar
+  // dat bestand wordt op deze nginx-hosting niet gelezen (.htaccess is
+  // Apache-only) — vandaar via <meta name="referrer"> hier. Dit is de
+  // enige van de geplande .htaccess-headers die via HTML hetzelfde effect
+  // heeft: HSTS/X-Frame-Options/X-Content-Type-Options bestaan niet als
+  // meta-variant, en CSP via <meta> ondersteunt geen Report-Only-modus —
+  // die blind afdwingen zonder ooit getest te hebben is een té groot
+  // risico (kan hydratatie/inline styles breken). Zie DEPLOY.md voor de
+  // openstaande actie: navragen bij TransIP of aangepaste HTTP-headers
+  // op deze nginx-hosting mogelijk zijn.
+  referrer: "strict-origin-when-cross-origin",
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
