@@ -233,6 +233,18 @@ zonder ooit getest te zijn — dat risico is bewust niet genomen).
 headers mogelijk zijn op deze (nginx-)hosting, en zo ja, hoe. Zodra dat
 duidelijk is, kunnen de resterende headers alsnog worden ingesteld.
 
+**Zelfde oorzaak, extra gevolg (gevonden tijdens de Fase 8-launch-QA)**:
+`.htaccess`'s `ErrorDocument 404 /404.html` wordt om dezelfde reden ook
+genegeerd. Een écht niet-bestaande URL (typefout, kapotte externe link,
+een verborgen pagina) krijgt daardoor wel de correcte `404`-statuscode
+(dat regelt nginx zelf, los van `.htaccess`), maar toont nginx' kale
+standaard foutpagina in plaats van de gestylede `out/404.html` die
+`next build` al klaarzet. Puur cosmetisch — de statuscode zelf klopt, dus
+geen SEO-risico — maar niet on-brand. Los te lossen zodra hierboven
+duidelijk is of/hoe aangepaste server-instellingen mogelijk zijn: dan kan
+in dezelfde actie ook `error_page 404 /404.html;` (of het TransIP-
+paneel-equivalent daarvan) meegenomen worden.
+
 ## 6. Back-up en monitoring
 
 Code staat in git, beeldmateriaal (in elk geval het seed-materiaal) in
