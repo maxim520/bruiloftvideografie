@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import CtaStack from "@/components/ui/CtaStack";
 import Reveal from "@/components/ui/Reveal";
 import SafeImage from "@/components/ui/SafeImage";
 import type { FinalCtaBlock, PagePreset } from "@/types/blocks";
@@ -27,12 +28,16 @@ const objectPositionClasses: Record<PagePreset, string> = {
   contact: "object-[62%_34%] md:object-[68%_40%]",
 };
 
-/** Koplettergrootte, max-breedte en marge, exact per pagina. */
+/**
+ * Koplettergrootte en max-breedte, exact per pagina. Marge naar de
+ * ondersteunende tekst/CTA komt niet meer hiervandaan — zie CtaStack
+ * (--space-stack-*-tokens), sectie 15 van de Fase 5-brief.
+ */
 const headingClasses: Record<PagePreset, string> = {
-  home: "mb-4 max-w-[20ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
-  "over-mij": "mb-4 max-w-[18ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
-  fotografie: "mb-[14px] max-w-[22ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
-  contact: "mb-[14px] max-w-[14ch] text-[clamp(1.75rem,3vw,2.625rem)]",
+  home: "max-w-[20ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
+  "over-mij": "max-w-[18ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
+  fotografie: "max-w-[22ch] text-[clamp(1.75rem,2.9vw,2.5rem)]",
+  contact: "max-w-[14ch] text-[clamp(1.75rem,3vw,2.625rem)]",
 };
 
 export default function FinalCta({ block }: FinalCtaProps) {
@@ -61,13 +66,22 @@ export default function FinalCta({ block }: FinalCtaProps) {
 
       <Container className="relative z-[2] w-full pt-[76px] pb-[54px] md:pb-[76px]">
         <Reveal>
-          <h2 className={`text-white ${headingClasses[size]}`}>{heading}</h2>
-          {text && <p className="mb-[30px] text-base text-white/[0.78]">{text}</p>}
-          {cta?.href && (
-            <Button href={cta.href} variant="primary" className="w-full md:w-auto">
-              {cta.label}
-            </Button>
-          )}
+          <CtaStack
+            heading={<h2 className={`text-white ${headingClasses[size]}`}>{heading}</h2>}
+            text={text && <p className="text-base text-white/[0.78]">{text}</p>}
+            actions={
+              cta?.href && (
+                // self-start: dit is hier de enige/directe flex-item van
+                // CtaStack's kolom (geen omringende rij zoals Hero.tsx),
+                // dus zonder deze override zou de kolom 'm (net als elk
+                // flex-item zonder align-self) over de volle breedte
+                // uitrekken en w-auto op md+ stilzwijgend overschrijven.
+                <Button href={cta.href} variant="primary" className="w-full self-start md:w-auto">
+                  {cta.label}
+                </Button>
+              )
+            }
+          />
         </Reveal>
       </Container>
     </section>

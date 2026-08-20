@@ -34,6 +34,7 @@ export const homePage: Page = {
   sections: [
     {
       _type: "hero",
+      mediaType: "image",
       heading: "Tijdloze foto's.",
       headingLine2: "Echte emoties.",
       subheading:
@@ -247,6 +248,7 @@ export const overMijPage: Page = {
   sections: [
     {
       _type: "hero",
+      mediaType: "image",
       eyebrow: "Over mij",
       heading: "Ik leg jullie verhaal",
       headingLine2: "vast zoals het écht was.",
@@ -446,6 +448,7 @@ export const fotografiePage: Page = {
   sections: [
     {
       _type: "hero",
+      mediaType: "image",
       eyebrow: "Fotografie",
       heading: "Tijdloze beelden.",
       headingLine2: "Echte momenten.",
@@ -666,6 +669,7 @@ export const contactPage: Page = {
   sections: [
     {
       _type: "hero",
+      mediaType: "image",
       eyebrow: "Contact",
       heading: "Laten we kennismaken.",
       headingLine2: "Ik kijk graag met jullie mee.",

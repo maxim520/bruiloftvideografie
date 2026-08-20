@@ -283,7 +283,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                   </svg>
                   <p className="text-base leading-[1.6]">
                     Er ging iets mis bij het versturen. Probeer het opnieuw of neem
-                    rechtstreeks contact met ons op.
+                    rechtstreeks contact met mij op.
                   </p>
                 </div>
               )}

@@ -37,7 +37,12 @@ export default function Process({ block }: ProcessProps) {
   if (steps.length === 0) return null;
 
   return (
+    // id="aanpak": doel van page-fotografie's benefits-CTA "Werkwijze
+    // fotografie" (Fase 5-audit) — die ankerlink bestond al in de
+    // content, maar wees tot nu toe nergens naartoe, dezelfde soort bug
+    // als portfolio/reportages destijds (zie PortfolioGrid.tsx).
     <section
+      id="aanpak"
       className={`relative overflow-hidden py-[68px] md:py-20 lg:py-[112px] ${
         isDark ? "bg-ink text-background" : "bg-surface-light text-text"
       }`}

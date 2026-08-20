@@ -117,6 +117,16 @@ export type HeroBlock = {
   headingLine2?: string;
   subheading?: string;
   image: SanityImage;
+  /**
+   * Fase 5: "video" vult de foto hierboven aan met een achtergrondvideo
+   * (HeroMedia.tsx) — de foto blijft in beide gevallen verplicht en
+   * dient als poster/fallback. videoUrl komt al kant-en-klaar uit Sanity
+   * (asset->url in de GROQ-query), geen eigen URL-opbouw nodig. Ontbreekt
+   * bij mediaType "video" (nog niet geüpload), dan toont HeroMedia
+   * gewoon alleen de foto — geen foutstatus.
+   */
+  mediaType: "image" | "video";
+  videoUrl?: string;
   primaryCta?: CtaLink;
   secondaryCta?: CtaLink;
   /**

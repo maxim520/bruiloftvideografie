@@ -1,7 +1,8 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import CtaStack from "@/components/ui/CtaStack";
+import HeroMedia from "@/components/ui/HeroMedia";
 import Reveal from "@/components/ui/Reveal";
-import SafeImage from "@/components/ui/SafeImage";
 import type { HeroBlock, PagePreset } from "@/types/blocks";
 
 type HeroProps = {
@@ -87,6 +88,7 @@ export default function Hero({ block }: HeroProps) {
     headingLine2,
     subheading,
     image,
+    videoUrl,
     primaryCta,
     secondaryCta,
     size,
@@ -103,8 +105,9 @@ export default function Hero({ block }: HeroProps) {
       className={`relative flex items-end overflow-hidden bg-ink md:items-center ${sizeClasses[size]}`}
     >
       <div className="absolute inset-0">
-        <SafeImage
+        <HeroMedia
           image={image}
+          videoUrl={videoUrl}
           preload
           sizes="100vw"
           className={`object-cover ${objectPositionClasses[size]}`}
@@ -129,29 +132,35 @@ export default function Hero({ block }: HeroProps) {
               {eyebrow}
             </p>
           )}
-          <h1 className={`mb-[26px] font-medium ${headingClasses[size]}`}>
-            <span className="block">{heading}</span>
-            {headingLine2 && <span className="block">{headingLine2}</span>}
-          </h1>
-          {subheading && (
-            <p className="mb-7 max-w-[31em] text-base text-white/[0.84] md:mb-[38px] md:text-body">
-              {subheading}
-            </p>
-          )}
-          {(primaryCta || secondaryCta) && (
-            <div className="flex flex-col flex-wrap gap-3.5 md:flex-row">
-              {primaryCta && (
-                <Button href={primaryCta.href} variant="primary" className="w-full md:w-auto">
-                  {primaryCta.label}
-                </Button>
-              )}
-              {secondaryCta && (
-                <Button href={secondaryCta.href} variant="secondary" className="w-full md:w-auto">
-                  {secondaryCta.label}
-                </Button>
-              )}
-            </div>
-          )}
+          <CtaStack
+            heading={
+              <h1 className={`font-medium ${headingClasses[size]}`}>
+                <span className="block">{heading}</span>
+                {headingLine2 && <span className="block">{headingLine2}</span>}
+              </h1>
+            }
+            text={
+              subheading && (
+                <p className="max-w-[31em] text-base text-white/[0.84] md:text-body">{subheading}</p>
+              )
+            }
+            actions={
+              (primaryCta || secondaryCta) && (
+                <div className="flex flex-col flex-wrap gap-[var(--space-cta-gap)] md:flex-row">
+                  {primaryCta && (
+                    <Button href={primaryCta.href} variant="primary" className="w-full md:w-auto">
+                      {primaryCta.label}
+                    </Button>
+                  )}
+                  {secondaryCta && (
+                    <Button href={secondaryCta.href} variant="secondary" className="w-full md:w-auto">
+                      {secondaryCta.label}
+                    </Button>
+                  )}
+                </div>
+              )
+            }
+          />
         </Reveal>
       </Container>
 

@@ -99,6 +99,21 @@
   --space-2xl: 4.5rem; /* 72px */
   --space-3xl: 7rem; /* 112px — huidige --section-y */
 
+  /* ------------------------------------------------------------------
+     Sectie 15 (Fase 5): vaste ademruimte in elke hero/CTA-compositie
+     (heading → ondersteunende tekst → CTA('s)). Semantische aliassen op
+     de schaal hierboven i.p.v. losse "margin-top: 17px"-achtige getallen
+     per component — één plek om de hiërarchie bij te stellen. Gebruikt
+     via CSS `gap` op geneste flex-groepen (zie components/ui/CtaStack.tsx
+     en Hero.tsx/FinalCta.tsx/WeddingCta.tsx), niet via child-margins:
+     dat voorkomt margin-collapsing en houdt de afstand consistent
+     ongeacht welke elementen een blok wel/niet toont (bv. geen
+     ondersteunende tekst ingevuld).
+     ------------------------------------------------------------------ */
+  --space-stack-heading: var(--space-md); /* kop -> ondersteunende tekst */
+  --space-stack-actions: var(--space-xl); /* tekst -> CTA/CTA-groep */
+  --space-cta-gap: var(--space-sm); /* tussen twee CTA's onderling */
+
   /* Containers/content-breedtes */
   --container: 1280px;
   --container-narrow: 720px; /* smalle tekstkolom, editorial leesbreedte */

@@ -33,6 +33,8 @@ const sectionsProjection = groq`
     headingLine2,
     subheading,
     image${image},
+    mediaType,
+    "videoUrl": video.asset->url,
     primaryCta,
     secondaryCta,
     size,

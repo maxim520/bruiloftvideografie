@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import CtaStack from "@/components/ui/CtaStack";
 import Reveal from "@/components/ui/Reveal";
 
 /**
@@ -15,13 +16,20 @@ export default function WeddingCta() {
     <section className="bg-background py-20 text-center md:py-24">
       <Container width="narrow">
         <Reveal>
-          <h2 className="mb-3 text-h2">Voelt dit als jullie?</h2>
-          <p className="mx-auto mb-8 max-w-[40ch] text-base leading-[1.8] text-text-muted">
-            Vertel me over jullie dag.
-          </p>
-          <Button href="/contact" variant="primary">
-            Check jullie datum
-          </Button>
+          <CtaStack
+            className="items-center"
+            heading={<h2 className="text-h2">Voelt dit als jullie?</h2>}
+            text={
+              <p className="mx-auto max-w-[40ch] text-base leading-[1.8] text-text-muted">
+                Vertel me over jullie dag.
+              </p>
+            }
+            actions={
+              <Button href="/contact" variant="primary">
+                Check jullie datum
+              </Button>
+            }
+          />
         </Reveal>
       </Container>
     </section>
