@@ -4,6 +4,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/JsonLd";
+import HeroManifestScript from "@/components/HeroManifestScript";
 import { getSiteSettings } from "@/lib/sanity/queries";
 import { buildLocalBusinessJsonLd } from "@/lib/structuredData";
 import { SITE_URL } from "@/lib/site";
@@ -108,6 +109,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${inter.variable}`}
       >
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
+        <HeroManifestScript />
         <SiteHeader
           logoName={siteSettings.logoName}
           logoSubline={siteSettings.logoSubline}

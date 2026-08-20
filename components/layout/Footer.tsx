@@ -36,13 +36,21 @@ export default function Footer({ settings }: FooterProps) {
   const { logoName, logoSubline, footer, business, headerCta } = settings;
   const socials = withRealHref(footer.socials);
   const navLinks = withRealHref(footer.navLinks);
-  const popularPages = withRealHref(footer.popularPages);
   const legalLinks = withRealHref(footer.legalLinks);
 
   return (
     <footer className="bg-[#1b1310] pt-[78px] text-white/[0.72]">
       <Container>
-        <div className="grid grid-cols-1 gap-10 pb-11 md:grid-cols-[1.6fr_1fr_1.3fr_1.2fr] md:gap-12 md:pb-14">
+        {/*
+          3 kolommen, niet 4: er is momenteel geen "Populaire pagina's"-content
+          die niet al ergens anders in de footer staat (de reportagepagina's
+          hebben nog geen eigen route, zie /verhalen/[slug] — expliciet
+          buiten deze fase). Zolang footer.popularPages leeg is, reserveert
+          een 4-koloms grid onvermijdelijk een zichtbare lege kolom (was zo
+          op productie); dat lost een lege heading niet op, dus de kolom
+          verdwijnt hier in plaats van hem verborgen leeg te laten staan.
+        */}
+        <div className="grid grid-cols-1 gap-10 pb-11 md:grid-cols-[1.6fr_1fr_1.2fr] md:gap-12 md:pb-14">
           <div>
             <span className="block text-white">
               <span className="block font-display text-[21px] font-medium uppercase leading-[1.1] tracking-[.16em]">
@@ -93,26 +101,6 @@ export default function Footer({ settings }: FooterProps) {
               <ul className="flex flex-col gap-[11px]">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {popularPages.length > 0 && (
-            <div>
-              <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
-                Populaire pagina&apos;s
-              </h3>
-              <ul className="flex flex-col gap-[11px]">
-                {popularPages.map((link) => (
-                  <li key={link.label}>
                     <Link
                       href={link.href}
                       className="text-sm transition-colors hover:text-white"

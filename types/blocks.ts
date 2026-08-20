@@ -484,8 +484,26 @@ export type SiteSettings = {
     aboutText: string;
     socials: SocialLink[];
     navLinks: NavLink[];
-    popularPages: NavLink[];
     legalLinks: NavLink[];
   };
   business: BusinessInfo;
+};
+
+/* ==========================================================================
+   Wedding — losse reportagedocumenten (Fase 2), zie studio/schemaTypes/
+   documents/wedding.ts. Dit type bevat alleen de velden die de
+   "featured weddings"-sectie op de homepage nodig heeft (kaartweergave),
+   niet het hele document — story/testimonial/suppliers/relatedWeddings
+   horen bij het reportage-detailtemplate (/verhalen/[slug], expliciet
+   buiten deze fase).
+   ========================================================================== */
+
+/** Eén bruiloft-reportage, kaartweergave voor de homepage. */
+export type WeddingCard = {
+  coupleNames: string;
+  slug: { current: string };
+  venue?: string;
+  city?: string;
+  region?: string;
+  heroImage: SanityImage;
 };

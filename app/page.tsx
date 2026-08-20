@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SectionRenderer from "@/components/SectionRenderer";
-import { getPageBySlug } from "@/lib/sanity/queries";
+import FeaturedWeddings from "@/components/blocks/FeaturedWeddings";
+import { getFeaturedWeddings, getPageBySlug } from "@/lib/sanity/queries";
 import { resolvePageMetadata } from "@/lib/sanity/metadata";
 
 const SLUG = "/";
@@ -18,8 +19,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const page = await getPageBySlug(SLUG);
+  const [page, featuredWeddings] = await Promise.all([
+    getPageBySlug(SLUG),
+    getFeaturedWeddings(),
+  ]);
   if (!page) notFound();
 
-  return <SectionRenderer sections={page.sections} />;
+  return (
+    <>
+      <SectionRenderer sections={page.sections} />
+      <FeaturedWeddings weddings={featuredWeddings} />
+    </>
+  );
 }

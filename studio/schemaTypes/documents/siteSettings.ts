@@ -68,13 +68,6 @@ export const siteSettings = defineType({
           validation: (Rule) => Rule.required(),
         }),
         defineField({
-          name: 'popularPages',
-          title: "Populaire pagina's",
-          type: 'array',
-          of: [{type: 'navLink'}],
-          validation: (Rule) => Rule.required(),
-        }),
-        defineField({
           name: 'legalLinks',
           title: 'Juridische links',
           description: 'Bijvoorbeeld privacybeleid en algemene voorwaarden.',

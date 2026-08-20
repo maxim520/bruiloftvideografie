@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { groq } from "next-sanity";
-import type { Page, SiteSettings } from "@/types/blocks";
+import type { Page, SiteSettings, WeddingCard } from "@/types/blocks";
 import { client } from "./client";
 
 /**
@@ -238,10 +238,30 @@ export const SITE_SETTINGS_QUERY = groq`
       aboutText,
       socials,
       navLinks,
-      popularPages,
       legalLinks
     },
     business
+  }
+`;
+
+/**
+ * Voor de "featured weddings"-sectie op de homepage — kaartweergave, dus
+ * alleen de velden die die kaart nodig heeft (zie WeddingCard). Geen limiet
+ * op het aantal: `featured` is een bewuste keuze per document in Studio, de
+ * component zelf begrenst hoeveel er getoond worden.
+ */
+const FEATURED_WEDDINGS_QUERY = groq`
+  *[
+    _type == "wedding" &&
+    featured == true &&
+    !(_id in path("drafts.**"))
+  ] | order(date desc){
+    coupleNames,
+    slug,
+    venue,
+    city,
+    region,
+    heroImage${image}
   }
 `;
 
@@ -284,4 +304,8 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
 
 export const getAllPageSlugs = cache(async (): Promise<PageSlugEntry[]> => {
   return client.fetch<PageSlugEntry[]>(ALL_PAGE_SLUGS_QUERY);
+});
+
+export const getFeaturedWeddings = cache(async (): Promise<WeddingCard[]> => {
+  return client.fetch<WeddingCard[]>(FEATURED_WEDDINGS_QUERY);
 });

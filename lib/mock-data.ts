@@ -819,13 +819,6 @@ export const siteSettings: SiteSettings = {
       { label: "Video", href: "#" },
       { label: "Pakketten", href: "#" },
     ],
-    popularPages: [
-      { label: "Trouwfotograaf Gelderland", href: "#" },
-      { label: "Trouwfotograaf Utrecht", href: "#" },
-      { label: "Trouwfotograaf Amsterdam", href: "#" },
-      { label: "Trouwvideograaf Nederland", href: "#" },
-      { label: "Destination wedding", href: "#" },
-    ],
     legalLinks: [
       { label: "Privacyverklaring", href: "#" },
       { label: "Algemene voorwaarden", href: "#" },
