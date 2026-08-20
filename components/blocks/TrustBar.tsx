@@ -11,7 +11,7 @@ export default function TrustBar({ block }: TrustBarProps) {
   if (block.items.length === 0) return null;
 
   return (
-    <section aria-label="Waar wij voor staan" className="border-b border-border bg-surface-light">
+    <section aria-label="Waar ik voor sta" className="border-b border-border bg-surface-light">
       <Container>
         <Reveal>
           <div className="grid grid-cols-1 py-2 md:grid-cols-4 md:py-[34px]">

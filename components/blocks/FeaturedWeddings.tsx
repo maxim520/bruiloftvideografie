@@ -7,22 +7,36 @@ import type { WeddingCard } from "@/types/blocks";
 
 type FeaturedWeddingsProps = {
   weddings: WeddingCard[];
+  eyebrow?: string;
+  heading?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** Hoeveel kaarten tonen — over-mij (Fase 6, sectie 17) wil er 2-3, de homepage 4. */
+  limit?: number;
 };
 
 /**
- * Toont de losse `wedding`-documenten (Fase 2) op de homepage — los van,
- * en zonder te raken aan, page-fotografie's bestaande reportageList
- * (die twee databronnen bestaan tot een expliciete migratie, zie
+ * Toont de losse `wedding`-documenten (Fase 2) — los van, en zonder te
+ * raken aan, page-fotografie's bestaande reportageList (die twee
+ * databronnen bestaan tot een expliciete migratie, zie
  * studio/schemaTypes/documents/wedding.ts).
  *
- * Fase 4: elke kaart linkt nu naar zijn echte /verhalen/[slug]-pagina
- * (bestond nog niet in Fase 3). De sectie-CTA blijft naar /fotografie
- * wijzen ("Bekijk alle verhalen"): dat is nu een bewuste keuze — de
- * bestaande overzichtspagina daar toont de langerlopende reportageList,
- * /verhalen is het nieuwe, kleinere overzicht van losse documenten.
+ * Herbruikbaar over pagina's heen (Fase 6, sectie 17: ook op /over-mij,
+ * met eigen intro-copy "Zo ziet die manier van werken eruit.") — vandaar
+ * de optionele eyebrow/heading/cta-overrides i.p.v. een tweede,
+ * bijna-identieke component.
+ *
+ * Fase 4: elke kaart linkt naar zijn echte /verhalen/[slug]-pagina.
  */
-export default function FeaturedWeddings({ weddings }: FeaturedWeddingsProps) {
-  const featured = weddings.slice(0, 4);
+export default function FeaturedWeddings({
+  weddings,
+  eyebrow = "Uitgelicht",
+  heading = "Bruiloften die ik mocht vastleggen.",
+  ctaLabel = "Bekijk de verhalen",
+  ctaHref = "/verhalen",
+  limit = 4,
+}: FeaturedWeddingsProps) {
+  const featured = weddings.slice(0, limit);
 
   if (featured.length === 0) return null;
 
@@ -31,9 +45,9 @@ export default function FeaturedWeddings({ weddings }: FeaturedWeddingsProps) {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Uitgelicht"
-            heading="Bruiloften die wij mochten vastleggen."
-            cta={{ label: "Bekijk alle verhalen", href: "/verhalen" }}
+            eyebrow={eyebrow}
+            heading={heading}
+            cta={{ label: ctaLabel, href: ctaHref }}
             className="mb-11 [&_h2]:max-w-[22ch]"
           />
 

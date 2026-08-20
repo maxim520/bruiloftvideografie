@@ -1,4 +1,4 @@
-import type { SiteSettings, Wedding } from "@/types/blocks";
+import type { SanityImage, SiteSettings, Wedding } from "@/types/blocks";
 import { SITE_URL } from "@/lib/site";
 import { urlFor, isSanityAssetImage } from "@/lib/sanity/image";
 
@@ -52,6 +52,40 @@ export function buildLocalBusinessJsonLd(siteSettings: SiteSettings): object {
     },
     areaServed: ["Nederland", "Europa"],
     ...(sameAs.length > 0 && { sameAs }),
+  };
+}
+
+/**
+ * Sectie 31 (Fase 6): Person-structured data voor Jeroen op /over-mij —
+ * uitsluitend velden die daadwerkelijk uit Sanity komen (storyIntro's
+ * naam/rol/foto, al live content, niets nieuw verzonnen). Geen `sameAs`:
+ * er zijn geen echte social-URL's in siteSettings.footer.socials (leeg
+ * sinds Fase 2) — die verzin ik dus niet bij.
+ */
+export function buildPersonJsonLd(params: {
+  name: string;
+  jobTitle?: string;
+  image?: SanityImage;
+  worksForName: string;
+}): object {
+  const { name, jobTitle, image, worksForName } = params;
+  const imageUrl =
+    image && isSanityAssetImage(image)
+      ? urlFor(image).width(800).height(1000).fit("crop").auto("format").quality(78).url()
+      : undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    url: `${SITE_URL}/over-mij`,
+    ...(jobTitle && { jobTitle }),
+    ...(imageUrl && { image: imageUrl }),
+    worksFor: {
+      "@type": "Organization",
+      name: worksForName,
+      url: SITE_URL,
+    },
   };
 }
 

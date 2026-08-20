@@ -428,6 +428,20 @@ export type StoryIntroBlock = {
   images: SanityImage[];
 };
 
+/**
+ * Compacte "dit is de persoon achter het merk"-sectie (Fase 6, sectie 18)
+ * — géén tweede StoryIntroBlock: precies één alinea, één foto, één CTA.
+ * Komt voor op: home.
+ */
+export type PersonalIntroBlock = {
+  _type: "personalIntro";
+  eyebrow?: string;
+  heading: string;
+  text: string;
+  image: SanityImage;
+  cta: CtaLink;
+};
+
 /** Unie van alle bloktypes die op een pagina kunnen voorkomen. */
 export type Block =
   | HeroBlock
@@ -445,6 +459,7 @@ export type Block =
   | ContactFormBlock
   | FinalCtaBlock
   | StoryIntroBlock
+  | PersonalIntroBlock
   | PricingBlock;
 
 /** Eén pagina, opgebouwd uit een geordende lijst blokken. */

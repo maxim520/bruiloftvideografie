@@ -36,6 +36,7 @@ import {contactForm} from './blocks/contactForm'
 import {finalCta} from './blocks/finalCta'
 import {storyIntro} from './blocks/storyIntro'
 import {pricing} from './blocks/pricing'
+import {personalIntro} from './blocks/personalIntro'
 
 import {page} from './documents/page'
 import {siteSettings} from './documents/siteSettings'
@@ -64,6 +65,7 @@ export const schemaTypes = [
   finalCta,
   storyIntro,
   pricing,
+  personalIntro,
 
   // Gedeelde objecttypes
   ctaLink,

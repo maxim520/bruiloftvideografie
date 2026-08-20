@@ -25,10 +25,19 @@ export default async function HomePage() {
   ]);
   if (!page) notFound();
 
+  // Fase 6, sectie 19: Wedding Stories (bewijs) vóór de allerlaatste
+  // conversiestap (finalCta), niet erna — dezelfde
+  // [hero, ...rest]-splitspatroon als app/fotografie/page.tsx, hier aan
+  // het eind van de array i.p.v. het begin. finalCta staat op elke
+  // pagina altijd als laatste sectie.
+  const finalCta = page.sections.at(-1);
+  const sectionsBeforeFinalCta = page.sections.slice(0, -1);
+
   return (
     <>
-      <SectionRenderer sections={page.sections} />
+      <SectionRenderer sections={sectionsBeforeFinalCta} />
       <FeaturedWeddings weddings={featuredWeddings} />
+      {finalCta && <SectionRenderer sections={[finalCta]} />}
     </>
   );
 }

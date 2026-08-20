@@ -198,6 +198,14 @@ const sectionsProjection = groq`
       features,
       cta
     }
+  },
+  _type == "personalIntro" => {
+    _type,
+    eyebrow,
+    heading,
+    text,
+    image${image},
+    cta
   }
 `;
 

@@ -56,6 +56,7 @@ export const page = defineType({
         {type: 'finalCta'},
         {type: 'storyIntro'},
         {type: 'pricing'},
+        {type: 'personalIntro'},
       ],
       options: {
         insertMenu: {
@@ -69,7 +70,7 @@ export const page = defineType({
             {
               name: 'inhoudEnVerhaal',
               title: 'Inhoud & verhaal',
-              of: ['benefits', 'process', 'storyIntro', 'quote', 'stats', 'pricing'],
+              of: ['benefits', 'process', 'storyIntro', 'personalIntro', 'quote', 'stats', 'pricing'],
             },
             {name: 'socialProof', title: 'Reviews & reportages', of: ['reviews', 'reportageList']},
             {name: 'vragenEnContact', title: 'Vragen & contact', of: ['faq', 'contactForm']},
