@@ -3,6 +3,13 @@ import Container from "./Container";
 
 type BreadcrumbProps = {
   currentLabel: string;
+  /**
+   * Optioneel tussenliggend niveau (Home → parent → currentLabel), bv.
+   * "Verhalen" op de wedding-detailpagina's. Zonder deze prop blijft het
+   * bestaande 2-niveau-gedrag (Home → currentLabel) op /fotografie en
+   * /contact ongewijzigd.
+   */
+  parent?: { label: string; href: string };
 };
 
 /**
@@ -15,7 +22,7 @@ type BreadcrumbProps = {
  * vaste plek direct onder de hero — zie app/fotografie/page.tsx en
  * app/contact/page.tsx.
  */
-export default function Breadcrumb({ currentLabel }: BreadcrumbProps) {
+export default function Breadcrumb({ currentLabel, parent }: BreadcrumbProps) {
   return (
     <nav aria-label="Kruimelpad" className="border-b border-border bg-surface-light">
       <Container>
@@ -25,6 +32,16 @@ export default function Breadcrumb({ currentLabel }: BreadcrumbProps) {
               Home
             </Link>
           </li>
+          {parent && (
+            <>
+              <li aria-hidden="true">&middot;</li>
+              <li>
+                <Link href={parent.href} className="transition-colors hover:text-copper">
+                  {parent.label}
+                </Link>
+              </li>
+            </>
+          )}
           <li aria-hidden="true">&middot;</li>
           <li>
             <span aria-current="page" className="text-text">

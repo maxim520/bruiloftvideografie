@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllPageSlugs } from "@/lib/sanity/queries";
+import { getAllPageSlugs, getAllWeddings } from "@/lib/sanity/queries";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -15,13 +15,27 @@ import { SITE_URL } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const pages = await getAllPageSlugs();
+  const [pages, weddings] = await Promise.all([getAllPageSlugs(), getAllWeddings()]);
 
-  return pages.map((page) => ({
+  const pageEntries = pages.map((page) => ({
     // Sluitende slash voor consistentie met trailingSlash: true — dat is
     // ook wat canonical/og:url elders al opleveren (geverifieerd in de
     // gebouwde HTML), dus de sitemap moet dezelfde vorm gebruiken.
     url: page.slug === "/" ? `${SITE_URL}/` : `${SITE_URL}${page.slug}/`,
     lastModified: page.updatedAt,
   }));
+
+  // Fase 4: /verhalen (overzicht) + elke /verhalen/[slug]. WeddingCard
+  // heeft geen _updatedAt (die lichte kaartweergave wordt ook door de
+  // homepage en /verhalen zelf gebruikt) — lastModified is optioneel in
+  // Next's sitemap-type, dus simpelweg weglaten i.p.v. de query overal
+  // zwaarder te maken voor één extra veld.
+  const weddingEntries = [
+    { url: `${SITE_URL}/verhalen/` },
+    ...weddings.map((wedding) => ({
+      url: `${SITE_URL}/verhalen/${wedding.slug.current}/`,
+    })),
+  ];
+
+  return [...pageEntries, ...weddingEntries];
 }

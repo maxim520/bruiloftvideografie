@@ -14,6 +14,11 @@ import {faqItem} from './objects/faqItem'
 import {contactFormPerk} from './objects/contactFormPerk'
 import {supplier} from './objects/supplier'
 import {pricingItem} from './objects/pricingItem'
+import {storyImage} from './objects/storyImage'
+import {storyImagePair} from './objects/storyImagePair'
+import {storyText} from './objects/storyText'
+import {storyQuote} from './objects/storyQuote'
+import {storySpacer} from './objects/storySpacer'
 
 import {hero} from './blocks/hero'
 import {trustBar} from './blocks/trustBar'
@@ -77,4 +82,9 @@ export const schemaTypes = [
   contactFormPerk,
   supplier,
   pricingItem,
+  storyImage,
+  storyImagePair,
+  storyText,
+  storyQuote,
+  storySpacer,
 ]

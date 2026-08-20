@@ -1,5 +1,6 @@
-import type { SiteSettings } from "@/types/blocks";
+import type { SiteSettings, Wedding } from "@/types/blocks";
 import { SITE_URL } from "@/lib/site";
+import { urlFor, isSanityAssetImage } from "@/lib/sanity/image";
 
 /**
  * Zet Nederlandse notatie ("06 12 34 56 78") om naar E.164 ("+31612345678")
@@ -69,5 +70,65 @@ export function buildBreadcrumbJsonLd(items: BreadcrumbEntry[]): object {
       name: item.name,
       item: `${SITE_URL}${item.path}`,
     })),
+  };
+}
+
+/**
+ * Sectie 17 (Fase 4): Article voor een wedding-reportagepagina — echte
+ * editorial content (foto's + verhaal), geen productpagina of blogpost.
+ * datePublished/dateModified komen uit Sanity's eigen _createdAt/
+ * _updatedAt: er is geen apart "gepubliceerd op"-veld in het schema, en
+ * dit zijn de enige daadwerkelijk beschikbare tijdstempels — geen
+ * verzonnen datum.
+ */
+export function buildWeddingArticleJsonLd(wedding: Wedding, siteSettings: SiteSettings): object {
+  const url = `${SITE_URL}/verhalen/${wedding.slug.current}/`;
+  const image =
+    isSanityAssetImage(wedding.heroImage) &&
+    urlFor(wedding.heroImage).width(1200).height(800).fit("crop").auto("format").quality(78).url();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: wedding.seo.title,
+    description: wedding.seo.description,
+    url,
+    datePublished: wedding._createdAt,
+    dateModified: wedding._updatedAt,
+    ...(image && { image: [image] }),
+    author: {
+      "@type": "Organization",
+      name: siteSettings.logoName,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteSettings.logoName,
+      url: SITE_URL,
+    },
+  };
+}
+
+/**
+ * VideoObject, alleen wanneer wedding.filmUrl daadwerkelijk is ingevuld
+ * (zie app/verhalen/[slug]/page.tsx — deze functie wordt niet aangeroepen
+ * zonder film). uploadDate is dezelfde _createdAt-benadering als
+ * hierboven: geen eigen "geüpload op"-datum bekend, _createdAt is de
+ * meest eerlijke beschikbare waarde, niet verzonnen.
+ */
+export function buildWeddingVideoJsonLd(wedding: Wedding, filmUrl: string): object {
+  const thumbnail =
+    isSanityAssetImage(wedding.heroImage) &&
+    urlFor(wedding.heroImage).width(1200).height(675).fit("crop").auto("format").quality(78).url();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: `Trouwfilm ${wedding.coupleNames}`,
+    description: wedding.seo.description,
+    uploadDate: wedding._createdAt,
+    embedUrl: filmUrl,
+    ...(thumbnail && { thumbnailUrl: [thumbnail] }),
   };
 }

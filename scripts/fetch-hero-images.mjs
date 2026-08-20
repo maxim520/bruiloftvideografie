@@ -45,7 +45,14 @@ const OUT_DIR = path.resolve(process.cwd(), "public/_hero-cache");
 const BROWSER_ACCEPT = "image/avif,image/webp,image/apng,image/*,*/*;q=0.8";
 
 async function queryHeroImages() {
-  const query = `*[_type == "page" && defined(sections[_type == "hero"][0].image.asset._ref)]{ "ref": sections[_type == "hero"][0].image.asset._ref }`;
+  // Fase 4: naast elke pagina's hero (sections[_type=="hero"]) ook elke
+  // wedding.heroImage — dat is op /verhalen/[slug] evengoed het
+  // LCP-element, en verdient dezelfde lokale cache (zie sectie 4 van de
+  // Fase 4-brief: "behandel de hero opnieuw als LCP-kritisch").
+  const query = `[
+    ...*[_type == "page" && defined(sections[_type == "hero"][0].image.asset._ref)]{ "ref": sections[_type == "hero"][0].image.asset._ref },
+    ...*[_type == "wedding" && defined(heroImage.asset._ref)]{ "ref": heroImage.asset._ref }
+  ]`;
   const url = `https://${PROJECT_ID}.api.sanity.io/v2024-01-01/data/query/${DATASET}?query=${encodeURIComponent(query)}`;
   const res = await fetch(url);
   if (!res.ok) {

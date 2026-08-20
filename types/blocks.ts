@@ -490,12 +490,8 @@ export type SiteSettings = {
 };
 
 /* ==========================================================================
-   Wedding — losse reportagedocumenten (Fase 2), zie studio/schemaTypes/
-   documents/wedding.ts. Dit type bevat alleen de velden die de
-   "featured weddings"-sectie op de homepage nodig heeft (kaartweergave),
-   niet het hele document — story/testimonial/suppliers/relatedWeddings
-   horen bij het reportage-detailtemplate (/verhalen/[slug], expliciet
-   buiten deze fase).
+   Wedding — losse reportagedocumenten (Fase 2/4), zie studio/schemaTypes/
+   documents/wedding.ts.
    ========================================================================== */
 
 /** Eén bruiloft-reportage, kaartweergave voor de homepage. */
@@ -506,4 +502,92 @@ export type WeddingCard = {
   city?: string;
   region?: string;
   heroImage: SanityImage;
+};
+
+/** Eén blok in wedding.storyBlocks — een foto in een gekozen editorial-uitvoering. */
+export type StoryImageBlock = {
+  _type: "storyImage";
+  _key: string;
+  image: SanityImage;
+  variant: "full-bleed" | "full-width-landscape" | "large-portrait" | "small-editorial";
+};
+
+/** Eén blok in wedding.storyBlocks — twee foto's naast elkaar. */
+export type StoryImagePairBlock = {
+  _type: "storyImagePair";
+  _key: string;
+  images: [SanityImage, SanityImage];
+  layout: "even" | "asymmetric";
+};
+
+/** Eén blok in wedding.storyBlocks — kort tekstblok tussen de foto's. */
+export type StoryTextBlock = {
+  _type: "storyText";
+  _key: string;
+  heading?: string;
+  text: string;
+};
+
+/** Eén blok in wedding.storyBlocks — korte pull-quote middenin het verhaal. */
+export type StoryQuoteBlock = {
+  _type: "storyQuote";
+  _key: string;
+  quote: string;
+  attribution?: string;
+};
+
+/** Eén blok in wedding.storyBlocks — pure witruimte. */
+export type StorySpacerBlock = {
+  _type: "storySpacer";
+  _key: string;
+  size: "md" | "lg" | "xl";
+};
+
+export type StoryBlock =
+  | StoryImageBlock
+  | StoryImagePairBlock
+  | StoryTextBlock
+  | StoryQuoteBlock
+  | StorySpacerBlock;
+
+/** Eén leverancier bij een bruiloft (locatie, bloemist, ...). Spiegelt objects/supplier.ts. */
+export type Supplier = {
+  role: string;
+  name: string;
+  url?: string;
+};
+
+/** Grote editorial quote van het bruidspaar, spiegelt wedding.testimonial. */
+export type WeddingTestimonial = {
+  quote: string;
+  name?: string;
+};
+
+/**
+ * Volledig wedding-document voor de reportagedetailpagina
+ * (/verhalen/[slug], Fase 4). WeddingCard hierboven blijft de lichte
+ * kaartweergave voor de homepage — dit type bevat alles wat de
+ * detailpagina daarnaast nodig heeft.
+ */
+export type Wedding = {
+  coupleNames: string;
+  slug: { current: string };
+  date?: string;
+  _createdAt: string;
+  _updatedAt: string;
+  venue?: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  intro: string;
+  heroImage: SanityImage;
+  gallery: SanityImage[];
+  storyBlocks?: StoryBlock[];
+  filmUrl?: string;
+  venueContext?: string;
+  testimonial?: WeddingTestimonial;
+  suppliers?: Supplier[];
+  featured: boolean;
+  relatedWeddings?: WeddingCard[];
+  seo: Seo;
 };

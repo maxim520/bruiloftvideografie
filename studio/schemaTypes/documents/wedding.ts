@@ -94,7 +94,9 @@ export const wedding = defineType({
     }),
     defineField({
       name: 'gallery',
-      title: 'Fotogalerij',
+      title: 'Fotogalerij (eenvoudig)',
+      description:
+        'Gebruikt als er geen storyBlocks zijn ingevuld: het reportage-template legt deze foto\'s dan automatisch in een gevarieerde editorial-compositie. Vul storyBlocks hieronder in voor volledige controle over de layout.',
       type: 'array',
       of: [
         {
@@ -112,6 +114,20 @@ export const wedding = defineType({
       ],
     }),
     defineField({
+      name: 'storyBlocks',
+      title: 'Verhaal — opbouw (geavanceerd)',
+      description:
+        'Optioneel: bouw het verhaal handmatig op uit foto\'s, fotoduo\'s, korte tekst, een pull-quote en witruimte, in de volgorde die je kiest. Leeg? Dan valt de pagina terug op de eenvoudige fotogalerij hierboven.',
+      type: 'array',
+      of: [
+        {type: 'storyImage'},
+        {type: 'storyImagePair'},
+        {type: 'storyText'},
+        {type: 'storyQuote'},
+        {type: 'storySpacer'},
+      ],
+    }),
+    defineField({
       name: 'filmUrl',
       title: 'Film (URL)',
       description:
@@ -124,6 +140,15 @@ export const wedding = defineType({
       description: 'Het volledige verhaal bij de reportage — spaarzaam gebruiken, het beeld vertelt het grootste deel.',
       type: 'array',
       of: [{type: 'block'}],
+    }),
+    defineField({
+      name: 'venueContext',
+      title: 'Over deze locatie (optioneel)',
+      description:
+        'Korte, specifiek voor déze locatie geschreven tekst (sfeer, licht, ceremonie) — voor SEO-waarde op de reportagepagina. Alleen invullen als er echt iets locatie-specifieks te zeggen is; leeg laten toont geen sectie (geen automatisch gegenereerde tekst).',
+      type: 'text',
+      rows: 4,
+      validation: (Rule) => Rule.max(600),
     }),
     defineField({
       name: 'testimonial',

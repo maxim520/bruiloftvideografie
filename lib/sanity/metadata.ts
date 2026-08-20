@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { Page } from "@/types/blocks";
+import type { Page, Wedding } from "@/types/blocks";
 import { urlFor, isSanityAssetImage } from "./image";
 
 type MetadataFallback = {
@@ -59,6 +59,61 @@ export function resolvePageMetadata(page: Page, fallback: MetadataFallback): Met
       siteName: "Behind Every Wedding",
       locale: "nl_NL",
       type: "website",
+      ...(images && { images }),
+    },
+    twitter: {
+      card: images ? "summary_large_image" : "summary",
+      title,
+      description,
+      ...(images && { images }),
+    },
+  };
+}
+
+/**
+ * Sectie 16 (Fase 4): zelfde opbouw als resolvePageMetadata, met twee
+ * wedding-specifieke verschillen: de titel-fallback volgt het gevraagde
+ * patroon ("Sanne & Daan — Kasteel Maurick | Behind Every Wedding"), en
+ * ogImage valt terug op de hero-foto in plaats van helemaal leeg te
+ * blijven — elke wedding heeft er sowieso al één, dus dat is geen
+ * verzonnen content, alleen een zinnig hergebruik van wat al bestaat.
+ */
+export function resolveWeddingMetadata(wedding: Wedding): Metadata {
+  const { seo, coupleNames, venue, heroImage } = wedding;
+  const title = seo.title || `${coupleNames}${venue ? ` — ${venue}` : ""} | Behind Every Wedding`;
+  const description = seo.description || wedding.intro;
+  const ogSource =
+    seo.ogImage && isSanityAssetImage(seo.ogImage)
+      ? seo.ogImage
+      : isSanityAssetImage(heroImage)
+        ? heroImage
+        : undefined;
+  const url = `/verhalen/${wedding.slug.current}`;
+
+  const images = ogSource
+    ? [
+        {
+          url: urlFor(ogSource).width(1200).height(630).fit("crop").auto("format").quality(78).url(),
+          width: 1200,
+          height: 630,
+          alt: ogSource.alt,
+        },
+      ]
+    : undefined;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Behind Every Wedding",
+      locale: "nl_NL",
+      type: "article",
       ...(images && { images }),
     },
     twitter: {

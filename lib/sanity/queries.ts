@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { groq } from "next-sanity";
-import type { Page, SiteSettings, WeddingCard } from "@/types/blocks";
+import type { Page, SiteSettings, Wedding, WeddingCard } from "@/types/blocks";
 import { client } from "./client";
 
 /**
@@ -266,6 +266,118 @@ const FEATURED_WEDDINGS_QUERY = groq`
 `;
 
 /**
+ * Alle velden van storyBlocks (Fase 4) — hetzelfde per-_type-patroon als
+ * sectionsProjection hierboven, om dezelfde reden: expliciet opsommen
+ * i.p.v. `...` spreaden.
+ */
+const storyBlocksProjection = groq`
+  _type == "storyImage" => {
+    _type,
+    _key,
+    image${image},
+    variant
+  },
+  _type == "storyImagePair" => {
+    _type,
+    _key,
+    images[]${image},
+    layout
+  },
+  _type == "storyText" => {
+    _type,
+    _key,
+    heading,
+    text
+  },
+  _type == "storyQuote" => {
+    _type,
+    _key,
+    quote,
+    attribution
+  },
+  _type == "storySpacer" => {
+    _type,
+    _key,
+    size
+  }
+`;
+
+/** Kaartweergave van een wedding — hetzelfde shape als FEATURED_WEDDINGS_QUERY, herbruikt voor relatedWeddings-dereferencing. */
+const weddingCardProjection = groq`{
+  coupleNames,
+  slug,
+  venue,
+  city,
+  region,
+  heroImage${image}
+}`;
+
+/**
+ * Eén volledige wedding voor de reportagedetailpagina (/verhalen/[slug]).
+ * relatedWeddings wordt gedereferentieerd naar dezelfde kaartvorm als de
+ * homepage gebruikt, zodat NextStory geen aparte lookup nodig heeft.
+ */
+export const WEDDING_BY_SLUG_QUERY = groq`
+  *[
+    _type == "wedding" &&
+    slug.current == $slug &&
+    !(_id in path("drafts.**"))
+  ][0]{
+    coupleNames,
+    slug,
+    date,
+    _createdAt,
+    _updatedAt,
+    venue,
+    city,
+    region,
+    country,
+    intro,
+    heroImage${image},
+    gallery[]${image},
+    storyBlocks[]{
+      ${storyBlocksProjection}
+    },
+    filmUrl,
+    venueContext,
+    testimonial,
+    suppliers,
+    featured,
+    "relatedWeddings": relatedWeddings[]->${weddingCardProjection},
+    seo{
+      title,
+      description,
+      ogImage${image}
+    }
+  }
+`;
+
+/** Voor generateStaticParams: elke gepubliceerde wedding-slug, voor de volledige statische export. */
+const ALL_WEDDING_SLUGS_QUERY = groq`
+  *[
+    _type == "wedding" &&
+    defined(slug.current) &&
+    !(_id in path("drafts.**"))
+  ]{
+    "slug": slug.current
+  }
+`;
+
+/**
+ * Lichte kaartweergave van alle weddings, op een vaste, voorspelbare
+ * volgorde — gebruikt door zowel /verhalen (overzicht) als de "volgende
+ * reportage"-fallback op de detailpagina (zie lib/wedding/nextWedding.ts).
+ * coalesce(date, _createdAt): date is optioneel en bij alle 4 huidige
+ * weddings nog leeg, zonder fallback zou de volgorde dan willekeurig zijn.
+ */
+const ALL_WEDDINGS_QUERY = groq`
+  *[
+    _type == "wedding" &&
+    !(_id in path("drafts.**"))
+  ] | order(coalesce(date, _createdAt) desc)${weddingCardProjection}
+`;
+
+/**
  * Alleen slug + laatste wijzigingsdatum, voor app/sitemap.ts. Een aparte,
  * lichte query i.p.v. dit veld aan PAGE_BY_SLUG_QUERY toevoegen: geen
  * enkele pagina zelf heeft _updatedAt nodig, alleen de sitemap.
@@ -308,4 +420,21 @@ export const getAllPageSlugs = cache(async (): Promise<PageSlugEntry[]> => {
 
 export const getFeaturedWeddings = cache(async (): Promise<WeddingCard[]> => {
   return client.fetch<WeddingCard[]>(FEATURED_WEDDINGS_QUERY);
+});
+
+export type WeddingSlugEntry = {
+  slug: string;
+};
+
+export const getWeddingBySlug = cache(async (slug: string): Promise<Wedding | null> => {
+  const wedding = await client.fetch<Wedding | null>(WEDDING_BY_SLUG_QUERY, { slug });
+  return wedding ?? null;
+});
+
+export const getAllWeddingSlugs = cache(async (): Promise<WeddingSlugEntry[]> => {
+  return client.fetch<WeddingSlugEntry[]>(ALL_WEDDING_SLUGS_QUERY);
+});
+
+export const getAllWeddings = cache(async (): Promise<WeddingCard[]> => {
+  return client.fetch<WeddingCard[]>(ALL_WEDDINGS_QUERY);
 });
