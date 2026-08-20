@@ -65,6 +65,16 @@ export default async function WeddingPage({ params }: WeddingPageProps) {
 
   const next = resolveNextWedding(wedding, allWeddings);
 
+  // filmSource ontbreekt op reportages van vóór dit veld — dan gold het
+  // enige toenmalige gedrag (url), zie ook de hidden-conditie in het
+  // Studio-schema (wedding.ts) die om dezelfde reden dezelfde fallback hanteert.
+  const film =
+    (wedding.filmSource ?? "url") === "upload" && wedding.filmFileUrl
+      ? ({ source: "upload", url: wedding.filmFileUrl } as const)
+      : wedding.filmUrl
+        ? ({ source: "url", url: wedding.filmUrl } as const)
+        : null;
+
   return (
     <>
       <JsonLd
@@ -75,18 +85,14 @@ export default async function WeddingPage({ params }: WeddingPageProps) {
         ])}
       />
       <JsonLd data={buildWeddingArticleJsonLd(wedding, siteSettings)} />
-      {wedding.filmUrl && <JsonLd data={buildWeddingVideoJsonLd(wedding, wedding.filmUrl)} />}
+      {film && <JsonLd data={buildWeddingVideoJsonLd(wedding, film)} />}
 
       <WeddingHero wedding={wedding} />
       <Breadcrumb currentLabel={wedding.coupleNames} parent={{ label: "Verhalen", href: "/verhalen" }} />
       <EditorialIntro intro={wedding.intro} />
       <StoryLayout storyBlocks={wedding.storyBlocks} gallery={wedding.gallery} />
-      {wedding.filmUrl && (
-        <FilmMoment
-          filmUrl={wedding.filmUrl}
-          posterImage={wedding.heroImage}
-          coupleNames={wedding.coupleNames}
-        />
+      {film && (
+        <FilmMoment film={film} posterImage={wedding.heroImage} coupleNames={wedding.coupleNames} />
       )}
       <TestimonialQuote testimonial={wedding.testimonial} />
       <Suppliers suppliers={wedding.suppliers} />

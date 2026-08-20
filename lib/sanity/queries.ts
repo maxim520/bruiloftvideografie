@@ -377,7 +377,9 @@ export const WEDDING_BY_SLUG_QUERY = groq`
     storyBlocks[]{
       ${storyBlocksProjection}
     },
+    filmSource,
     filmUrl,
+    "filmFileUrl": filmFile.asset->url,
     venueContext,
     testimonial,
     suppliers,

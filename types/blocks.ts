@@ -608,7 +608,9 @@ export type Wedding = {
   heroImage: SanityImage;
   gallery: SanityImage[];
   storyBlocks?: StoryBlock[];
+  filmSource?: "url" | "upload";
   filmUrl?: string;
+  filmFileUrl?: string;
   venueContext?: string;
   testimonial?: WeddingTestimonial;
   suppliers?: Supplier[];

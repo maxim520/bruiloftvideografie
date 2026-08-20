@@ -128,11 +128,46 @@ export const wedding = defineType({
       ],
     }),
     defineField({
+      name: 'filmSource',
+      title: 'Bron van de trouwfilm',
+      description: 'Kies hoe de trouwfilm hieronder wordt aangeleverd, indien van toepassing.',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Externe link (YouTube/Vimeo)', value: 'url'},
+          {title: 'Eigen upload', value: 'upload'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'url',
+    }),
+    defineField({
       name: 'filmUrl',
       title: 'Film (URL)',
-      description:
-        'Link naar de trouwfilm (bijv. Vimeo/YouTube), indien beschikbaar. Hoe dit precies wordt weergegeven volgt in de fase waarin de filmspeler gebouwd wordt.',
+      description: 'Link naar de trouwfilm op YouTube of Vimeo.',
       type: 'url',
+      // Bestaande reportages van vóór dit veld hebben geen filmSource
+      // opgeslagen — ontbrekend moet dus als 'url' tellen (het oude,
+      // enige gedrag), anders verdwijnt filmUrl voor hen stilzwijgend uit
+      // de Studio-UI totdat iemand het radiobutton-veld handmatig opslaat.
+      hidden: ({parent}: {parent?: {filmSource?: string}}) => (parent?.filmSource ?? 'url') !== 'url',
+    }),
+    defineField({
+      name: 'filmFile',
+      title: 'Film (upload)',
+      description:
+        'Upload een al gecomprimeerd, web-geoptimaliseerd bestand: H.264 MP4, bij voorkeur onder de ~150 MB. Sanity comprimeert dit zelf niet.',
+      type: 'file',
+      options: {accept: 'video/mp4,video/webm'},
+      hidden: ({parent}: {parent?: {filmSource?: string}}) => parent?.filmSource !== 'upload',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as {filmSource?: string} | undefined;
+          if (parent?.filmSource === 'upload' && !value) {
+            return 'Verplicht wanneer "Bron van de trouwfilm" op Eigen upload staat.';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'story',

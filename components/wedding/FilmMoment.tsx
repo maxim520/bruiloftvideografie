@@ -7,7 +7,7 @@ import SafeImage from "@/components/ui/SafeImage";
 import type { SanityImage } from "@/types/blocks";
 
 type FilmMomentProps = {
-  filmUrl: string;
+  film: { source: "url"; url: string } | { source: "upload"; url: string };
   posterImage: SanityImage;
   coupleNames: string;
 };
@@ -42,16 +42,22 @@ function toEmbedUrl(url: string): string {
 
 /**
  * Sectie 10: de film krijgt een eigen cinematografisch moment, geen los
- * technisch blok. "Deferred load": de video (iframe) wordt pas
- * aangemaakt ná een klik van de bezoeker — vóór die klik is er alleen
- * een posterfoto + afspeelknop, geen enkele video-request of -script.
- * Vandaar "use client": de klik-naar-onthullen-interactie heeft state
- * nodig, maar er wordt niets opgehaald en er is niets dat server- en
- * client-rendering kan laten verschillen (de poster ziet er vóór elke
- * interactie identiek uit), dus geen hydration-risico.
+ * technisch blok. "Deferred load": de video wordt pas aangemaakt ná een
+ * klik van de bezoeker — vóór die klik is er alleen een posterfoto +
+ * afspeelknop, geen enkele video-request of -script. Vandaar "use client":
+ * de klik-naar-onthullen-interactie heeft state nodig, maar er wordt
+ * niets opgehaald en er is niets dat server- en client-rendering kan
+ * laten verschillen (de poster ziet er vóór elke interactie identiek
+ * uit), dus geen hydration-risico.
+ *
+ * Twee bronnen, één weergave: een externe link (YouTube/Vimeo) wordt als
+ * embed-iframe getoond, een eigen upload als native <video>-element met
+ * bedieningselementen — dezelfde deferred-load-aanpak, alleen het
+ * daadwerkelijke afspeelelement verschilt.
  */
-export default function FilmMoment({ filmUrl, posterImage, coupleNames }: FilmMomentProps) {
+export default function FilmMoment({ film, posterImage, coupleNames }: FilmMomentProps) {
   const [playing, setPlaying] = useState(false);
+  const embedUrl = film.source === "url" ? toEmbedUrl(film.url) : null;
 
   return (
     <section className="bg-ink py-20 text-white md:py-28">
@@ -64,9 +70,18 @@ export default function FilmMoment({ filmUrl, posterImage, coupleNames }: FilmMo
           </p>
 
           <div className="relative mx-auto aspect-video w-full max-w-[960px] overflow-hidden rounded-[3px] bg-black">
-            {playing ? (
+            {playing && film.source === "upload" ? (
+              <video
+                src={film.url}
+                title={`Trouwfilm ${coupleNames}`}
+                className="h-full w-full"
+                controls
+                autoPlay
+                playsInline
+              />
+            ) : playing && embedUrl ? (
               <iframe
-                src={`${toEmbedUrl(filmUrl)}${toEmbedUrl(filmUrl).includes("?") ? "&" : "?"}autoplay=1`}
+                src={`${embedUrl}${embedUrl.includes("?") ? "&" : "?"}autoplay=1`}
                 title={`Trouwfilm ${coupleNames}`}
                 className="h-full w-full"
                 allow="autoplay; fullscreen; picture-in-picture"

@@ -165,13 +165,21 @@ export function buildWeddingArticleJsonLd(wedding: Wedding, siteSettings: SiteSe
 }
 
 /**
- * VideoObject, alleen wanneer wedding.filmUrl daadwerkelijk is ingevuld
+ * VideoObject, alleen wanneer de reportage daadwerkelijk een film heeft
  * (zie app/verhalen/[slug]/page.tsx — deze functie wordt niet aangeroepen
  * zonder film). uploadDate is dezelfde _createdAt-benadering als
  * hierboven: geen eigen "geüpload op"-datum bekend, _createdAt is de
  * meest eerlijke beschikbare waarde, niet verzonnen.
+ *
+ * Twee bronnen, twee VideoObject-velden: een externe link is een
+ * embed-bestemming (embedUrl), een eigen upload is het videobestand zelf
+ * (contentUrl) — schema.org's eigen onderscheid tussen "waar je 'm kan
+ * bekijken" en "waar het bestand staat", niet inwisselbaar voor elkaar.
  */
-export function buildWeddingVideoJsonLd(wedding: Wedding, filmUrl: string): object {
+export function buildWeddingVideoJsonLd(
+  wedding: Wedding,
+  film: { source: "url"; url: string } | { source: "upload"; url: string },
+): object {
   const thumbnail =
     isSanityAssetImage(wedding.heroImage) &&
     urlFor(wedding.heroImage).width(1200).height(675).fit("crop").auto("format").quality(78).url();
@@ -182,7 +190,7 @@ export function buildWeddingVideoJsonLd(wedding: Wedding, filmUrl: string): obje
     name: `Trouwfilm ${wedding.coupleNames}`,
     description: wedding.seo.description,
     uploadDate: wedding._createdAt,
-    embedUrl: filmUrl,
+    ...(film.source === "url" ? { embedUrl: film.url } : { contentUrl: film.url }),
     ...(thumbnail && { thumbnailUrl: [thumbnail] }),
   };
 }
