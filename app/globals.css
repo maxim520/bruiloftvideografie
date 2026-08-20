@@ -193,32 +193,53 @@
   --radius-lg: var(--radius-lg);
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  margin: 0;
-  line-height: 1.14;
-  letter-spacing: .005em;
-}
-p { margin: 0; }
+/*
+ * Header-contrast-hotfix: deze basisstijlen (element-selectors als
+ * `a`/`body`/`h1..h4`) stonden hier als "ongelaagde" CSS — buiten elke
+ * @layer. `@import "tailwindcss"` bouwt Tailwinds eigen CSS wél op in
+ * named layers (o.a. een "utilities"-layer voor classes als
+ * `.text-white`). Volgens de CSS Cascade Layers-spec wint ongelaagde CSS
+ * ALTIJD van gelaagde CSS, ongeacht selector-specificiteit — dus
+ * `a { color: inherit; }` hieronder won stelselmatig van `.text-white`
+ * op elk navigatie-element (`<a>`), ondanks dat de class wel degelijk in
+ * de HTML stond. `<button>`-elementen (bv. de hamburger) hadden dit
+ * probleem niet — er was geen concurrerende ongelaagde button-color-regel
+ * — en werkten dus altijd al correct, wat het theoretische contrast-
+ * systeem betrouwbaar liet lijken terwijl de praktijk het tegendeel
+ * bewees. Oplossing: dit hele blok in Tailwinds eigen `base`-layer
+ * plaatsen (het door Tailwind v4 zelf aanbevolen patroon voor globale
+ * resets), zodat het in dezelfde laagvolgorde meedoet als de utilities
+ * en een utility-class een element-selector weer normaal kan
+ * overschrijven.
+ */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.14;
+    letter-spacing: .005em;
+  }
+  p { margin: 0; }
 
-:focus-visible {
-  outline: 2px solid var(--copper);
-  outline-offset: 3px;
-  border-radius: 2px;
+  :focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
