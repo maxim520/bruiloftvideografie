@@ -115,6 +115,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body
         className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${inter.variable}`}
       >
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[100] -translate-y-[calc(100%+16px)] rounded-md bg-ink px-5 py-3 text-small font-medium text-white transition-transform focus-visible:translate-y-0"
+        >
+          Ga naar inhoud
+        </a>
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
         <HeroManifestScript />
         <HeaderThemeProvider>
@@ -124,7 +130,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             navLinks={siteSettings.mainNav}
             headerCta={siteSettings.headerCta}
           />
-          <main>{children}</main>
+          <main id="main-content">{children}</main>
         </HeaderThemeProvider>
         <Footer settings={siteSettings} />
       </body>

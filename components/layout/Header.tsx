@@ -139,7 +139,17 @@ export default function Header({
             href={headerCta.href}
             variant="primary"
             size="sm"
-            className="hidden lg:inline-flex"
+            // Sectie 37 (Fase 8): `hidden` alleen (zonder !) verliest hier
+            // van Button's eigen `base`, dat altijd een onvoorwaardelijke
+            // `inline-flex` meegeeft — zelfde specificiteit, en Tailwind
+            // genereert die twee niet in className-volgorde, dus welke wint
+            // is niet gegarandeerd. Gevonden doordat de CTA daardoor op
+            // mobiel zichtbaar bleef en de hamburger-knop letterlijk buiten
+            // het viewport duwde (onbruikbare mobiele navigatie). De
+            // `!`-suffix (Tailwind v4-syntax, dus áchteraan) dwingt
+            // `!important` af zodat deze override altijd wint, ongeacht
+            // generatievolgorde — geverifieerd via computed style na de fix.
+            className="hidden! lg:inline-flex!"
           >
             {headerCta.label}
           </Button>

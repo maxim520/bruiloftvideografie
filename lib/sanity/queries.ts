@@ -245,6 +245,20 @@ export const PAGE_BY_SLUG_QUERY = groq`
 `;
 
 /** Site-brede instellingen (header, footer, bedrijfsgegevens). Singleton. */
+/**
+ * mainNav/footer.navLinks zijn losse {href,label}-paren, geen referenties
+ * naar page-documenten — er is dus geen structurele koppeling naar een
+ * pagina's isVisible/showInNavigation. Zonder deze filter deed
+ * showInNavigation daardoor letterlijk niets (gevonden tijdens de Fase
+ * 8-launch-QA, scenario B "zichtbaar + niet in navigatie" faalde
+ * stilzwijgend: de link bleef gewoon in de header staan). Matcht op href
+ * === page.slug.current, dezelfde conventie die de paginacomponenten zelf
+ * al gebruiken (zie SLUG-constantes in app/*​/page.tsx). Footer respecteert
+ * alleen isVisible (een verborgen pagina hoort nergens een link te
+ * hebben), de hoofdnavigatie ook showInNavigation (een zichtbare pagina
+ * die je bewust uit het menu houdt, bijv. omdat hij alleen via een andere
+ * link bereikbaar hoeft te zijn).
+ */
 export const SITE_SETTINGS_QUERY = groq`
   *[
     _type == "siteSettings" &&
@@ -252,12 +266,17 @@ export const SITE_SETTINGS_QUERY = groq`
   ][0]{
     logoName,
     logoSubline,
-    mainNav,
+    "mainNav": mainNav[!(href in *[
+      _type == "page" &&
+      (isVisible == false || showInNavigation == false)
+    ].slug.current)],
     headerCta,
     footer{
       aboutText,
       socials,
-      navLinks,
+      "navLinks": navLinks[!(href in *[
+        _type == "page" && isVisible == false
+      ].slug.current)],
       legalLinks
     },
     business

@@ -28,6 +28,7 @@ export default function MobileMenu({
   activeHref,
 }: MobileMenuProps) {
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -39,12 +40,32 @@ export default function MobileMenu({
     };
   }, [open]);
 
+  // Focus trap: dit is een full-screen overlay bovenop de rest van de
+  // pagina (header/main blijven daaronder wél in de taborde staan, want
+  // die krijgen geen `inert` — alleen het menu zelf kreeg dat al, hierboven,
+  // voor de dichte staat). Zonder deze trap zou Tab vanaf de laatste
+  // focusbare menu-link naar visueel verborgen achtergrondcontent springen.
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
         triggerRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !containerRef.current) return;
+      const focusable = containerRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])',
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
     document.addEventListener("keydown", onKeyDown);
@@ -59,6 +80,10 @@ export default function MobileMenu({
   return (
     <div
       id="mobile-menu"
+      ref={containerRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobiele navigatie"
       // Buiten beeld (translate) betekent niet buiten de taborde: inert
       // voorkomt dat toetsenbordgebruikers in het dichte menu belanden.
       inert={!open}

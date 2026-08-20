@@ -127,7 +127,12 @@ function Field({ id, label, required, error, children }: FieldProps) {
 }
 
 function controlClass(invalid: boolean, extra = ""): string {
-  return `min-h-[52px] w-full rounded-lg border bg-white/55 px-4 text-base text-text transition-colors placeholder:text-[#a2988f] focus:border-copper focus:bg-white focus:shadow-[0_0_0_3px_rgba(166,110,74,0.14)] focus:outline-none ${
+  // #7d7368 i.p.v. het eerdere #a2988f (2.83:1): placeholders hebben wel
+  // al een zichtbaar, permanent <label> erboven (dus geen enige bron van
+  // instructie), maar zo min mogelijk onder de 4.5:1 AA-drempel blijven
+  // hangen zonder de bedoelde "duidelijk lichter dan ingevulde tekst"-
+  // functie te verliezen (echte inputtekst is --text, #28231f).
+  return `min-h-[52px] w-full rounded-lg border bg-white/55 px-4 text-base text-text transition-colors placeholder:text-[#7d7368] focus:border-copper focus:bg-white focus:shadow-[0_0_0_3px_rgba(166,110,74,0.14)] focus:outline-none ${
     invalid ? "border-[#9b3b26]" : "border-border"
   } ${extra}`;
 }
@@ -228,7 +233,7 @@ export default function ContactForm({ block }: ContactFormProps) {
               </h3>
               <p className="mb-7 max-w-[44ch] text-base leading-[1.8] text-text-muted">
                 {successText ||
-                  "We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op."}
+                  "Ik heb je bericht ontvangen en neem zo snel mogelijk persoonlijk contact met je op."}
               </p>
               {successCta && (
                 <Button href={successCta.href} variant="dark-outline">
