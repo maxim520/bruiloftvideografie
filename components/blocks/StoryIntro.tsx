@@ -10,10 +10,10 @@ type StoryIntroProps = {
 /**
  * De referentie gebruikt hier een los "handschrift"-lettertype
  * (--font-script, "Petit Formal Script") voor de handtekening. Dat is in
- * Fase 1 bewust niet geladen ("laad alleen deze gewichten, niets extra's"
- * gold voor Cormorant Garamond + Manrope). De handtekening leent daarom
- * font-display-quote (de cursieve 400-instantie, zie app/layout.tsx) in
- * plaats van een derde font te introduceren.
+ * Fase 1 bewust niet geladen ("laad alleen deze gewichten, niets extra's").
+ * De handtekening leent daarom font-display-quote (de cursieve
+ * 400-instantie, zie app/layout.tsx) in plaats van een derde font te
+ * introduceren.
  */
 export default function StoryIntro({ block }: StoryIntroProps) {
   const { eyebrow, heading, paragraphs, signatureName, signatureRole, images } = block;

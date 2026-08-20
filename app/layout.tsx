@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { preconnect } from "react-dom";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Elms_Sans, Open_Sans } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -28,20 +28,20 @@ import "./globals.css";
  *    500-cursief, 600-cursief) — puur CSS-declaraties, geen download,
  *    maar wel overbodig.
  *
- * Twee losse oproepen lossen beide op: cormorantGaramond (500/600,
- * rechtop, preload aan — dekt elke hero-h1, het logo en Benefits' h3)
- * en cormorantGaramondQuote (400, cursief, preload uit — alleen de
- * Quote-pull-quote en StoryIntro's handtekening, allebei verderop op de
- * pagina). Precies 3 bestanden gedeclareerd, precies 3 gebruikt.
+ * Twee losse oproepen lossen beide op: elmsSans (500/600, rechtop,
+ * preload aan — dekt elke hero-h1, het logo en Benefits' h3) en
+ * elmsSansQuote (400, cursief, preload uit — alleen de Quote-pull-quote
+ * en StoryIntro's handtekening, allebei verderop op de pagina). Precies
+ * 3 bestanden gedeclareerd, precies 3 gebruikt.
  */
-const cormorantGaramond = Cormorant_Garamond({
+const elmsSans = Elms_Sans({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["500", "600"],
   display: "swap",
 });
 
-const cormorantGaramondQuote = Cormorant_Garamond({
+const elmsSansQuote = Elms_Sans({
   variable: "--font-display-quote",
   subsets: ["latin"],
   weight: ["400"],
@@ -50,9 +50,9 @@ const cormorantGaramondQuote = Cormorant_Garamond({
   preload: false,
 });
 
-// Redesign-besluit (Fase 2): Inter i.p.v. Manrope als body/UI-sans —
-// zelfde weights, zelfde laadstrategie, alleen het lettertype zelf wisselt.
-const inter = Inter({
+// Redesign-besluit: Open Sans als body/UI-sans — zelfde weights, zelfde
+// laadstrategie, alleen het lettertype zelf wisselt.
+const openSans = Open_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -106,7 +106,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="nl">
       <body
-        className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${inter.variable}`}
+        className={`${elmsSans.variable} ${elmsSansQuote.variable} ${openSans.variable}`}
       >
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
         <HeroManifestScript />

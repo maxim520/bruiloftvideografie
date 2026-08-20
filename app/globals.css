@@ -45,13 +45,11 @@
   --border: #d8cfc6;
   --white: #ffffff;
 
-  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-display: "Elms Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   /* Cursieve 400-instantie (Quote.tsx, StoryIntro.tsx's handtekening) —
      zie app/layout.tsx voor waarom dit een losse next/font-oproep is. */
-  --font-display-quote: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  /* Fase 2: Inter i.p.v. Manrope, zelfde rol (body/UI-sans die bijna
-     "verdwijnt" ten opzichte van de display-serif en de fotografie). */
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display-quote: "Elms Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-body: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
   /* ------------------------------------------------------------------
      Typografische schaal — editorial: grote sprongen tussen display-
