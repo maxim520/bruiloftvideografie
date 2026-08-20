@@ -36,6 +36,24 @@ export const page = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'isVisible',
+      title: 'Pagina tonen op website',
+      description:
+        'Uit: de pagina blijft volledig bewaard in Sanity (content, SEO, alles) en blijft hier bewerkbaar, maar is niet publiek bereikbaar — een rechtstreeks bezoek aan de URL geeft dan "pagina niet gevonden", en de pagina verschijnt nergens automatisch (menu, sitemap, overzichten). Handig om een pagina alvast voor te bereiden voordat hij live mag.',
+      type: 'boolean',
+      initialValue: true,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'showInNavigation',
+      title: 'Tonen in hoofdnavigatie',
+      description:
+        'Een pagina kan publiek bereikbaar zijn zonder in het hoofdmenu te staan. Heeft geen effect wanneer "Pagina tonen op website" uit staat — dan verschijnt de pagina sowieso nergens.',
+      type: 'boolean',
+      initialValue: true,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'sections',
       title: 'Secties',
       type: 'array',
@@ -82,6 +100,12 @@ export const page = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title', subtitle: 'slug.current'},
+    select: {title: 'title', subtitle: 'slug.current', isVisible: 'isVisible'},
+    prepare({title, subtitle, isVisible}) {
+      return {
+        title,
+        subtitle: isVisible === false ? `${subtitle} — verborgen` : subtitle,
+      }
+    },
   },
 })

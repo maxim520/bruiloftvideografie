@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { SetHeaderTheme } from "@/components/layout/HeaderThemeContext";
 import JsonLd from "@/components/JsonLd";
 import SafeImage from "@/components/ui/SafeImage";
 import Reveal from "@/components/ui/Reveal";
@@ -11,12 +12,12 @@ import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 export const metadata: Metadata = {
   title: "Verhalen | Behind Every Wedding",
   description:
-    "Een overzicht van bruiloftsreportages die we mochten vastleggen — echte dagen, echte emoties.",
+    "Een overzicht van bruiloftsreportages die ik mocht vastleggen — echte dagen, echte emoties.",
   alternates: { canonical: "/verhalen" },
   openGraph: {
     title: "Verhalen | Behind Every Wedding",
     description:
-      "Een overzicht van bruiloftsreportages die we mochten vastleggen — echte dagen, echte emoties.",
+      "Een overzicht van bruiloftsreportages die ik mocht vastleggen — echte dagen, echte emoties.",
     url: "/verhalen",
     siteName: "Behind Every Wedding",
     locale: "nl_NL",
@@ -36,6 +37,9 @@ export default async function VerhalenPage() {
 
   return (
     <>
+      {/* Sectie 1 (Fase 7): deze pagina opent met een lichte achtergrond
+          (geen fotohero), dus donkere headertekst — zie HeaderThemeContext. */}
+      <SetHeaderTheme theme="dark" />
       <JsonLd
         data={buildBreadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -50,7 +54,7 @@ export default async function VerhalenPage() {
               Verhalen
             </p>
             <h1 className="max-w-[18ch] text-h1">
-              Bruiloften die wij mochten vastleggen.
+              Bruiloften die ik mocht vastleggen.
             </h1>
           </Reveal>
         </Container>

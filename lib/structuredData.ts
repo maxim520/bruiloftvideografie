@@ -121,6 +121,25 @@ export function buildWeddingArticleJsonLd(wedding: Wedding, siteSettings: SiteSe
     isSanityAssetImage(wedding.heroImage) &&
     urlFor(wedding.heroImage).width(1200).height(800).fit("crop").auto("format").quality(78).url();
 
+  // Fase 7, sectie 13: Place alleen wanneer er daadwerkelijk een locatie
+  // bekend is (venue of city) — geen lege/verzonnen Place-entiteit. Elke
+  // wedding heeft nu al een eigen, unieke locatie (geen twee delen
+  // dezelfde venue), dus dit blijft per-reportage-data, geen aparte
+  // venue-referentie nodig — zie het Fase 7-verslag voor de afweging.
+  const hasLocation = Boolean(wedding.venue || wedding.city);
+  const place = hasLocation
+    ? {
+        "@type": "Place",
+        ...(wedding.venue && { name: wedding.venue }),
+        address: {
+          "@type": "PostalAddress",
+          ...(wedding.city && { addressLocality: wedding.city }),
+          ...(wedding.region && { addressRegion: wedding.region }),
+          ...(wedding.country && { addressCountry: wedding.country }),
+        },
+      }
+    : undefined;
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -131,6 +150,7 @@ export function buildWeddingArticleJsonLd(wedding: Wedding, siteSettings: SiteSe
     datePublished: wedding._createdAt,
     dateModified: wedding._updatedAt,
     ...(image && { image: [image] }),
+    ...(place && { contentLocation: place }),
     author: {
       "@type": "Organization",
       name: siteSettings.logoName,

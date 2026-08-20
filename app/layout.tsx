@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { preconnect } from "react-dom";
 import { Elms_Sans, Open_Sans } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
+import { HeaderThemeProvider } from "@/components/layout/HeaderThemeContext";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/JsonLd";
 import HeroManifestScript from "@/components/HeroManifestScript";
@@ -110,13 +111,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       >
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
         <HeroManifestScript />
-        <SiteHeader
-          logoName={siteSettings.logoName}
-          logoSubline={siteSettings.logoSubline}
-          navLinks={siteSettings.mainNav}
-          headerCta={siteSettings.headerCta}
-        />
-        <main>{children}</main>
+        <HeaderThemeProvider>
+          <SiteHeader
+            logoName={siteSettings.logoName}
+            logoSubline={siteSettings.logoSubline}
+            navLinks={siteSettings.mainNav}
+            headerCta={siteSettings.headerCta}
+          />
+          <main>{children}</main>
+        </HeaderThemeProvider>
         <Footer settings={siteSettings} />
       </body>
     </html>

@@ -12,7 +12,7 @@ type BenefitsProps = {
 /**
  * Drie visuele varianten uit de referentie, afgeleid uit welke optionele
  * velden gevuld zijn — geen apart "variant"-veld nodig:
- * - `image` gezet             → home "waarom ons": tekst + grid naast een foto
+ * - `image` gezet             → home "mijn manier van werken": tekst + grid naast een foto
  * - geen image, wel intro     → fotografie: introtekst naast een grid met
  *   (heading/text/cta)          verticale scheidingslijnen
  * - geen image, geen intro    → over mij "mijn aanpak": losstaand donker

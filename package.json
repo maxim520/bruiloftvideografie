@@ -6,13 +6,13 @@
     "dev": "next dev",
     "prebuild": "node scripts/fetch-hero-images.mjs",
     "build": "next build",
+    "postbuild": "node scripts/remove-hidden-pages.mjs",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "eslint",
     "studio:dev": "npm --prefix studio run dev",
     "studio:build": "npm --prefix studio run build",
-    "studio:deploy": "npm --prefix studio run deploy",
-    "studio:seed": "npm --prefix studio run seed"
+    "studio:deploy": "npm --prefix studio run deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.7.1",

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Container from "./Container";
 import MobileMenu from "./MobileMenu";
 import Button from "@/components/ui/Button";
+import { useHeaderTheme } from "./HeaderThemeContext";
 import type { NavLink as NavLinkItem, CtaLink } from "@/types/blocks";
 
 type HeaderProps = {
@@ -26,6 +27,7 @@ export default function Header({
   const [menuOpen, setMenuOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const ticking = useRef(false);
+  const pageTheme = useHeaderTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -41,6 +43,13 @@ export default function Header({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Gescrold heeft altijd een eigen, ondoorzichtige achtergrond
+  // (bg-ink/[0.86] hieronder) — ongeacht wat de pagina daaronder is, dus
+  // dan wint altijd "light" (witte tekst). Alleen in de transparante,
+  // niet-gescrolde stand telt het door de pagina opgegeven thema.
+  const theme = scrolled ? "light" : pageTheme;
+  const isLight = theme === "light";
+
   return (
     <>
       <header
@@ -50,17 +59,38 @@ export default function Header({
             : "border-transparent py-[14px]"
         }`}
       >
-        <Container className="flex items-center justify-between gap-8">
+        {/*
+          Subtiele top-gradient, alleen actief in de transparante
+          "light"-stand (witte tekst boven een foto): garandeert
+          leesbaarheid ongeacht wat er toevallig bovenaan de foto staat
+          (lichte trouwjurk, lichte lucht, ...) zonder een zichtbare
+          zwarte balk over de fotografie te leggen. Los van elke hero's
+          eigen sfeer-gradient (die is per pagina/stemming, dit is puur
+          leesbaarheid) — zo geldt het automatisch voor iedere toekomstige
+          hero, zonder dat elke hero dit apart hoeft te regelen.
+        */}
+        {!scrolled && isLight && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[linear-gradient(180deg,rgba(0,0,0,.32)_0%,rgba(0,0,0,0)_100%)]"
+          />
+        )}
+
+        <Container className="relative flex items-center justify-between gap-8">
           <Link
             href="/"
             aria-label={logoSubline ? `${logoName} ${logoSubline}, naar home` : `${logoName}, naar home`}
-            className="block text-white"
+            className={`block transition-colors ${isLight ? "text-white" : "text-ink"}`}
           >
             <span className="block font-display text-[21px] font-medium uppercase leading-[1.1] tracking-[.16em]">
               {logoName}
             </span>
             {logoSubline && (
-              <span className="mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] text-white/[0.62]">
+              <span
+                className={`mt-[5px] block pl-0.5 text-[9px] font-medium uppercase tracking-[.42em] transition-colors ${
+                  isLight ? "text-white/[0.62]" : "text-text-muted"
+                }`}
+              >
                 {logoSubline}
               </span>
             )}
@@ -83,7 +113,13 @@ export default function Header({
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={`group relative py-2 text-xs font-medium uppercase tracking-[.13em] transition-colors ${
-                    isActive ? "text-white" : "text-white/[0.86] hover:text-white"
+                    isLight
+                      ? isActive
+                        ? "text-white"
+                        : "text-white/[0.86] hover:text-white"
+                      : isActive
+                        ? "text-ink"
+                        : "text-text hover:text-ink"
                   }`}
                 >
                   {link.label}
@@ -115,7 +151,9 @@ export default function Header({
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen(true)}
-            className="flex h-[46px] w-[46px] items-center justify-center text-white lg:hidden"
+            className={`flex h-[46px] w-[46px] items-center justify-center transition-colors lg:hidden ${
+              isLight ? "text-white" : "text-ink"
+            }`}
           >
             <svg
               width="26"

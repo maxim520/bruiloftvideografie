@@ -214,11 +214,21 @@ const sectionsProjection = groq`
  * heeft de Next-app geen token en dus toch al geen toegang tot concepten —
  * dit maakt de bedoeling in de query zelf zichtbaar en houdt de query
  * correct als er ooit wel met een token gebouwd wordt.
+ *
+ * Fase 7: `isVisible != false` sluit verborgen pagina's hier al uit —
+ * die worden dus vanuit de app gezien alsof ze niet bestaan. Elke
+ * paginaroute roept al `if (!page) notFound()` aan (bestond al voor het
+ * "pagina niet gevonden"-geval), dus dat geeft automatisch hetzelfde
+ * gedrag voor een verborgen pagina, zonder dat de paginabestanden zelf
+ * iets van visibility hoeven te weten. `!= false` (i.p.v. `== true`)
+ * behandelt een ontbrekend veld als zichtbaar — de praktische default,
+ * consistent met het schema's `initialValue: true`.
  */
 export const PAGE_BY_SLUG_QUERY = groq`
   *[
     _type == "page" &&
     slug.current == $slug &&
+    isVisible != false &&
     !(_id in path("drafts.**"))
   ][0]{
     title,
@@ -395,6 +405,7 @@ const ALL_WEDDINGS_QUERY = groq`
 const ALL_PAGE_SLUGS_QUERY = groq`
   *[
     _type == "page" &&
+    isVisible != false &&
     !(_id in path("drafts.**"))
   ]{
     "slug": slug.current,
