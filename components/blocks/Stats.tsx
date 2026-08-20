@@ -22,7 +22,7 @@ export default function Stats({ block }: StatsProps) {
               heading={heading}
               text={text}
               cta={cta}
-              className="[&_h2]:max-w-[14ch] [&_h2]:text-[clamp(1.875rem,3.1vw,2.625rem)] [&_p]:max-w-none lg:[&_p]:max-w-[40ch]"
+              className="[&_h2]:max-w-[14ch] [&_h2]:text-h2 [&_p]:max-w-none lg:[&_p]:max-w-[40ch]"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">

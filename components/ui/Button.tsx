@@ -38,7 +38,7 @@ const base =
  */
 const filledSize: Record<ButtonSize, string> = {
   default: "min-h-12 px-[22px]",
-  sm: "min-h-11 px-[18px] text-[11px]",
+  sm: "min-h-11 px-[18px] text-eyebrow",
 };
 
 const variantClasses: Record<Exclude<ButtonVariant, "text-link">, string> = {

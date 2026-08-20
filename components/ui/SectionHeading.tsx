@@ -27,7 +27,7 @@ export default function SectionHeading({
     <div className={className}>
       {eyebrow && (
         <p
-          className={`mb-5 text-[11px] font-semibold uppercase tracking-[.22em] ${
+          className={`mb-5 text-eyebrow font-semibold uppercase tracking-[.22em] ${
             muted ? "text-charcoal-muted" : onDark ? "text-copper-text-on-dark" : "text-copper-text"
           }`}
         >
@@ -35,7 +35,7 @@ export default function SectionHeading({
         </p>
       )}
       {heading && (
-        <h2 className="text-[clamp(2rem,3.4vw,2.875rem)]">{heading}</h2>
+        <h2 className="text-h2">{heading}</h2>
       )}
       {text && (
         <p

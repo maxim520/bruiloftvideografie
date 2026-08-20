@@ -25,7 +25,7 @@ export default function Quote({ block }: QuoteProps) {
               {quote}
             </p>
             {attribution && (
-              <cite className="mt-[34px] block font-body text-[11px] font-semibold not-italic uppercase tracking-[.2em] text-white/50">
+              <cite className="mt-[34px] block font-body text-eyebrow font-semibold not-italic uppercase tracking-[.2em] text-white/50">
                 {attribution}
               </cite>
             )}

@@ -30,7 +30,7 @@ export default function PortfolioGrid({ block }: PortfolioGridProps) {
               eyebrow={eyebrow}
               heading={heading}
               cta={cta}
-              className="col-span-2 flex flex-col justify-center pb-6 md:col-span-1 md:py-1.5 md:pr-10 [&_h2]:max-w-[11ch] [&_h2]:text-[clamp(2rem,3.4vw,2.875rem)]"
+              className="col-span-2 flex flex-col justify-center pb-6 md:col-span-1 md:py-1.5 md:pr-10 [&_h2]:max-w-[11ch]"
             />
             {images.map((image, index) => {
               const isLead = index === 0;

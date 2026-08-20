@@ -125,7 +125,7 @@ export default function Hero({ block }: HeroProps) {
       <Container className="relative z-[2] w-full pt-24 pb-28 md:pb-24">
         <Reveal className="max-w-[640px] text-white">
           {eyebrow && (
-            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-[#c08f68]">
+            <p className="mb-5 text-eyebrow font-semibold uppercase tracking-[.22em] text-[#c08f68]">
               {eyebrow}
             </p>
           )}
@@ -134,7 +134,7 @@ export default function Hero({ block }: HeroProps) {
             {headingLine2 && <span className="block">{headingLine2}</span>}
           </h1>
           {subheading && (
-            <p className="mb-7 max-w-[31em] text-base text-white/[0.84] md:mb-[38px] md:text-[17px]">
+            <p className="mb-7 max-w-[31em] text-base text-white/[0.84] md:mb-[38px] md:text-body">
               {subheading}
             </p>
           )}

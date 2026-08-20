@@ -95,7 +95,7 @@ export default function Footer({ settings }: FooterProps) {
 
           {navLinks.length > 0 && (
             <div>
-              <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+              <h3 className="mb-5 text-eyebrow font-semibold uppercase tracking-[.2em] text-white">
                 Navigatie
               </h3>
               <ul className="flex flex-col gap-[11px]">
@@ -114,7 +114,7 @@ export default function Footer({ settings }: FooterProps) {
           )}
 
           <div>
-            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[.2em] text-white">
+            <h3 className="mb-5 text-eyebrow font-semibold uppercase tracking-[.2em] text-white">
               Contact
             </h3>
             <address className="mb-[22px] text-sm leading-[2] not-italic">

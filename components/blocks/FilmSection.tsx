@@ -24,7 +24,7 @@ export default function FilmSection({ block }: FilmSectionProps) {
               heading={heading}
               cta={cta}
               onDark
-              className="[&_h2]:max-w-[14ch] [&_h2]:text-[clamp(2rem,3.2vw,2.75rem)] [&_h2]:text-white"
+              className="[&_h2]:max-w-[14ch] [&_h2]:text-h2 [&_h2]:text-white"
             />
 
             <div className="grid grid-cols-1 gap-[26px] lg:grid-cols-3 lg:gap-[22px]">

@@ -41,7 +41,7 @@ export default function Pricing({ block }: PricingProps) {
                 {/* Geen prijsregel zolang startingPrice niet is ingevuld —
                     zie pricingItem.ts: bewust geen placeholder-bedrag. */}
                 {item.startingPrice !== undefined && (
-                  <p className="mt-5 text-[13px] font-semibold uppercase tracking-[.14em] text-copper-text">
+                  <p className="mt-5 text-caption font-semibold uppercase tracking-[.14em] text-copper-text">
                     Vanaf €{item.startingPrice.toLocaleString("nl-NL")}
                   </p>
                 )}

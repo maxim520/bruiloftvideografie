@@ -35,11 +35,11 @@ export default function StoryIntro({ block }: StoryIntroProps) {
           >
             <div>
               {eyebrow && (
-                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-charcoal-muted">
+                <p className="mb-5 text-eyebrow font-semibold uppercase tracking-[.22em] text-charcoal-muted">
                   {eyebrow}
                 </p>
               )}
-              <h2 className="mb-7 max-w-[16ch] text-[clamp(1.875rem,3.1vw,2.625rem)]">
+              <h2 className="mb-7 max-w-[16ch] text-h2">
                 {heading}
               </h2>
               {paragraphs.length > 0 && (
@@ -62,7 +62,7 @@ export default function StoryIntro({ block }: StoryIntroProps) {
                     </div>
                   )}
                   {signatureRole && (
-                    <div className="mt-3 text-[11px] font-semibold uppercase tracking-[.2em] text-copper-text">
+                    <div className="mt-3 text-eyebrow font-semibold uppercase tracking-[.2em] text-copper-text">
                       {signatureRole}
                     </div>
                   )}

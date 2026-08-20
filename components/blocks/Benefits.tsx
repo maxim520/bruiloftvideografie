@@ -62,7 +62,7 @@ export default function Benefits({ block }: BenefitsProps) {
                 heading={heading}
                 text={text}
                 cta={cta}
-                className="[&_h2]:max-w-[14ch] [&_h2]:text-[clamp(1.875rem,3vw,2.625rem)]"
+                className="[&_h2]:max-w-[14ch] [&_h2]:text-h2"
               />
               <div className="grid grid-cols-1 lg:grid-cols-4">
                 {items.map((item, index) => (
@@ -77,7 +77,7 @@ export default function Benefits({ block }: BenefitsProps) {
                       size={30}
                       className="row-span-2 text-copper lg:mb-[26px]"
                     />
-                    <h3 className="mb-[5px] text-[15px] font-semibold lg:mb-2.5">{item.title}</h3>
+                    <h3 className="mb-[5px] text-small font-semibold lg:mb-2.5">{item.title}</h3>
                     <p className="text-[13.5px] leading-[1.7] text-text-muted lg:max-w-[22ch]">
                       {item.text}
                     </p>
@@ -109,7 +109,7 @@ export default function Benefits({ block }: BenefitsProps) {
                 <span className="row-span-2 flex h-12 w-12 items-center justify-center rounded-full border border-white/[0.22] text-[#d6a67e] md:col-span-1 md:row-auto md:mx-auto md:mb-5">
                   <Icon name={item.icon} size={22} />
                 </span>
-                <h3 className="self-center text-[11px] font-semibold uppercase tracking-[.2em] text-white md:mb-3 md:self-auto">
+                <h3 className="self-center text-eyebrow font-semibold uppercase tracking-[.2em] text-white md:mb-3 md:self-auto">
                   {item.title}
                 </h3>
                 <p className="text-[13.5px] leading-[1.75] text-white/60 md:mx-auto md:max-w-[24ch]">

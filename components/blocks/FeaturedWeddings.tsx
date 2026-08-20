@@ -32,7 +32,7 @@ export default function FeaturedWeddings({ weddings }: FeaturedWeddingsProps) {
             eyebrow="Uitgelicht"
             heading="Bruiloften die wij mochten vastleggen."
             cta={{ label: "Bekijk alle reportages", href: "/fotografie" }}
-            className="mb-11 [&_h2]:max-w-[22ch] [&_h2]:text-[clamp(2rem,3.4vw,2.875rem)]"
+            className="mb-11 [&_h2]:max-w-[22ch]"
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

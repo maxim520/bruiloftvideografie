@@ -26,8 +26,8 @@ export default function TrustBar({ block }: TrustBarProps) {
               >
                 <Icon name={item.icon} size={30} className="shrink-0 text-charcoal-muted" />
                 <div>
-                  <div className="text-[15px] font-semibold tracking-[.01em]">{item.title}</div>
-                  <div className="text-[13px] text-text-muted">{item.text}</div>
+                  <div className="text-small font-semibold tracking-[.01em]">{item.title}</div>
+                  <div className="text-caption text-text-muted">{item.text}</div>
                 </div>
               </div>
             ))}

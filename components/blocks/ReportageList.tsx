@@ -22,11 +22,11 @@ export default function ReportageList({ block }: ReportageListProps) {
             <div className="mb-9 flex flex-col items-start gap-[22px] md:mb-12 md:flex-row md:items-end md:justify-between md:gap-8">
               <div>
                 {eyebrow && (
-                  <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
+                  <p className="mb-5 text-eyebrow font-semibold uppercase tracking-[.22em] text-copper-text">
                     {eyebrow}
                   </p>
                 )}
-                {heading && <h2 className="text-[clamp(1.875rem,3vw,2.625rem)]">{heading}</h2>}
+                {heading && <h2 className="text-h2">{heading}</h2>}
               </div>
               {cta && (
                 <Button href={cta.href} variant="dark-outline" size="sm">
@@ -59,7 +59,7 @@ export default function ReportageList({ block }: ReportageListProps) {
                     </h3>
                   )}
                   {reportage.location && (
-                    <div className="mb-[18px] text-[11px] font-semibold uppercase tracking-[.16em] text-copper-text">
+                    <div className="mb-[18px] text-eyebrow font-semibold uppercase tracking-[.16em] text-copper-text">
                       {reportage.location}
                     </div>
                   )}

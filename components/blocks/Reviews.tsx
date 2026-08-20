@@ -39,7 +39,7 @@ export default function Reviews({ block }: ReviewsProps) {
           <SectionHeading
             eyebrow={eyebrow}
             heading={heading}
-            className="mb-11 [&_h2]:text-[clamp(2rem,3.2vw,2.75rem)]"
+            className="mb-11 [&_h2]:text-h2"
           />
 
           <div className="-mx-5 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:-mx-6 md:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0 lg:pb-0">
@@ -59,7 +59,7 @@ export default function Reviews({ block }: ReviewsProps) {
                 <div>
                   <Stars />
                   <p className="mb-4 text-base leading-[1.7] text-text-muted">{review.quote}</p>
-                  <div className="text-[13px] font-semibold">{review.name}</div>
+                  <div className="text-caption font-semibold">{review.name}</div>
                 </div>
               </article>
             ))}

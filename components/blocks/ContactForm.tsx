@@ -111,7 +111,7 @@ function Field({ id, label, required, error, children }: FieldProps) {
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.16em] text-charcoal-muted"
+        className="mb-2.5 text-eyebrow font-semibold uppercase tracking-[.16em] text-charcoal-muted"
       >
         {label}
         {required && (
@@ -249,12 +249,12 @@ export default function ContactForm({ block }: ContactFormProps) {
           <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[minmax(0,7fr)_1px_minmax(0,4fr)] lg:gap-14">
             <div>
               {eyebrow && (
-                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[.22em] text-copper-text">
+                <p className="mb-5 text-eyebrow font-semibold uppercase tracking-[.22em] text-copper-text">
                   {eyebrow}
                 </p>
               )}
               {heading && (
-                <h2 className="mb-5 max-w-[15ch] text-[clamp(1.875rem,3vw,2.75rem)]">{heading}</h2>
+                <h2 className="mb-5 max-w-[15ch] text-h2">{heading}</h2>
               )}
               {intro && (
                 <p className="mb-10 max-w-[46ch] text-base leading-[1.8] text-text-muted">
@@ -486,7 +486,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                   {perks.map((perk) => (
                     <div key={perk.title} className="grid grid-cols-[44px_1fr] gap-x-5">
                       <Icon name={perk.icon} size={30} className="row-span-2 text-copper" />
-                      <h3 className="mb-[7px] font-body text-[15px] font-semibold">{perk.title}</h3>
+                      <h3 className="mb-[7px] font-body text-small font-semibold">{perk.title}</h3>
                       <p className="text-[13.5px] leading-[1.7] text-text-muted">{perk.text}</p>
                     </div>
                   ))}
@@ -498,7 +498,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                   {directHeading && <h3 className="mb-[22px] text-2xl">{directHeading}</h3>}
                   <ul className="flex flex-col gap-4">
                     {phone && (
-                      <li className="flex items-center gap-3.5 text-[15px]">
+                      <li className="flex items-center gap-3.5 text-small">
                         <svg
                           width="19"
                           height="19"
@@ -522,7 +522,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                       </li>
                     )}
                     {email && (
-                      <li className="flex items-center gap-3.5 text-[15px]">
+                      <li className="flex items-center gap-3.5 text-small">
                         <svg
                           width="19"
                           height="19"
@@ -544,7 +544,7 @@ export default function ContactForm({ block }: ContactFormProps) {
                       </li>
                     )}
                     {location && (
-                      <li className="flex items-center gap-3.5 text-[15px]">
+                      <li className="flex items-center gap-3.5 text-small">
                         <svg
                           width="19"
                           height="19"
