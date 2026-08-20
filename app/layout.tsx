@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { preconnect } from "react-dom";
-import { Elms_Sans, Open_Sans } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import SiteHeader from "@/components/layout/SiteHeader";
 import { HeaderThemeProvider } from "@/components/layout/HeaderThemeContext";
 import Footer from "@/components/layout/Footer";
@@ -29,20 +29,28 @@ import "./globals.css";
  *    500-cursief, 600-cursief) — puur CSS-declaraties, geen download,
  *    maar wel overbodig.
  *
- * Twee losse oproepen lossen beide op: elmsSans (500/600, rechtop,
- * preload aan — dekt elke hero-h1, het logo en Benefits' h3) en
- * elmsSansQuote (400, cursief, preload uit — alleen de Quote-pull-quote
- * en StoryIntro's handtekening, allebei verderop op de pagina). Precies
- * 3 bestanden gedeclareerd, precies 3 gebruikt.
+ * Twee losse oproepen lossen beide op: cormorantGaramond (400/500,
+ * rechtop, preload aan — dekt elke hero-h1, het logo en Benefits' h3) en
+ * cormorantGaramondQuote (400, cursief, preload uit — alleen de
+ * Quote-pull-quote en StoryIntro's handtekening, allebei verderop op de
+ * pagina). Precies 3 bestanden gedeclareerd, precies 3 gebruikt.
+ *
+ * Correctieronde: teruggezet van Elms Sans/Open Sans naar Cormorant
+ * Garamond/Inter — de eerdere fontwissel (op expliciet verzoek) had de
+ * grote editorial hero-titels laten renderen als een neutrale
+ * geometrische sans, wat "corporate" oogde i.p.v. de bedoelde
+ * editorial/tijdloze uitstraling. Gewicht bewust 400/500 (was 500/600):
+ * de correctiebrief vraagt karakter via het lettertype en de schaal, niet
+ * via boldheid.
  */
-const elmsSans = Elms_Sans({
+const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
-const elmsSansQuote = Elms_Sans({
+const cormorantGaramondQuote = Cormorant_Garamond({
   variable: "--font-display-quote",
   subsets: ["latin"],
   weight: ["400"],
@@ -51,9 +59,7 @@ const elmsSansQuote = Elms_Sans({
   preload: false,
 });
 
-// Redesign-besluit: Open Sans als body/UI-sans — zelfde weights, zelfde
-// laadstrategie, alleen het lettertype zelf wisselt.
-const openSans = Open_Sans({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -107,7 +113,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="nl">
       <body
-        className={`${elmsSans.variable} ${elmsSansQuote.variable} ${openSans.variable}`}
+        className={`${cormorantGaramond.variable} ${cormorantGaramondQuote.variable} ${inter.variable}`}
       >
         <JsonLd data={buildLocalBusinessJsonLd(siteSettings)} />
         <HeroManifestScript />

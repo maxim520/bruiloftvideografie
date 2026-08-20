@@ -28,26 +28,36 @@ type ButtonAsButton = ButtonCommonProps & {
 
 export type ButtonProps = ButtonAsLink | ButtonAsButton;
 
+/**
+ * Correctieronde: knoppen oogden te zwaar/template-achtig — font-semibold
+ * + 0.14em tracking + text-xs in hoofdletters las als een generieke
+ * marketing-CTA i.p.v. een verfijnde editorial knop. font-medium en
+ * duidelijk minder tracking geven de tekst rust; text-caption (13px, een
+ * bestaand token) is een fractie groter dan de vorige 12px maar leest
+ * rustiger bij minder tracking, i.p.v. drukker.
+ */
 const base =
-  "inline-flex items-center whitespace-nowrap text-xs font-semibold uppercase tracking-[.14em] transition-all duration-200";
+  "inline-flex items-center whitespace-nowrap text-caption font-medium uppercase tracking-[.08em] transition-all duration-200";
 
 /**
- * "sm" is 44px hoog, niet de 42px uit de referentie: een tikdoel onder
- * 44px is te klein op mobiel. Bewuste, kleine afwijking t.o.v. de
- * referentie voor toegankelijkheid.
+ * "default" blijft ruim boven het 44px-tikdoel (mobiel: alle default-
+ * knoppen, incl. het mobiele menu). "sm" is uitsluitend de header-CTA op
+ * desktop (Header.tsx: `hidden lg:inline-flex`, nooit op mobiel getoond)
+ * — mag dus bewust compacter, los van het tikdoel-vraagstuk: de header
+ * moet luchtig ogen, niet even zwaar als de hero-CTA's.
  */
 const filledSize: Record<ButtonSize, string> = {
-  default: "min-h-12 px-[22px]",
-  sm: "min-h-11 px-[18px] text-eyebrow",
+  default: "min-h-12 px-6",
+  sm: "min-h-10 px-4",
 };
 
 const variantClasses: Record<Exclude<ButtonVariant, "text-link">, string> = {
   primary:
-    "justify-center gap-2.5 rounded-[10px] border border-copper bg-copper text-white hover:bg-copper-hover hover:border-copper-hover hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
+    "justify-center gap-2 rounded-[8px] border border-copper bg-copper text-white hover:bg-copper-hover hover:border-copper-hover hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
   secondary:
-    "justify-center gap-2.5 rounded-[10px] border border-white/70 bg-transparent text-white hover:bg-white/10 hover:border-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
+    "justify-center gap-2 rounded-[8px] border border-white/60 bg-transparent text-white hover:bg-white/10 hover:border-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
   "dark-outline":
-    "justify-center gap-2.5 rounded-[10px] border border-ink bg-transparent text-ink hover:bg-ink hover:text-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
+    "justify-center gap-2 rounded-[8px] border border-ink/70 bg-transparent text-ink hover:bg-ink hover:text-white hover:-translate-y-px disabled:opacity-65 disabled:pointer-events-none",
 };
 
 /**

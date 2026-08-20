@@ -26,17 +26,20 @@ const objectPositionClasses: Record<PagePreset, string> = {
 };
 
 /**
- * Koplettergrootte/regelhoogte per pagina. Alleen home is hoofdletters
- * met extra letterspacing; de andere drie zijn zinsvorm zoals getypt.
+ * Koplettergrootte/regelhoogte per pagina, zinsvorm op alle vier (geen
+ * hoofdletters meer op home — correctieronde: all-caps + Elms Sans las
+ * als "corporate website heading", niet als editorial). Cormorant
+ * Garamond krijgt karakter via het lettertype/de schaal zelf, dus geen
+ * zware tracking meer nodig om de kop te laten dragen.
  */
 const headingClasses: Record<PagePreset, string> = {
-  home: "uppercase leading-[1.08] tracking-[.02em] text-[clamp(2.375rem,10.5vw,3rem)] md:text-[clamp(2.625rem,5.2vw,4.625rem)]",
+  home: "leading-[1.1] text-[clamp(2.375rem,9vw,3.375rem)] md:text-[clamp(2.75rem,5.4vw,5.25rem)]",
   "over-mij":
-    "leading-[1.14] text-[clamp(2.125rem,9vw,2.625rem)] md:text-[clamp(2.375rem,4.6vw,3.875rem)]",
+    "leading-[1.14] text-[clamp(2.25rem,8.5vw,3rem)] md:text-[clamp(2.625rem,4.8vw,4.5rem)]",
   fotografie:
-    "leading-[1.1] text-[clamp(2.375rem,11vw,3.125rem)] md:text-[clamp(2.75rem,5vw,4.5rem)]",
+    "leading-[1.1] text-[clamp(2.375rem,9.5vw,3.375rem)] md:text-[clamp(2.75rem,5.2vw,4.75rem)]",
   contact:
-    "leading-[1.12] text-[clamp(2.25rem,10vw,3rem)] md:text-[clamp(2.625rem,4.8vw,4.375rem)]",
+    "leading-[1.12] text-[clamp(2.375rem,8.5vw,3.125rem)] md:text-[clamp(2.625rem,5vw,4.5rem)]",
 };
 
 /**

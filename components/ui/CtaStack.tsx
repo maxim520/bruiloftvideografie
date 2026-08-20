@@ -18,8 +18,20 @@ type CtaStackProps = {
  * --space-stack-*-tokens.
  */
 export default function CtaStack({ heading, text, actions, className }: CtaStackProps) {
+  // Bewust een losse `gap-[var(--space-stack-actions)]`-string, NIET
+  // direct achter een template-literal-interpolatie geplakt: Tailwind
+  // scant de rauwe brontekst op class-tokens, en "gap-[...]${className"
+  // (zonder spatie ertussen) werd niet als geldige, volledige class
+  // herkend — er werd dus nooit een CSS-regel voor gegenereerd. Zichtbaar
+  // bevestigd via computed styles (gap: normal i.p.v. de bedoelde 72px),
+  // dít was de daadwerkelijke oorzaak van de te krappe hero/CTA-spacing,
+  // niet de tokenwaarde zelf (die was al correct herijkt in Fase 7).
+  const outerClassName = ["flex", "flex-col", "gap-[var(--space-stack-actions)]", className]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className={`flex flex-col gap-[var(--space-stack-actions)]${className ? ` ${className}` : ""}`}>
+    <div className={outerClassName}>
       <div className="flex flex-col gap-[var(--space-stack-heading)]">
         {heading}
         {text}

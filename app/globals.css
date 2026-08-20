@@ -45,11 +45,12 @@
   --border: #d8cfc6;
   --white: #ffffff;
 
-  --font-display: "Elms Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  /* Correctieronde: terug naar Cormorant Garamond/Inter, zie app/layout.tsx. */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   /* Cursieve 400-instantie (Quote.tsx, StoryIntro.tsx's handtekening) —
      zie app/layout.tsx voor waarom dit een losse next/font-oproep is. */
-  --font-display-quote: "Elms Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-body: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display-quote: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
   /* ------------------------------------------------------------------
      Typografische schaal — editorial: grote sprongen tussen display-
