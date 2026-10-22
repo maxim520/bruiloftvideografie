@@ -16,22 +16,22 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^6.9.2",
+    "@sanity/vision": "^6.19.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react-dom": "^19.3.1",
     "sanity": "^6.9.2",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.6.0"
   },
   "devDependencies": {
-    "@sanity/client": "^7.26.2",
-    "@sanity/eslint-config-studio": "^6.0.0",
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.2.14",
-    "dotenv": "^17.4.2",
-    "eslint": "^9.28",
-    "prettier": "^3.5",
-    "tsx": "^4.23.12",
-    "typescript": "^5.8"
+    "@sanity/client": "^8.9.0",
+    "@sanity/eslint-config-studio": "^7.0.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "dotenv": "^18.0.8",
+    "eslint": "^10.13",
+    "prettier": "^3.9",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0"
   },
   "prettier": {
     "bracketSpacing": false,
